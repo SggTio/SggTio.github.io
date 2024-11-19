@@ -17,23 +17,51 @@ layout: main
 </div>
 <!-- aquí acaba la sección de Title and Description-->
 
-{% for post in paginator.posts %}
-<article class="post">
-  {% if post.img %}
-  <a class="post-thumbnail" 
-   style="background-image: url('{{ site.baseurl }}/assets/img/{{ post.img }}')" 
-   href="{{ post.url | prepend: site.baseurl }}">
-  </a>
-
-  {% else %}
-  {% endif %}
-  <div class="post-content">
-    <h2 class="post-title"><a href="{{post.url | prepend: site.baseurl}}">{{post.title}}</a></h2>
-    <p>{{ post.content | strip_html | truncatewords: 15 }}</p>
-    <span class="post-date">{{post.date | date: '%Y, %b %d'}}&nbsp;&nbsp;&nbsp;—&nbsp;</span>
-    <span class="post-words">{% capture words %}{{ post.content | number_of_words }}{% endcapture %}{% unless words contains "-" %}{{ words | plus: 250 | divided_by: 250 | append: " minute read" }}{% endunless %}</span>
-  </div>
-</article>
-{% endfor %}
+<!-- Posts Grid -->
+<div class="posts-grid" style="
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  gap: 20px; /* Spacing between posts */
+  margin-top: 20px;">
+  {% for post in site.posts limit:6 %}
+  <article class="post" style="
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;">
+    {% if post.img %}
+    <a class="post-thumbnail" 
+       style="
+         display: block;
+         width: 100%;
+         height: 200px;
+         background-image: url('{{ site.baseurl }}/assets/img/{{ post.img }}');
+         background-size: cover;
+         background-position: center;" 
+       href="{{ post.url | prepend: site.baseurl }}">
+    </a>
+    {% endif %}
+    <div class="post-content" style="padding: 15px;">
+      <h2 class="post-title" style="margin: 0 0 10px;">
+        <a href="{{ post.url | prepend: site.baseurl }}" style="text-decoration: none; color: #263959;">
+          {{ post.title }}
+        </a>
+      </h2>
+      <p style="margin-bottom: 10px; color: #555;">
+        {{ post.content | strip_html | truncatewords: 15 }}
+      </p>
+      <span class="post-date" style="display: block; font-size: 12px; color: #999;">
+        {{ post.date | date: '%Y, %b %d' }}
+      </span>
+      <span class="post-words" style="display: block; font-size: 12px; color: #999;">
+        {% capture words %}{{ post.content | number_of_words }}{% endcapture %}
+        {% unless words contains "-" %}
+          {{ words | plus: 250 | divided_by: 250 | append: " minute read" }}
+        {% endunless %}
+      </span>
+    </div>
+  </article>
+  {% endfor %}
+</div>
 
 {% include pagination.html %}
