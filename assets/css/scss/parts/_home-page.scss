@@ -30,7 +30,7 @@
 }
 
 .sections-menu a:hover {
-  color: #007bff; /* Example hover color */
+  color: #010407; /* Example hover color */
 }
 /*-------------------- Here we start with the about --------------------*/
 .about {
@@ -80,6 +80,29 @@
     margin: 0 0 10px;
   }
 }
+/*-------------------- Here we start with the title and description --------------------*/
+.home-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #f9f9f9; /* Optional background color */
+  border-radius: 8px; /* Optional rounded corners */
+}
+
+.home-intro h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.home-intro p {
+  font-size: 1.25rem;
+  color: #555;
+  margin: 0.5rem 0;
+}
+
+/*-------------------- content  --------------------*/
 .content-box {
   padding: 20px;
   padding-left: 260px;
@@ -90,6 +113,7 @@
   align-items: stretch;
 }
 
+/*-------------------- contact  --------------------*/
 .contact {
   .contact-title {
     position: relative;
@@ -148,6 +172,7 @@
   }
 }
 
+/*-------------------- footer  --------------------*/
 footer {
   .copyright {
     font-size: 14px;
@@ -156,6 +181,7 @@ footer {
   }
 }
 
+/*-------------------- Posts  --------------------*/
 .post {
   width: 100%;
   max-width: 100%;

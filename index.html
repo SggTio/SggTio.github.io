@@ -1,10 +1,22 @@
 ---
 layout: main
 ---
+
+<!-- Add Title and Description -->
+<div class="home-intro">
+  <h1>TITULO PRINCIPAL</h1>
+  <p>Esta es una breve descripción sobre lo que hace la página.</p>
+</div>
+<!-- aquí acaba la sección de Title and Description-->
+
 {% for post in paginator.posts %}
 <article class="post">
   {% if post.img %}
-    <a class="post-thumbnail" style="background-image: url({{"/assets/img/" | prepend: site.baseurl | append : post.img}})" href="{{post.url | prepend: site.baseurl}}"></a>
+  <a class="post-thumbnail" 
+   style="background-image: url('{{ site.baseurl }}/assets/img/{{ post.img }}')" 
+   href="{{ post.url | prepend: site.baseurl }}">
+  </a>
+  
   {% else %}
   {% endif %}
   <div class="post-content">
