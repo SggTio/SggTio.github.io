@@ -104,11 +104,13 @@
 
 /*-------------------- Background Image --------------------*/
 .home-intro {
+  border: 1px solid red; /* To visualize the container */
   text-align: center;
   margin-bottom: 2rem;
   padding: 2rem;
   background: url('/assets/img/software.jpg') no-repeat center center;
   background-size: cover;
+  min-height: 300px; /* Adjust as needed */
   color: white; /* Ensure text is readable */
 }
 
