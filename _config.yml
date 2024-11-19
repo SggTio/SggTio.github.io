@@ -16,7 +16,7 @@ social-github: SggTio # add your Github handle
 social-email: santiagogilgallego@gmail.com # add your Email address
 
 #navigation
-navigation:
+sections:
   - title: "Home"
     url: /
   - title: "Section 1"
