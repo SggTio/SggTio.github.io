@@ -12,6 +12,14 @@ layout: default
       <p>{{site.about-author}}</p>
     </div>
   </header> <!-- End Header -->
+  <!-- Add Navigation Menu -->
+  <nav class="sections-menu">
+    <ul>
+      {% for section in site.sections %}
+      <li><a href="{{ section.url }}">{{ section.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav> <!-- End Navigation Menu-->
   <footer>
     <section class="contact">
       <h3 class="contact-title">Contáctanos</h3>

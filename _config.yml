@@ -15,6 +15,19 @@ social-github: SggTio # add your Github handle
 #social-linkedin: # add your Linkedin handle
 social-email: santiagogilgallego@gmail.com # add your Email address
 
+#navigation
+navigation:
+  - title: "Home"
+    url: /
+  - title: "Section 1"
+    url: /section-1/
+  - title: "Section 2"
+    url: /section-2/
+  - title: "Section 3"
+    url: /section-3/
+
+
+
 # Disqus
 discus-identifier: # add your discus identifier
 
