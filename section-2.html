@@ -1,0 +1,20 @@
+---
+layout: default
+title: "Section 2"
+---
+<div class="section-posts">
+    <h1>Section 1</h1>
+    <div class="columns" style="
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;">
+        {% for post in site.posts %}
+            {% if post.tags contains "section-2" %}
+                <div class="column">
+                    <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+                    <p>{{ post.excerpt }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

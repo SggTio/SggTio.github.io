@@ -26,7 +26,10 @@ sections:
   - title: "Section 3"
     url: /section-3/
 
-
+categories:
+  section-1: "Section 1"
+  section-2: "Section 2"
+  section-3: "Section 3"
 
 # Disqus
 discus-identifier: # add your discus identifier
