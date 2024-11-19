@@ -3,9 +3,17 @@ layout: main
 ---
 
 <!-- Add Title and Description -->
-<div class="home-intro">
-  <h1>TITULO PRINCIPAL</h1>
-  <p>Esta es una breve descripción sobre lo que hace la página.</p>
+<div class="home-intro" style="
+  border: 1px solid red;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: url('/assets/img/software.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 600px;
+  color: white;">
+  <h1 style="font-size: 3rem; font-weight: bold;">TITULO PRINCIPAL</h1>
+  <p style="font-size: 1.5rem;">Esta es una breve descripción sobre lo que hace la página.</p>
 </div>
 <!-- aquí acaba la sección de Title and Description-->
 
@@ -16,7 +24,7 @@ layout: main
    style="background-image: url('{{ site.baseurl }}/assets/img/{{ post.img }}')" 
    href="{{ post.url | prepend: site.baseurl }}">
   </a>
-  
+
   {% else %}
   {% endif %}
   <div class="post-content">
