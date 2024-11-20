@@ -45,6 +45,69 @@ h1 {
   margin: 0.67em 0;
 }
 
+/*------------------ everything related to sections menu --------------------*/
+
+.sections-menu {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.sections-menu li {
+  margin-bottom: 15px;
+}
+
+.nav-link {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px 15px;
+  position: relative;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: -1;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  border-radius: 8px;
+}
+
+.nav-link:hover::before {
+  opacity: 1;
+}
+
+.nav-link:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .sections-menu li {
+    margin-bottom: 10px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+
 /* Grouping content
    ========================================================================== */
 /**

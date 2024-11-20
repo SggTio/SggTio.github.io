@@ -16,7 +16,9 @@ layout: default
   <nav class="sections-menu">
     <ul>
       {% for section in site.sections %}
-      <li><a href="{{ section.url }}">{{ section.title }}</a></li>
+      <li>
+        <a href="{{ section.url }}" class="nav-link">{{ section.title }}</a>
+      </li>
       {% endfor %}
     </ul>
   </nav> <!-- End Navigation Menu-->
