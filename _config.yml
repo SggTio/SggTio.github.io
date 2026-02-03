@@ -1,50 +1,48 @@
-title: insomn IA.
-description: "Un espacio crítico de la tecnología, la IA y la cultura"
-permalink: ':title/'
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
-site-twitter: #if your site has a twitter account, enter it here
+# Setup
+title: Dark Poole
+url: https://getpoole.com
+paginate: 1
+baseurl: ""
+permalink: pretty
 
-# Author Settings
-author: insomn IA # add your name
-author-img: david-freeman.jpg # add your photo
-about-author: Un espacio político de la tecnología, la IA y la cultura. # add description
-social-twitter: Un_Santajaro # add your Twitter handle
-#social-facebook: # add your Facebook handle
-social-github: SggTio # add your Github handle
-#social-linkedin: # add your Linkedin handle
-social-email: santiagogilgallego@gmail.com # add your Email address
-
-#navigation
-sections:
-  - title: "Home"
-    url: /
-  - title: "Section 1"
-    url: /section-1/
-  - title: "Section 2"
-    url: /section-2/
-  - title: "Section 3"
-    url: /section-3/
-
-categories:
-  section-1: "Section 1"
-  section-2: "Section 2"
-  section-3: "Section 3"
-
-# Disqus
-discus-identifier: # add your discus identifier
-
-# Tracker
-analytics: # Google Analytics
-
-# Build Settings
-markdown: kramdown
+# Gems
 plugins:
-  - jekyll-sitemap
+  - jekyll-gist
   - jekyll-paginate
-  - jemoji
+  - jekyll-seo-tag
 
-paginate: 8
-paginate_path: "/page/:num"
+# Optimize Jekyll
+exclude:
+  - .editorconfig
+  - .git
+  - .jekyll-cache
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE.md
+  - README.md
 
-exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock"]
+sass:
+  sass_dir: _sass
+  style: :compressed
+
+# Options
+
+# Replace this value and uncomment to enable Google Analytics tracking
+# ga_analytics: UA-000000-0
+
+# Specify the author for blog posts
+author:
+  name: Mark Otto
+  url: https://twitter.com/mdo
+  email: markdotto@gmail.com
+
+# Custom vars
+version: 3.0.0
+
+# Navbar page list
+nav:
+  - title: Blog
+    url: /archive
+
+  - title: About
+    url: /about
