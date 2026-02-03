@@ -29,10 +29,8 @@ section: escritos
   {% assign escritos_posts = site.categories.escritos | sort: 'date' | reverse %}
   {% for post in escritos_posts limit:3 %}
     <div class="escrito-card">
-      <a href="{{ post.url }}">
-        <h3>{{ post.title }}</h3>
+      <a href="{{ post.url }}">{{ post.title }}</a><br>
         <p><small>{{ post.date | date: "%B %Y" }}</small></p>
-      </a>
     </div>
   {% endfor %}
 </div>

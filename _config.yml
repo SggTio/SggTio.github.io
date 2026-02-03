@@ -49,3 +49,9 @@ nav:
     url: /escritos/
   - title: Sobre mí
     url: /about/
+
+#una colección para escritos:
+collections:
+  escritos:
+    output: true
+    permalink: /escritos/:name/
