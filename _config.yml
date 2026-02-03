@@ -50,8 +50,14 @@ nav:
   - title: Sobre mí
     url: /about/
 
-#una colección para escritos:
+#una colección para las categrorías
 collections:
   escritos:
     output: true
     permalink: /escritos/:name/
+  mates:
+    output: true
+    permalink: /math/:name/
+  notas:
+    output: true
+    permalink: /blog/:name/
