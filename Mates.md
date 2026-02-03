@@ -2,6 +2,7 @@
 layout: page
 title: Mates
 permalink: /math/
+section: math
 custom_color: "#8A1B1D"
 ---
 

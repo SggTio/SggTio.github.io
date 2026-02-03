@@ -2,6 +2,7 @@
 layout: page
 title: Notas e ideas
 permalink: /blog/
+section: blog
 custom_color: "#8A1B1D"
 ---
 

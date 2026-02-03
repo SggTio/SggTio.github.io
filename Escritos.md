@@ -2,6 +2,7 @@
 layout: page
 title: Escritos
 permalink: /escritos/
+section: escritos
 custom_color: "#8A1B1D"
 ---
 
