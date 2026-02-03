@@ -158,4 +158,67 @@ h1, h2, h3 {
     text-align: left;
   }
 }
- //--------
+ //-------- añadimos ahora todo lo relacionado con los escritos.md:
+
+ .centered-quote {
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.escritos-intro-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.escrito-block {
+  flex: 1 1 300px;
+  background: #1e1e1e;
+  padding: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent-color);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.escritos-post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.escrito-card {
+  background: #1c1c1c;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}
+
+.escrito-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.escrito-card:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.escritos-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.escritos-list li {
+  margin-bottom: 0.5rem;
+}
+
+
