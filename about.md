@@ -5,6 +5,8 @@ permalink: /about/
 section: about
 ---
 
+<div class="quote-tag">"Estudié matemáticas, porque quiero ser poeta".</div>
+
 <div class="about-grid">
   <div class="about-block">
     <h2> ¿Quién soy?</h2>
@@ -43,4 +45,3 @@ section: about
     <li>GitHub: <a href="https://github.com/SggTio" target="_blank">github.com/SggTio</a></li>
   </ul>
 </div>
-

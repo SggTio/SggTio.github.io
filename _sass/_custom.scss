@@ -138,3 +138,24 @@ h1, h2, h3 {
   margin-bottom: 0.5rem;
 }
 
+//--- dentro del about me, éste pedacito habla de la frase flotante:
+
+.quote-tag {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #aaa;
+  max-width: 200px;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .quote-tag {
+    position: static;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+}
+ //--------
