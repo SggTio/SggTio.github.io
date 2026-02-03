@@ -26,7 +26,7 @@ section: escritos
 
 <h2 style="text-align:center;"> Últimos escritos</h2>
 <div class="escritos-post-grid">
-  {% assign escritos_posts = site.categories.escritos | sort: 'date' | reverse %}
+  {% assign escritos_posts = site.escritos | sort: 'date' | reverse %}
   {% for post in escritos_posts limit:3 %}
     <div class="escrito-card">
       <a href="{{ post.url }}">{{ post.title }}</a><br>
