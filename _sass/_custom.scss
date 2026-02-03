@@ -95,3 +95,46 @@ h1, h2, h3 {
 .nav a:hover {
   opacity: 0.85;
 }
+
+// añado la estructura del about me: 
+
+.about-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.about-block {
+  flex: 1 1 300px;
+  background: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent-color);
+}
+
+.about-block h2 {
+  margin-top: 0;
+  color: var(--accent-color);
+}
+
+.contact-block {
+  background: #1c1c1c;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent-color);
+}
+
+.contact-block h2 {
+  color: var(--accent-color);
+}
+
+.contact-block ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.contact-block li {
+  margin-bottom: 0.5rem;
+}
+
