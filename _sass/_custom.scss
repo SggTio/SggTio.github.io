@@ -1,0 +1,24 @@
+body.section-default {
+  --accent-color: #8D99AB;
+}
+body.section-math {
+  --accent-color: #8A1B1D;
+}
+body.section-science {
+  --accent-color: #AA979B;
+}
+body.section-literature {
+  --accent-color: #E5D6C7;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h2, h3 {
+  color: var(--accent-color);
+}
