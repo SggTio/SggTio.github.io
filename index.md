@@ -1,16 +1,38 @@
 ---
-layout: page
+layout: default
 title: Inicio
 permalink: /
 section: home
 ---
 
-# Bienvenido a mi sitio
+<div class="intro-grid">
+  <div class="intro-block">
+    <h2> ¿Qué es este sitio?</h2>
+    <p>
+      Este blog es un proyecto personal donde comparto cosas que me interesan,
+      mezclando divulgación, matemáticas y literatura. No hay una sola línea: solo una mente curiosa escribiendo.
+    </p>
+  </div>
+  <div class="intro-block">
+    <h2>📅 Frecuencia y estilo</h2>
+    <p>
+      Publico de forma semi-regular. A veces es una nota matemática, otras un ensayo
+      o una reflexión breve. El contenido es bilingüe, visual, y personal.
+    </p>
+  </div>
+</div>
 
-Este es mi espacio personal para compartir:
+<hr />
 
-- 🧮 [Mates](/math/) – Apuntes, explicaciones y visualizaciones matemáticas.
-- 🧪 [Notas e ideas](/blog/) – Cosas que estoy pensando o aprendiendo.
-- ✍️ [Escritos](/escritos/) – Textos, ensayos y literatura.
-
-Explora las secciones según tu interés. Todo está hecho con Jekyll y GitHub Pages ✨
+<h2>🧩 Últimas publicaciones</h2>
+<div class="post-grid">
+  {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+  {% for post in sorted_posts limit:9 %}
+    <div class="post-card">
+      <a href="{{ post.url }}">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.date | date: "%b %d, %Y" }}</p>
+      </a>
+    </div>
+  {% endfor %}
+</div>

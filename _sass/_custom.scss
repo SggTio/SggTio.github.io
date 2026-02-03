@@ -22,3 +22,76 @@ a:hover {
 h1, h2, h3 {
   color: var(--accent-color);
 }
+
+// lo relacionado a la nav bar de recientes con la grilla::after
+.intro-grid {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.intro-block {
+  flex: 1 1 300px;
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent-color);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.post-card {
+  background: #1c1c1c;
+  padding: 1rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.post-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post-card:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+//lo relacionado al master head:
+
+.masthead {
+  background-color: #1f1f1f; // adjust for clarity vs body
+  border-bottom: 1px solid white;
+  padding: 1.2rem 0;
+}
+
+.masthead-title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.masthead-title a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.nav a {
+  color: white;
+  text-decoration: underline;
+  margin-left: 1rem;
+}
+
+.nav a:hover {
+  opacity: 0.85;
+}

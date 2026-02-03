@@ -14,9 +14,6 @@
             {% endfor %}
           </nav>
         </h3>
-        <script type="text/javascript" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-        </script>
       </header>
 
       <main>
@@ -26,9 +23,10 @@
       <footer class="footer">
         <small>
           &copy;
-          <time datetime="{{ site.time | date_to_xmlschema }}"
-            >{{ site.time | date: '%Y' }}</time
-          >. All rights reserved.
+          <time datetime="{{ site.time | date_to_xmlschema }}">
+            {{ site.time | date: '%Y' }}
+          </time>
+          . All rights reserved.
         </small>
       </footer>
     </div>
