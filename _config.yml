@@ -41,8 +41,11 @@ version: 3.0.0
 
 # Navbar page list
 nav:
-  - title: Blog
-    url: /archive
-
-  - title: About
-    url: /about
+  - title: Mates
+    url: /math/
+  - title: Notas
+    url: /blog/
+  - title: Escritos
+    url: /escritos/
+  - title: Sobre mí
+    url: /about/
