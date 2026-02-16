@@ -218,3 +218,30 @@ h1, h2, h3 {
 .escritos-list li {
   margin-bottom: 0.5rem;
 }
+
+// OTOD LO QUE TIENE QUE VER CON EL STYLING DE LAS FOTOS::after
+.homepage-banner {
+  text-align: center;
+  margin: 2rem 0;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.profile-block {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1rem;
+}
+
+.profile-pic {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent-color);
+}

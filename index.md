@@ -5,6 +5,10 @@ permalink: /
 section: home
 ---
 
+<div class="homepage-banner">
+  <img src="{{ '/assets/home-banner.jpg' | relative_url }}" alt="Banner image" />
+</div>
+
 <div class="intro-grid">
   <div class="intro-block">
     <h2> ¿Qué es este sitio?</h2>
