@@ -4,6 +4,9 @@ title: Sobre mí
 permalink: /about/
 section: about
 ---
+<div class="about-profile">
+  <img src="{{ '/assets/profile.jpg' | relative_url }}" alt="Mi perfil" />
+</div>
 
 <div class="quote-tag">"Estudié matemáticas, porque quiero ser poeta".</div>
 
