@@ -28,7 +28,8 @@ section: home
 
 <h2> Últimas publicaciones</h2>
 <div class="post-grid">
-  {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+  {% assign all_posts = site.posts | concat: site.mates | concat: site.notas | concat: site.escritos %}
+  {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
   {% for post in sorted_posts limit:9 %}
     <div class="post-card">
       <a href="{{ post.url }}">
