@@ -14,13 +14,11 @@ section: about
   <div class="about-block">
     <h2> ¿Quién soy?</h2>
     <p>
-      Matemático al que le gustan mucho los métodos computacionales.  
-      Tengo dos maestrías aplicando estos métodos a sistemas y datos médicos,  
-      por lo que a ratos me disfrazo de ingeniero.
+      Matemático aplicado en ciencias e ingeniería.  
+      Me gusta la computación y la geometría, aplico éstos métodos a sistemas y datos médicos y sociales.
     </p>
     <p>
-      Profesionalmente hablando, soy un científico computacional con énfasis  
-      en la relación lenguaje-visión.
+      Quisiera ser psiquiatra de máquinas, para interpretar sus sueños lenguaje-visión.
     </p>
     <p>
       Me sueño con una panadería.
@@ -28,10 +26,11 @@ section: about
   </div>
 
   <div class="about-block">
-    <h2> Me Interesa:</h2>
+    <h2> Me Interesan:</h2>
     <ul>
-      <li>Geometría y topología</li>
-      <li>Programar, el MLOps y DevOps</li>
+      <li>La Geometría y la topología aplicadas en contextos computacionales</li>
+      <li>La computación la gestión de operaciones, los sistemas distribuidos y de alto desempeño</li>
+      <li> La ética de la IA y su relación con la sociedad </li>
       <li>leer y escribir, echar cuentos, poemas y pensar en política</li>
     </ul>
   </div>

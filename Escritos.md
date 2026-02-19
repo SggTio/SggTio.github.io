@@ -17,10 +17,10 @@ section: escritos
 
 <div class="escritos-intro-grid">
   <div class="escrito-block">
-    Política, retazos e ideas vagas.
+    Cuentos, poesía y cosas que leo.
   </div>
   <div class="escrito-block">
-    El contraejemplo más conocido al lema de Yoneda soy yo, que no estoy a la altura de mis amigos.
+    Soy el agrupamiento de todas las multitudes que me contienen en eterna contradicción. Un uróboro.
   </div>
 </div>
 
