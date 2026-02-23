@@ -14,11 +14,11 @@ section: about
   <div class="about-block">
     <h2> ¿Quién soy?</h2>
     <p>
-      Matemático aplicado en ciencias e ingeniería.  
-      Me gusta la computación y la geometría, aplico éstos métodos a sistemas y datos médicos y sociales.
+      Un matemático aplicado en ingeniería y medicina.  
+      Me gusta la computación, la geometría,, la topología y aplicar éstos métodos a sistemas y datos médicos y sociales.
     </p>
     <p>
-      Quisiera ser psiquiatra de máquinas, para interpretar sus sueños lenguaje-visión.
+      Quisiera ser psiquiatra de máquinas, para interpretar sus sueños.
     </p>
     <p>
       Me sueño con una panadería.
@@ -29,9 +29,9 @@ section: about
     <h2> Me Interesan:</h2>
     <ul>
       <li>La Geometría y la topología aplicadas en contextos computacionales</li>
-      <li>La computación la gestión de operaciones, los sistemas distribuidos y de alto desempeño</li>
+      <li>¿Cómo gestionar sistemas centrados y distribuidos?</li>
       <li> La ética de la IA y su relación con la sociedad </li>
-      <li>leer y escribir, echar cuentos, poemas y pensar en política</li>
+      <li>leer y escribir: Cuentos, poemas. </li>
     </ul>
   </div>
 </div>

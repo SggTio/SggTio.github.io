@@ -13,13 +13,13 @@ section: home
   <div class="intro-block">
     <h2> ¿Qué es este sitio?</h2>
     <p>
-      escribo sobre matemáticas, cuentos y poesía.
+      escribo sobre lo que me gusta: Matemáticas, computación, cuentos y poesía.
     </p>
   </div>
   <div class="intro-block">
-    <h2>Frecuencia y estilo</h2>
+    <h2>formas</h2>
     <p>
-      Publico de forma semi-regular. A veces es una nota matemática, otras veces son cuentos. Se mezcla lo visual con lo abstracto.
+      Se mezcla lo visual con lo abstracto.
     </p>
   </div>
 </div>
