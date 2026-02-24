@@ -15,7 +15,7 @@ section: about
     <h2> ¿Quién soy?</h2>
     <p>
       Un matemático aplicado en ingeniería y medicina.  
-      Me gusta la computación, la geometría,, la topología y aplicar éstos métodos a sistemas y datos médicos y sociales.
+      Me gusta la computación, la geometría, la topología y aplicar éstos métodos a sistemas y datos médicos y sociales.
     </p>
     <p>
       Quisiera ser psiquiatra de máquinas, para interpretar sus sueños.
