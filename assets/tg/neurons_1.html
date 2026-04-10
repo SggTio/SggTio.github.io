@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Neuronas a Tumores — Cómo las Redes Neuronales Ven el Cerebro</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1118;--bg2:#161922;--bg3:#1c2030;--border:#262a3a;--text:#c8bfa8;--dim:#8a8272;--bright:#e8dfc8;--a:#7b7fb5;--a2:#9a9dd0;--b:#5f9a7e;--b2:#7dc4a0;--c:#c49a5c;--d:#b06060;--serif:'Newsreader',Georgia,serif;--sans:'Outfit',system-ui,sans-serif;--mono:'IBM Plex Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.75}
+a{color:var(--a2);text-decoration:none}a:hover{text-decoration:underline}
+h2{font-family:var(--serif);font-size:1.8rem;font-weight:600;color:var(--bright);margin-bottom:.3rem}
+h3{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--bright);margin:1.5rem 0 .5rem}
+p{margin-bottom:.7rem}strong{color:var(--bright)}code{font-family:var(--mono);font-size:.83em;background:var(--bg3);padding:.1rem .4rem;border-radius:3px;color:var(--a2)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 2rem}
+.sep{height:1px;background:var(--border);margin:3rem 0}
+.line{width:40px;height:2px;margin-bottom:1.5rem}
+.line.a{background:var(--a)}.line.b{background:var(--b)}.line.c{background:var(--c)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,17,24,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:.6rem 0;transform:translateY(-100%);transition:transform .3s}
+nav.vis{transform:translateY(0)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center}
+nav .brand{font-family:var(--serif);font-size:.9rem;color:var(--bright)}
+nav .links a{color:var(--dim);font-size:.8rem;margin-left:1.2rem}nav .links a:hover{color:var(--a2);text-decoration:none}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);font-weight:600;color:var(--bright);max-width:700px;line-height:1.2;margin-bottom:1rem}
+.hero h1 .a{color:var(--a2)}.hero h1 .b{color:var(--b2)}
+.hero .sub{color:var(--dim);max-width:500px;margin:0 auto 2rem;font-weight:300}
+.hero .badge{display:inline-block;padding:.3rem 1rem;border:1px solid var(--border);border-radius:100px;font-size:.75rem;font-family:var(--mono);color:var(--dim)}
+
+/* SECTION */
+.sec{padding:4rem 0}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.2rem;margin-bottom:1rem}
+.card h4{font-family:var(--serif);font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.card p{font-size:.88rem;color:var(--dim);line-height:1.6}
+
+/* INTERACTIVE BOXES */
+.ibox{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;position:relative;overflow:hidden}
+.ibox h4{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--c);margin-bottom:.8rem}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr}}
+
+/* TABS */
+.tabs{display:flex;gap:.3rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab{padding:.4rem 1rem;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--dim);font-family:var(--sans);font-size:.82rem;cursor:pointer;transition:all .2s}
+.tab:hover{border-color:var(--a);color:var(--text)}
+.tab.on{background:var(--a);border-color:var(--a);color:var(--bg);font-weight:500}
+.tpanel{display:none}.tpanel.on{display:block}
+
+/* FLOW NODES */
+.flow{display:flex;flex-direction:column;align-items:center;gap:2px;margin:1rem 0}
+.fn{padding:.45rem .9rem;border-radius:6px;font-size:.75rem;font-family:var(--mono);text-align:center;cursor:pointer;border:1px solid transparent;transition:all .2s;min-width:120px}
+.fn:hover{transform:scale(1.03)}
+.fn.active{border-color:var(--c)!important;box-shadow:0 0 10px rgba(196,154,92,.15)}
+.fn.i{background:rgba(95,154,126,.08);border-color:rgba(95,154,126,.2);color:var(--b2)}
+.fn.t{background:rgba(123,127,181,.08);border-color:rgba(123,127,181,.2);color:var(--a2)}
+.fn.e{background:rgba(95,154,126,.05);border-color:rgba(95,154,126,.12);color:var(--b)}
+.fn.b{background:rgba(196,154,92,.07);border-color:rgba(196,154,92,.15);color:var(--c)}
+.fn.d{background:rgba(95,154,126,.04);border-color:rgba(95,154,126,.08);color:var(--b)}
+.fn.l{background:rgba(176,96,96,.06);border-color:rgba(176,96,96,.15);color:var(--d)}
+.fa{color:var(--dim);font-size:.55rem;opacity:.4}
+
+/* DETAIL */
+.dp{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:.8rem;font-size:.85rem}
+.dp h5{font-family:var(--mono);font-size:.7rem;color:var(--c);text-transform:uppercase;margin-bottom:.4rem}
+.dp .row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.4rem}
+.dp .lb{font-family:var(--mono);font-size:.65rem;color:var(--dim);text-transform:uppercase}
+.dp .vl{color:var(--bright);font-size:.82rem;white-space:pre-line}
+.dp .desc{color:var(--dim);font-size:.82rem;line-height:1.5}
+
+/* SLIDER */
+.slider-wrap{position:relative;max-width:600px;margin:1.5rem auto;border-radius:10px;overflow:hidden;aspect-ratio:1;background:var(--bg3)}
+.slider-wrap canvas{display:block;width:100%;height:100%}
+.slider-controls{display:flex;justify-content:center;gap:.5rem;margin-top:.8rem}
+.slider-controls button{padding:.3rem .8rem;border:1px solid var(--border);border-radius:5px;background:transparent;color:var(--dim);font-family:var(--sans);font-size:.8rem;cursor:pointer;transition:all .2s}
+.slider-controls button.on{background:var(--a);color:var(--bg);border-color:var(--a)}
+
+/* NEURON VIS */
+.neuron-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;max-width:200px;margin:.5rem 0}
+.neuron-cell{aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.6rem;color:var(--bright);transition:background .3s}
+
+/* CONV DEMO */
+.conv-demo{display:grid;grid-template-columns:auto 30px auto 30px auto;align-items:center;gap:.5rem;justify-items:center;margin:1rem 0}
+.conv-demo .arr{color:var(--dim);font-size:1.2rem}
+.mini-grid{display:grid;gap:2px}
+.mini-cell{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:3px;font-family:var(--mono);font-size:.65rem;transition:all .3s}
+
+footer{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);color:var(--dim);font-size:.8rem}
+</style>
+</head>
+<body>
+
+<nav id="nav"><div class="wrap"><div class="brand">De Neuronas a Tumores</div><div class="links"><a href="#s1">Neuronas</a><a href="#s2">Convolución</a><a href="#s3">U-Net</a><a href="#s4">Nuestras Arquitecturas</a><a href="#s5">Procesamiento</a></div></div></nav>
+
+<!-- HERO -->
+<section class="hero">
+<div>
+<div class="badge">Divulgación Científica · Pontificia Universidad Javeriana</div>
+<h1 style="margin-top:1.2rem">De <span class="a">neuronas artificiales</span> a la detección de <span class="b">tumores cerebrales</span></h1>
+<p class="sub">Un recorrido interactivo desde los fundamentos de las redes neuronales hasta las arquitecturas que ven la forma y estructura de los tumores.</p>
+</div>
+</section>
+
+<!-- S1: NEURAL NETWORKS -->
+<section class="sec" id="s1"><div class="wrap">
+<h2>1. ¿Qué es una neurona artificial?</h2>
+<div class="line a"></div>
+
+<div class="grid2">
+<div>
+<p>Una neurona artificial toma números de entrada, los multiplica por "pesos" (la importancia de cada entrada), suma todo, y aplica una función de activación que decide si la neurona se "enciende" o no.</p>
+<p>Matemáticamente: <code>salida = σ(w₁x₁ + w₂x₂ + ... + b)</code></p>
+<p>La función de activación más común es <strong>ReLU</strong>: si el resultado es positivo, pasa tal cual. Si es negativo, se convierte en cero. Así de simple.</p>
+
+<h3>Prueba: una neurona en acción</h3>
+<p>Ajusta los pesos y observa cómo cambia la salida:</p>
+<div class="ibox">
+<h4>Neurona interactiva</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+<div>
+<label style="font-size:.8rem;color:var(--dim)">Entrada x₁ = <span id="x1v">3</span></label><br>
+<input type="range" min="-5" max="5" value="3" step="0.5" id="x1" oninput="calcNeuron()" style="width:100%">
+<label style="font-size:.8rem;color:var(--dim)">Entrada x₂ = <span id="x2v">1</span></label><br>
+<input type="range" min="-5" max="5" value="1" step="0.5" id="x2" oninput="calcNeuron()" style="width:100%">
+</div>
+<div>
+<label style="font-size:.8rem;color:var(--dim)">Peso w₁ = <span id="w1v">2</span></label><br>
+<input type="range" min="-3" max="3" value="2" step="0.5" id="w1" oninput="calcNeuron()" style="width:100%">
+<label style="font-size:.8rem;color:var(--dim)">Peso w₂ = <span id="w2v">-1</span></label><br>
+<input type="range" min="-3" max="3" value="-1" step="0.5" id="w2" oninput="calcNeuron()" style="width:100%">
+</div>
+</div>
+<div style="text-align:center;margin-top:1rem;font-family:var(--mono);font-size:.9rem">
+<span style="color:var(--dim)">z = w₁·x₁ + w₂·x₂ = </span><span id="zval" style="color:var(--c)">5</span>
+<span style="color:var(--dim)"> → ReLU → </span><span id="rval" style="color:var(--b2);font-weight:600">5</span>
+</div>
+</div>
+</div>
+<div>
+<div class="card" style="margin-top:0">
+<h4 style="color:var(--c)">💡 ¿Por qué "neurona"?</h4>
+<p>Se llama así por analogía con las neuronas biológicas del cerebro: reciben señales (entradas), las procesan (pesos + activación), y deciden si "disparan" una señal (salida). Pero la analogía es superficial — una red neuronal artificial es, en esencia, una función matemática muy compleja construida apilando operaciones simples.</p>
+</div>
+<div class="card">
+<h4 style="color:var(--a2)">📐 ¿Por qué ReLU?</h4>
+<p>Sin activación, apilar capas de neuronas produce solo una transformación lineal (una multiplicación de matrices). Con ReLU, cada capa puede "doblar" el espacio, creando fronteras de decisión curvas. Dos capas con ReLU pueden aproximar cualquier función continua — este es el Teorema de Aproximación Universal.</p>
+</div>
+<div class="card">
+<h4 style="color:var(--b2)">🏥 ¿Qué tiene que ver con tumores?</h4>
+<p>Un tumor en una imagen de resonancia magnética es un patrón complejo de píxeles. Una sola neurona no puede detectarlo. Pero miles de neuronas organizadas en capas pueden aprender a reconocer bordes → texturas → formas → tumores. Cada capa construye sobre la anterior.</p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- S2: CONVOLUTION -->
+<section class="sec" id="s2"><div class="wrap">
+<h2>2. Convolución: viendo la imagen con una lupa</h2>
+<div class="line b"></div>
+
+<div class="grid2">
+<div>
+<p>Una <strong>convolución</strong> es como mover una pequeña "lupa" (kernel) sobre la imagen. En cada posición, multiplicamos los valores de la lupa por los píxeles debajo de ella y sumamos todo. El resultado indica si el patrón de la lupa está presente en esa posición.</p>
+
+<h3>Prueba: detectando bordes</h3>
+<div class="ibox">
+<h4>Convolución interactiva</h4>
+<p style="font-size:.82rem;color:var(--dim);margin-bottom:.8rem">Elige un kernel y observa cómo transforma la imagen:</p>
+<div class="tabs">
+<button class="tab on" onclick="setKernel('identity',this)">Identidad</button>
+<button class="tab" onclick="setKernel('edge',this)">Bordes</button>
+<button class="tab" onclick="setKernel('blur',this)">Suavizado</button>
+<button class="tab" onclick="setKernel('sharpen',this)">Nitidez</button>
+</div>
+<div class="conv-demo">
+<div>
+<div style="font-size:.7rem;color:var(--dim);text-align:center;margin-bottom:3px">Imagen 4×4</div>
+<div class="mini-grid" id="conv-input" style="grid-template-columns:repeat(4,1fr)"></div>
+</div>
+<div class="arr">*</div>
+<div>
+<div style="font-size:.7rem;color:var(--dim);text-align:center;margin-bottom:3px">Kernel 3×3</div>
+<div class="mini-grid" id="conv-kernel" style="grid-template-columns:repeat(3,1fr)"></div>
+</div>
+<div class="arr">=</div>
+<div>
+<div style="font-size:.7rem;color:var(--dim);text-align:center;margin-bottom:3px">Salida 2×2</div>
+<div class="mini-grid" id="conv-output" style="grid-template-columns:repeat(2,1fr)"></div>
+</div>
+</div>
+</div>
+
+<h3>Múltiples kernels = múltiples "ojos"</h3>
+<p>Una capa convolucional aplica <strong>muchos kernels</strong> a la misma imagen. Cada kernel detecta un patrón diferente: bordes verticales, bordes horizontales, texturas, esquinas. El resultado: en lugar de 1 imagen, obtenemos 32 o 64 "mapas de características" — cada uno resaltando un aspecto diferente.</p>
+</div>
+<div>
+<div class="card" style="margin-top:0">
+<h4 style="color:var(--c)">💡 La ventaja de la convolución</h4>
+<p><strong>Compartir pesos:</strong> El mismo kernel se aplica en toda la imagen. Un detector de bordes funciona igual en la esquina que en el centro — no necesita re-aprender para cada posición. Esto reduce enormemente el número de parámetros: un kernel 3×3 tiene solo 9 pesos, sin importar el tamaño de la imagen.</p>
+</div>
+<div class="card">
+<h4 style="color:var(--a2)">📐 Campos receptivos</h4>
+<p>Un kernel 3×3 "ve" 3×3 píxeles. Dos capas de 3×3 ven efectivamente 5×5. Tres capas: 7×7. Así, las capas profundas tienen un "campo receptivo" grande — ven regiones amplias de la imagen — mientras que las capas iniciales ven detalles locales.</p>
+</div>
+<div class="card">
+<h4 style="color:var(--b2)">🏥 Para tumores</h4>
+<p>Las primeras capas detectan bordes del tumor. Las capas intermedias detectan texturas (realce, necrosis). Las capas profundas detectan la forma global. La convolución construye un entendimiento jerárquico: píxeles → bordes → texturas → formas → tumor.</p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- S3: U-NET -->
+<section class="sec" id="s3"><div class="wrap">
+<h2>3. U-Net: comprimir y reconstruir</h2>
+<div class="line a"></div>
+
+<div class="grid2">
+<div>
+<p>Una U-Net tiene forma de U: un <strong>encoder</strong> (lado izquierdo) comprime la imagen paso a paso, extrayendo significado pero perdiendo detalle. Un <strong>decoder</strong> (lado derecho) reconstruye la imagen a su resolución original. Las <strong>skip connections</strong> (líneas horizontales) envían detalles directamente del encoder al decoder.</p>
+
+<h3>Flujo de datos interactivo</h3>
+<p style="font-size:.85rem;color:var(--dim)">Haz clic en cada bloque para ver qué pasa con los datos:</p>
+<div class="ibox">
+<h4>U-Net: encoder → bottleneck → decoder</h4>
+<div class="flow">
+<div class="fn i" onclick="sdu('u1',this)">Imagen — 1ch × 128×128</div><div class="fa">↓</div>
+<div class="fn e" onclick="sdu('u2',this)">Enc 1 → 32ch × 64×64</div><div class="fa">↓ &nbsp; skip ─ ─ →</div>
+<div class="fn e" onclick="sdu('u3',this)">Enc 2 → 64ch × 32×32</div><div class="fa">↓ &nbsp; skip ─ ─ →</div>
+<div class="fn e" onclick="sdu('u4',this)">Enc 3 → 128ch × 16×16</div><div class="fa">↓ &nbsp; skip ─ ─ →</div>
+<div class="fn b" onclick="sdu('u5',this)">Bottleneck — 256ch × 8×8</div><div class="fa">↓</div>
+<div class="fn d" onclick="sdu('u6',this)">Dec 3 — 128ch × 16×16</div><div class="fa">↓</div>
+<div class="fn d" onclick="sdu('u7',this)">Dec 2 — 64ch × 32×32</div><div class="fa">↓</div>
+<div class="fn d" onclick="sdu('u8',this)">Dec 1 — 32ch × 128×128</div><div class="fa">↓</div>
+<div class="fn l" onclick="sdu('u9',this)">Predicción — 1ch × 128×128</div>
+</div>
+<div class="dp" id="dp-u"><h5>← Clic en un bloque</h5><p class="desc">Cada bloque transforma los datos: cambia la resolución y el número de canales.</p></div>
+</div>
+</div>
+<div>
+<div class="card" style="margin-top:0">
+<h4 style="color:var(--c)">💡 ¿Por qué la forma de U?</h4>
+<p>El encoder es como escribir un resumen de un libro: comprime la información (menos páginas = menor resolución) resaltando los temas clave (más canales). El bottleneck es el resumen más corto. El decoder reconstruye el libro completo usando el resumen Y las "notas al margen" (skip connections) que preservan los detalles.</p>
+</div>
+<div class="card">
+<h4 style="color:var(--a2)">📐 Los números</h4>
+<p>De 128×128×1 (16,384 valores) a 8×8×256 (16,384 valores): ¡la misma cantidad de información total! Pero redistribuida: menos espacio (8×8) pero más "canales de significado" (256). Es como comprimir un paisaje en 256 palabras clave, cada una describiendo un aspecto diferente.</p>
+</div>
+<div class="card">
+<h4 style="color:var(--b2)">🏥 Skip connections salvan vidas</h4>
+<p>Sin skip connections, el decoder solo tiene el resumen comprimido — pierde los bordes exactos del tumor. Con ellas, el decoder recibe tanto el "qué" (del bottleneck: "hay un tumor") como el "dónde" (del encoder: "el borde pasa exactamente por estos píxeles"). Esto es crucial: un borde desplazado por 2 píxeles puede cambiar el volumen tumoral estimado.</p>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- S4: OUR ARCHITECTURES -->
+<section class="sec" id="s4"><div class="wrap">
+<h2>4. Nuestras arquitecturas: añadiendo topología</h2>
+<div class="line c"></div>
+
+<p>La U-Net estándar ve píxeles pero no estructura. Nosotros le añadimos <strong>imágenes de persistencia</strong> — mapas que codifican cuántos agujeros y componentes tiene la forma. La pregunta: ¿DÓNDE añadir esta información?</p>
+
+<div class="tabs" style="margin-top:1rem">
+<button class="tab on" onclick="showArch('bl2',this)">Baseline (sin topología)</button>
+<button class="tab" onclick="showArch('if2',this)">InputFusion (paper)</button>
+<button class="tab" onclick="showArch('bf2',this)">BottleneckFusion (nuestro)</button>
+</div>
+
+<div class="tpanel on" id="tp-bl2">
+<div class="grid2">
+<div class="ibox" style="margin:0">
+<h4>Baseline — ignora la topología</h4>
+<div class="flow">
+<div class="fn i">Imagen (1ch)</div><div class="fa">↓</div>
+<div class="fn e">Encoder (1→32→64→128)</div><div class="fa">↓</div>
+<div class="fn b">Bottleneck (256ch)</div><div class="fa">↓</div>
+<div class="fn d">Decoder (128→64→32)</div><div class="fa">↓</div>
+<div class="fn l">Predicción</div>
+</div>
+<p style="text-align:center;font-size:.8rem;color:var(--dim);margin-top:.5rem">Sin información topológica. Solo ve intensidad de píxeles.</p>
+</div>
+<div>
+<div class="card"><h4 style="color:var(--d)">Resultado: β₁ = 0.260</h4><p>Una de cada 4 imágenes tiene un error de agujero. El modelo rellena donuts y fusiona discos separados porque Dice no lo penaliza.</p></div>
+</div>
+</div>
+</div>
+
+<div class="tpanel" id="tp-if2">
+<div class="grid2">
+<div class="ibox" style="margin:0">
+<h4>InputFusion — topología en la entrada</h4>
+<div class="flow">
+<div class="fn t">PI₀ + PI₁ (topología)</div>
+<div class="fn i">Imagen I</div>
+<div class="fa">↓ concatenar ↓</div>
+<div class="fn b">Cat(I, PI₀, PI₁) — 3 canales</div><div class="fa">↓</div>
+<div class="fn e">Encoder COMPARTIDO (3→32→64→128)</div><div class="fa">↓</div>
+<div class="fn b">Bottleneck</div><div class="fa">↓</div>
+<div class="fn d">Decoder</div><div class="fa">↓</div>
+<div class="fn l">Predicción</div>
+</div>
+<p style="text-align:center;font-size:.8rem;color:var(--dim);margin-top:.5rem">UN encoder para todo. Los gradientes de Dice y Betti compiten.</p>
+</div>
+<div>
+<div class="card"><h4 style="color:var(--c)">Resultado: β₁ = 0.010</h4><p>Mucho mejor. Pero los gradientes de "mejora píxeles" y "mejora topología" pasan por los mismos pesos → conflicto.</p></div>
+<div class="card"><h4 style="color:var(--a2)">El problema del piano compartido</h4><p>Dos músicos en un solo piano: uno quiere tocar la melodía (Dice) y otro el ritmo (Betti). Tienen que turnarse las teclas. Ninguno toca su pieza completa.</p></div>
+</div>
+</div>
+</div>
+
+<div class="tpanel" id="tp-bf2">
+<div class="grid2">
+<div class="ibox" style="margin:0">
+<h4 style="color:var(--a2)">BottleneckFusion — cada uno su encoder ★</h4>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem">
+<div class="flow" style="margin:0">
+<div class="fn i" style="font-size:.7rem">Imagen (1ch)</div><div class="fa">↓</div>
+<div class="fn e" style="font-size:.7rem">S-Enc (32→64→128)</div><div class="fa">↓</div>
+<div class="fn e" style="font-size:.7rem">S-Bottleneck (256)</div>
+</div>
+<div class="flow" style="margin:0">
+<div class="fn t" style="font-size:.7rem">PI₀, PI₁ (2ch)</div><div class="fa">↓</div>
+<div class="fn t" style="font-size:.7rem">T-Enc (16→32→64)</div><div class="fa">↓</div>
+<div class="fn t" style="font-size:.7rem">T-Bottleneck (128)</div>
+</div>
+</div>
+<div class="fa" style="margin-top:.3rem">↓ fusionar (384→256) ↓</div>
+<div class="flow" style="margin:0">
+<div class="fn b">Fusión</div><div class="fa">↓</div>
+<div class="fn d">Decoder → Predicción</div>
+</div>
+<p style="text-align:center;font-size:.8rem;color:var(--a2);margin-top:.5rem;font-weight:500">θ_espacial ∩ θ_topológico = ∅ (parámetros completamente independientes)</p>
+</div>
+<div>
+<div class="card"><h4 style="color:var(--b2)">Resultado: β₁ = 0.000 ★</h4><p><strong>Cero errores topológicos</strong> en 200 imágenes. Cada anillo se segmenta como anillo. Cada disco como disco. Perfección.</p></div>
+<div class="card"><h4 style="color:var(--a2)">Cada uno su instrumento</h4><p>Un pianista (encoder espacial) y un violinista (encoder topológico). Cada uno toca su instrumento sin interferir. Se unen en el bottleneck para una sinfonía coordinada. Los gradientes de Dice van al piano. Los de Betti van al violín. Sin conflicto.</p></div>
+</div>
+</div>
+</div>
+
+</div></section>
+
+<!-- S5: IMAGE PROCESSING SLIDER -->
+<section class="sec" id="s5"><div class="wrap">
+<h2>5. ¿Cómo ve cada arquitectura una imagen?</h2>
+<div class="line b"></div>
+
+<p>A continuación, una simulación conceptual de cómo cada arquitectura procesa una imagen sintética. Usa los botones para cambiar la vista.</p>
+
+<div class="ibox">
+<h4>Simulación de procesamiento</h4>
+<div class="slider-wrap">
+<canvas id="procCanvas" width="400" height="400"></canvas>
+</div>
+<div class="slider-controls">
+<button class="on" onclick="setView('original',this)">Original</button>
+<button onclick="setView('baseline',this)">Baseline</button>
+<button onclick="setView('inputfusion',this)">InputFusion</button>
+<button onclick="setView('bottleneck',this)">BottleneckFusion</button>
+<button onclick="setView('truth',this)">Verdad</button>
+</div>
+<p style="text-align:center;font-size:.82rem;color:var(--dim);margin-top:.8rem" id="viewDesc">Imagen original con ruido. La forma real es un anillo (donut) con β₀=1, β₁=1.</p>
+</div>
+
+<div class="grid3" style="margin-top:1.5rem">
+<div class="card"><h4 style="color:var(--d)">Baseline</h4><p>Solo ve intensidad. Tiende a rellenar el agujero del donut porque Dice no penaliza la pérdida del agujero. Resultado típico: β₁=0 (agujero perdido).</p></div>
+<div class="card"><h4 style="color:var(--c)">InputFusion</h4><p>Ve intensidad + topología juntas. Usualmente preserva el agujero, pero a veces el conflicto de gradientes lo cierra parcialmente. Resultado: β₁ correcto en ~99% de los casos.</p></div>
+<div class="card"><h4 style="color:var(--b2)">BottleneckFusion ★</h4><p>Encoders separados procesan intensidad y topología sin interferencia. El agujero se preserva siempre. Resultado: β₁ correcto en 100% de los casos.</p></div>
+</div>
+</div></section>
+
+<footer>
+<p>De Neuronas a Tumores — Divulgación Científica</p>
+<p>Maestría en Ingeniería · Pontificia Universidad Javeriana · 2026</p>
+</footer>
+
+<script>
+// NAV
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('vis',scrollY>innerHeight*.4));
+
+// NEURON CALCULATOR
+function calcNeuron(){
+  const x1=+document.getElementById('x1').value,x2=+document.getElementById('x2').value;
+  const w1=+document.getElementById('w1').value,w2=+document.getElementById('w2').value;
+  document.getElementById('x1v').textContent=x1;document.getElementById('x2v').textContent=x2;
+  document.getElementById('w1v').textContent=w1;document.getElementById('w2v').textContent=w2;
+  const z=w1*x1+w2*x2;const r=Math.max(0,z);
+  document.getElementById('zval').textContent=z.toFixed(1);
+  document.getElementById('rval').textContent=r.toFixed(1);
+  document.getElementById('rval').style.color=r>0?'var(--b2)':'var(--d)';
+}
+
+// CONV DEMO
+const IMG=[[0,0,0,0],[0,1,1,0],[0,1,1,0],[0,0,0,0]];
+const KERNELS={
+  identity:[[0,0,0],[0,1,0],[0,0,0]],
+  edge:[[0,-1,0],[-1,4,-1],[0,-1,0]],
+  blur:[[.111,.111,.111],[.111,.111,.111],[.111,.111,.111]],
+  sharpen:[[0,-1,0],[-1,5,-1],[0,-1,0]]
+};
+let curKernel='identity';
+
+function renderConv(){
+  const K=KERNELS[curKernel];
+  const inp=document.getElementById('conv-input');inp.innerHTML='';
+  for(let i=0;i<4;i++)for(let j=0;j<4;j++){const c=document.createElement('div');c.className='mini-cell';c.style.background=IMG[i][j]?'rgba(95,154,126,.3)':'rgba(95,154,126,.05)';c.textContent=IMG[i][j];inp.appendChild(c)}
+  const ker=document.getElementById('conv-kernel');ker.innerHTML='';
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++){const c=document.createElement('div');c.className='mini-cell';const v=K[i][j];c.style.background=v>0?`rgba(123,127,181,${Math.min(v*.3,.4)})`:(v<0?`rgba(176,96,96,${Math.min(-v*.3,.4)})`:'rgba(123,127,181,.03)');c.textContent=v%1===0?v:v.toFixed(1);ker.appendChild(c)}
+  const out=document.getElementById('conv-output');out.innerHTML='';
+  for(let i=0;i<2;i++)for(let j=0;j<2;j++){let s=0;for(let p=0;p<3;p++)for(let q=0;q<3;q++)s+=K[p][q]*IMG[i+p][j+q];const c=document.createElement('div');c.className='mini-cell';c.style.background=s>0?`rgba(95,154,126,${Math.min(s*.15,.5)})`:(s<0?`rgba(176,96,96,${Math.min(-s*.1,.4)})`:'rgba(95,154,126,.03)');c.textContent=s%1===0?s:s.toFixed(1);out.appendChild(c)}
+}
+function setKernel(k,btn){curKernel=k;btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));btn.classList.add('on');renderConv()}
+renderConv();
+
+// U-NET DETAIL
+const UD={
+  u1:{t:'Entrada',i:'Imagen 1ch × 128×128',o:'Tensor normalizado [0,1]',d:'La imagen de resonancia magnética (o sintética) entra como una matriz de números entre 0 (negro) y 1 (blanco).'},
+  u2:{t:'Encoder 1',i:'1ch × 128×128',o:'32ch × 64×64',d:'Dos convoluciones 3×3 expanden de 1 a 32 canales (32 "interpretaciones"). MaxPool 2×2 reduce la resolución a la mitad. Las features pre-pool se guardan como skip connection.'},
+  u3:{t:'Encoder 2',i:'32ch × 64×64',o:'64ch × 32×32',d:'Más convoluciones + pooling. Ahora hay 64 canales a un cuarto de la resolución. El campo receptivo crece: cada "pixel" ve ~10×10 de la imagen original.'},
+  u4:{t:'Encoder 3',i:'64ch × 32×32',o:'128ch × 16×16',d:'128 canales a 16×16. Features de alto nivel semántico: "hay algo redondo aquí", "hay un borde irregular allí".'},
+  u5:{t:'Bottleneck',i:'128ch × 16×16',o:'256ch × 8×8',d:'El punto más comprimido. 256 canales pero solo 8×8 posiciones. Cada posición "sabe" sobre toda la imagen. Aquí vive la representación más abstracta.'},
+  u6:{t:'Decoder 3',i:'256ch↑ + 128ch skip',o:'128ch × 16×16',d:'Upsampling 2× + concatenar con skip del Enc 3 + convoluciones. Comienza la reconstrucción: el "qué" (del bottleneck) se combina con el "dónde" (del skip).'},
+  u7:{t:'Decoder 2',i:'128ch + 64ch skip',o:'64ch × 32×32',d:'Más upsampling + skip + convoluciones. La imagen se reconstruye progresivamente.'},
+  u8:{t:'Decoder 1',i:'64ch + 32ch skip',o:'32ch × 128×128',d:'Resolución original restaurada. 32 canales de features refinadas con detalle espacial completo.'},
+  u9:{t:'Predicción',i:'32ch × 128×128',o:'1ch × 128×128, P∈[0,1]',d:'Conv 1×1 (32→1) + sigmoide. Cada píxel recibe una probabilidad: ¿pertenece al tumor? Umbral en 0.5 para binarizar.'},
+};
+function sdu(id,el){
+  const d=UD[id];if(!d)return;
+  el.closest('.ibox').querySelectorAll('.fn').forEach(n=>n.classList.remove('active'));el.classList.add('active');
+  document.getElementById('dp-u').innerHTML=`<h5>${d.t}</h5><div class="row"><div><div class="lb">Entrada</div><div class="vl">${d.i}</div></div><div><div class="lb">Salida</div><div class="vl">${d.o}</div></div></div><p class="desc">${d.d}</p>`;
+}
+
+// ARCH TABS
+function showArch(id,btn){document.querySelectorAll('.tpanel').forEach(p=>p.classList.remove('on'));document.getElementById('tp-'+id).classList.add('on');btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));btn.classList.add('on')}
+
+// PROCESSING CANVAS
+const canvas=document.getElementById('procCanvas');
+const ctx=canvas.getContext('2d');
+const DESCS={
+  original:'Imagen original con ruido. La forma real es un anillo (donut) con β₀=1, β₁=1.',
+  baseline:'Baseline (solo Dice): tiende a rellenar el agujero porque Dice no lo penaliza. β₁=0 → error topológico.',
+  inputfusion:'InputFusion (Dice+Betti): preserva el agujero en la mayoría de casos. El encoder compartido a veces produce bordes irregulares.',
+  bottleneck:'BottleneckFusion (Dice+Betti): preserva el agujero perfectamente. Bordes limpios. β₁=1 → topología correcta.',
+  truth:'Verdad (ground truth): el anillo perfecto. β₀=1, β₁=1. Esto es lo que todos los modelos intentan predecir.'
+};
+function drawDonut(cx,cy,R,r,fill,noise,hasHole){
+  for(let y=0;y<400;y++)for(let x=0;x<400;x++){
+    const dx=x-cx,dy=y-cy,dist=Math.sqrt(dx*dx+dy*dy);
+    let val=0;
+    if(hasHole){if(dist>=r&&dist<=R)val=1}
+    else{if(dist<=R)val=1}
+    if(noise>0)val+=noise*(Math.random()-.5);
+    val=Math.max(0,Math.min(1,val));
+    const g=Math.floor(val*180+20);
+    ctx.fillStyle=fill?`rgb(${Math.floor(val*80+30)},${Math.floor(val*140+40)},${Math.floor(val*100+40)})`:`rgb(${g},${g-10},${g-20})`;
+    ctx.fillRect(x,y,1,1);
+  }
+}
+function setView(mode,btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.getElementById('viewDesc').textContent=DESCS[mode];
+  ctx.clearRect(0,0,400,400);
+  const cx=200,cy=200,R=120,r=50;
+  switch(mode){
+    case'original':drawDonut(cx,cy,R,r,false,.35,true);break;
+    case'baseline':drawDonut(cx,cy,R,0,true,.05,false);
+      ctx.font='bold 14px var(--mono)';ctx.fillStyle='#b06060';ctx.fillText('β₁ = 0 ✗ (agujero perdido)',110,380);break;
+    case'inputfusion':drawDonut(cx,cy,R,r-8,true,.08,true);
+      ctx.font='bold 14px var(--mono)';ctx.fillStyle='#c49a5c';ctx.fillText('β₁ = 1 ✓ (casi siempre)',120,380);break;
+    case'bottleneck':drawDonut(cx,cy,R,r,true,.02,true);
+      ctx.font='bold 14px var(--mono)';ctx.fillStyle='#7dc4a0';ctx.fillText('β₁ = 1 ✓ (siempre)',140,380);break;
+    case'truth':drawDonut(cx,cy,R,r,true,0,true);
+      ctx.font='bold 14px var(--mono)';ctx.fillStyle='#e8dfc8';ctx.fillText('β₀ = 1, β₁ = 1 (ground truth)',100,380);break;
+  }
+}
+setView('original',document.querySelector('.slider-controls button'));
+</script>
+</body>
+</html>
