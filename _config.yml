@@ -1,14 +1,12 @@
 # Setup
 title: Un Santajaro
 url: https://sggtio.github.io
-paginate: 1
+lang: es
 baseurl: ""
 permalink: pretty
 
 # Gems
 plugins:
-  - jekyll-gist
-  - jekyll-paginate
   - jekyll-seo-tag
 
 # Optimize Jekyll
@@ -30,11 +28,11 @@ sass:
 # Replace this value and uncomment to enable Google Analytics tracking
 # ga_analytics: UA-000000-0
 
-# Specify the author for blog posts
+# Autor del blog
 author:
-  name: Mark Otto
-  url: https://twitter.com/mdo
-  email: markdotto@gmail.com
+  name: Santiago Gil Gallego
+  url: https://github.com/SggTio
+  email: santiagogilgallego@gmail.com
 
 # Custom vars
 version: 3.0.0
@@ -42,22 +40,49 @@ version: 3.0.0
 # Navbar page list
 nav:
   - title: Mates
-    url: /math/
+    url: /mates/
+    section: mates
   - title: Notas
-    url: /blog/
+    url: /notas/
+    section: notas
   - title: Escritos
     url: /escritos/
+    section: escritos
   - title: Sobre mí
-    url: /about/
+    url: /sobre/
+    section: sobre
 
-#una colección para las categrorías
+# Una colección para cada categoría
 collections:
   escritos:
     output: true
     permalink: /escritos/:name/
   mates:
     output: true
-    permalink: /math/:name/
+    permalink: /mates/:name/
   notas:
     output: true
-    permalink: /blog/:name/
+    permalink: /notas/:name/
+
+# Valores por defecto para items de colecciones.
+# Hereda `section` para que la navbar pueda marcar el link activo
+# incluso dentro de un post individual de una colección.
+defaults:
+  - scope:
+      path: ""
+      type: "mates"
+    values:
+      section: "mates"
+      layout: "post"
+  - scope:
+      path: ""
+      type: "notas"
+    values:
+      section: "notas"
+      layout: "post"
+  - scope:
+      path: ""
+      type: "escritos"
+    values:
+      section: "escritos"
+      layout: "post"

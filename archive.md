@@ -1,18 +1,21 @@
 ---
 layout: default
-title: Archive
+title: Archivo
+permalink: /archivo/
+section: archivo
 ---
 
-# Archive
+# Archivo
 
 Una navegación de todas las publicaciones por fecha.
 
-{% assign postsByYearMonth = site.posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
-{% for yearMonth in postsByYearMonth %}
-  <h2>{{ yearMonth.name }}</h2>
+{% assign all_items = site.mates | concat: site.notas | concat: site.escritos | sort: 'date' | reverse %}
+{% assign items_by_month = all_items | group_by_exp: "item", "item.date | date: '%B %Y'" %}
+{% for group in items_by_month %}
+  <h2>{{ group.name }}</h2>
   <ul>
-    {% for post in yearMonth.items %}
-      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% for item in group.items %}
+      <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
     {% endfor %}
   </ul>
 {% endfor %}

@@ -15,13 +15,14 @@ layout: null
    <email>{{ site.author.email }}</email>
  </author>
 
- {% for post in site.posts %}
+ {% assign feed_items = site.mates | concat: site.notas | concat: site.escritos | sort: 'date' | reverse %}
+ {% for item in feed_items %}
  <entry>
-   <title>{{ post.title | xml_escape }}</title>
-   <link href="{{ site.url }}{{ site.baseurl }}{{ post.url }}"/>
-   <updated>{{ post.date | date_to_xmlschema }}</updated>
-   <id>{{ site.url }}{{ post.id }}</id>
-   <content type="html">{{ post.content | xml_escape }}</content>
+   <title>{{ item.title | xml_escape }}</title>
+   <link href="{{ site.url }}{{ site.baseurl }}{{ item.url }}"/>
+   <updated>{{ item.date | date_to_xmlschema }}</updated>
+   <id>{{ site.url }}{{ item.url }}</id>
+   <content type="html">{{ item.content | xml_escape }}</content>
  </entry>
  {% endfor %}
 

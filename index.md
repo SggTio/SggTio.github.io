@@ -2,39 +2,35 @@
 layout: default
 title: Inicio
 permalink: /
-section: home
+section: inicio
 ---
 
 <div class="homepage-banner">
-  <img src="{{ '/assets/home-banner.jpg' | relative_url }}" alt="Banner image" />
+  <img src="{{ '/assets/home-banner.jpg' | relative_url }}" alt="Banner de Un Santajaro" />
 </div>
 
 <div class="intro-grid">
   <div class="intro-block">
-    <h2> ¿Qué es este sitio?</h2>
-    <p>
-      escribo sobre lo que me gusta: Matemáticas, computación, cuentos y poesía.
-    </p>
+    <h2>¿Qué es este sitio?</h2>
+    <p>Escribo sobre lo que me gusta: matemáticas, computación, cuentos y poesía.</p>
   </div>
   <div class="intro-block">
-    <h2>formas</h2>
-    <p>
-      Se mezcla lo visual con lo abstracto.
-    </p>
+    <h2>Formas</h2>
+    <p>Se mezcla lo visual con lo abstracto.</p>
   </div>
 </div>
 
 <hr />
 
-<h2> Últimas publicaciones</h2>
-<div class="post-grid">
-  {% assign all_posts = site.mates | concat: site.notas | concat: site.escritos %}
-  {% assign sorted_posts = all_posts | sort: 'date' | reverse %}
-  {% for post in sorted_posts limit:9 %}
-    <div class="post-card">
-      <a href="{{ post.url }}">
+<h2 class="posts-heading">Últimas publicaciones</h2>
+
+{% assign all_posts = site.mates | concat: site.notas | concat: site.escritos | sort: 'date' | reverse %}
+<div class="posts-grid">
+  {% for post in all_posts limit:9 %}
+    <div class="posts-card">
+      <a href="{{ post.url | relative_url }}">
         <h3>{{ post.title }}</h3>
-        <p>{{ post.date | date: "%b %d, %Y" }}</p>
+        <p><small>{{ post.date | date: "%b %d, %Y" }}</small></p>
       </a>
     </div>
   {% endfor %}

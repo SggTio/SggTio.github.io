@@ -1,100 +1,158 @@
-body.section-default {
-  --accent-color: #8D99AB;
-}
+// ==============================================================
+//  Acentos por sección
+//  Cada página declara `section: <nombre>` en su front matter,
+//  que se convierte en `body.section-<nombre>` en el layout.
+// ==============================================================
+body.section-default,
+body.section-inicio    { --accent-color: #8d99ab; }
+body.section-mates     { --accent-color: #e5d6c7; }
+body.section-notas     { --accent-color: #e5d6c7; }
+body.section-escritos  { --accent-color: #e5d6c7; }
+body.section-sobre     { --accent-color: #95c9a0; }
+body.section-archivo,
+body.section-etiquetas { --accent-color: #8d99ab; }
 
-body.section-science {
-  --accent-color: #AA979B;
-}
-body.section-literature {
-  --accent-color: #E5D6C7;
-}
-
+// ==============================================================
+//  Colores base dependientes del acento
+// ==============================================================
 a {
   color: var(--accent-color);
   text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
+
+  &:hover { text-decoration: underline; }
 }
 
 h1, h2, h3 {
   color: var(--accent-color);
 }
 
-// lo relacionado a la nav bar de recientes con la grilla::after
+// ==============================================================
+//  Bloques de introducción (home + páginas de sección)
+//  Tarjetas con borde acento que aparecen en la parte superior
+//  de la home y de cada landing de colección.
+// ==============================================================
 .intro-grid {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 }
 
 .intro-block {
   flex: 1 1 300px;
   background: #1e1e1e;
-  padding: 1rem;
+  padding: 1.2rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
+  font-size: 1rem;
+  line-height: 1.5;
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
-.post-grid {
+// ==============================================================
+//  Grilla y tarjetas de posts (reutilizable en home y secciones)
+// ==============================================================
+.posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
-.post-card {
+.posts-card {
   background: #1c1c1c;
   padding: 1rem;
   border: 1px solid #444;
   border-radius: 8px;
-  transition: 0.2s;
+  text-align: center;
+  transition: background-color .2s ease-in-out, border-color .2s ease-in-out;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h3 {
+    margin: 0 0 .4rem;
+    color: inherit;
+  }
+
+  &:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+  }
 }
 
-.post-card a {
-  color: inherit;
-  text-decoration: none;
+.posts-list {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    margin-bottom: .5rem;
+  }
 }
 
-.post-card:hover {
-  background: var(--accent-color);
-  color: #fff;
+.posts-heading {
+  text-align: center;
+  margin-top: 2.5rem;
 }
 
-//lo relacionado al master head:
-
-.masthead {
-  background-color: #1f1f1f; // adjust for clarity vs body
-  border-bottom: 1px solid white;
-  padding: 1.2rem 0;
+.posts-subheading {
+  margin-top: 2rem;
 }
 
-.masthead-title {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+.posts-empty {
+  text-align: center;
+  color: #888;
+  margin: 1.5rem 0 2rem;
 }
 
-.masthead-title a {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--accent-color);
-  text-decoration: none;
+// ==============================================================
+//  Cita en bloque centrada (cabeceras de sección)
+// ==============================================================
+.centered-quote {
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+  color: #aaa;
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
-.nav a {
-  color: white;
-  text-decoration: underline;
-  margin-left: 1rem;
+// ==============================================================
+//  Home — banner
+// ==============================================================
+.homepage-banner {
+  text-align: center;
+  margin: 2rem 0;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
 }
 
-.nav a:hover {
-  opacity: 0.85;
-}
+// ==============================================================
+//  Página "Sobre mí"
+// ==============================================================
+.about-profile {
+  text-align: center;
+  margin-bottom: 2rem;
 
-// añado la estructura del about me: 
+  img {
+    width: 33%;
+    max-width: 150px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+}
 
 .about-grid {
   display: flex;
@@ -109,11 +167,22 @@ h1, h2, h3 {
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
+
+  h2 {
+    margin-top: 0;
+    color: var(--accent-color);
+  }
 }
 
-.about-block h2 {
-  margin-top: 0;
-  color: var(--accent-color);
+// Cita flotante centrada (antes era absolute y se salía del container)
+.quote-tag {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  font-size: .95rem;
+  color: #aaa;
+  margin: 0 auto 1.5rem;
+  max-width: 420px;
 }
 
 .contact-block {
@@ -121,140 +190,24 @@ h1, h2, h3 {
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
-}
 
-.contact-block h2 {
-  color: var(--accent-color);
-}
-
-.contact-block ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.contact-block li {
-  margin-bottom: 0.5rem;
-}
-
-//--- dentro del about me, éste pedacito habla de la frase flotante:
-
-.quote-tag {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  font-style: italic;
-  font-size: 0.95rem;
-  color: #aaa;
-  max-width: 200px;
-  text-align: right;
-}
-
-@media (max-width: 768px) {
-  .quote-tag {
-    position: static;
-    margin-bottom: 1rem;
-    text-align: left;
+  h2 {
+    color: var(--accent-color);
   }
-}
- //-------- añadimos ahora todo lo relacionado con los escritos.md:
 
- .centered-quote {
-  text-align: center;
-  font-style: italic;
-  font-size: 1rem;
-  color: #aaa;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
 
-.escritos-intro-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.escrito-block {
-  flex: 1 1 300px;
-  background: #1e1e1e;
-  padding: 1.2rem;
-  border-radius: 8px;
-  border: 1px solid var(--accent-color);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.escritos-post-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.escrito-card {
-  background: #1c1c1c;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #444;
-  text-align: center;
-  transition: 0.2s ease-in-out;
-}
-
-.escrito-card a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.escrito-card:hover {
-  background-color: var(--accent-color);
-  color: white;
-}
-
-.escritos-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.escritos-list li {
-  margin-bottom: 0.5rem;
-}
-
-// OTOD LO QUE TIENE QUE VER CON EL STYLING DE LAS FOTOS::after
-.homepage-banner {
-  text-align: center;
-  margin: 2rem 0;
-
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  li {
+    margin-bottom: .5rem;
   }
 }
 
-.profile-block {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 1rem;
-}
-
-.profile-pic {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--accent-color);
-}
-
-.about-profile {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.about-profile img {
-  width: 33%; /* Roughly one-third the original size */
-  max-width: 150px;
-  border-radius: 50%;
-  border: 2px solid var(--accent-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+// ==============================================================
+//  Layout ancho (posts con visualizaciones interactivas)
+// ==============================================================
+body.layout-wide .container {
+  max-width: 62rem;
 }

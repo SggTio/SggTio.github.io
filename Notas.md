@@ -1,39 +1,46 @@
 ---
 layout: page
 title: Notas e ideas
-permalink: /blog/
-section: blog
+permalink: /notas/
+section: notas
 ---
 
 <div class="centered-quote">
-  “Toda declaración de amor es urgente, porque vamos a morir"
+  "Toda declaración de amor es urgente, porque vamos a morir"
   — <em>Raúl Zurita</em>
 </div>
 
-<div class="escritos-intro-grid">
-  <div class="escrito-block">
+<div class="intro-grid">
+  <div class="intro-block">
     Política, retazos e ideas vagas.
   </div>
-  <div class="escrito-block">
+  <div class="intro-block">
     El contraejemplo más conocido al lema de Yoneda soy yo, que no estoy a la altura de mis amigos.
   </div>
 </div>
 
-<h2 style="text-align:center;"> Últimas notas e ideas</h2>
-<div class="escritos-post-grid">
-  {% assign notas_posts = site.notas | sort: 'date' | reverse %}
+<h2 class="posts-heading">Últimas notas e ideas</h2>
+
+{% assign notas_posts = site.notas | sort: 'date' | reverse %}
+{% if notas_posts.size > 0 %}
+<div class="posts-grid">
   {% for post in notas_posts limit:3 %}
-    <div class="escrito-card">
-      <a href="{{ post.url }}">{{ post.title }}</a><br>
+    <div class="posts-card">
+      <a href="{{ post.url | relative_url }}">
+        <h3>{{ post.title }}</h3>
         <p><small>{{ post.date | date: "%B %Y" }}</small></p>
+      </a>
     </div>
   {% endfor %}
 </div>
+{% else %}
+<p class="posts-empty"><em>Próximamente...</em></p>
+{% endif %}
 
-<h3 style="margin-top:2rem;"> Otras notas y blog</h3>
-<ul class="escritos-list">
+<h3 class="posts-subheading">Otras notas y blog</h3>
+
+<ul class="posts-list">
   {% for post in notas_posts offset:3 %}
-    <li><a href="{{ post.url }}">{{ post.title }}</a> <small>({{ post.date | date: "%Y-%m-%d" }})</small></li>
+    <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>({{ post.date | date: "%Y-%m-%d" }})</small></li>
   {% endfor %}
 </ul>
-

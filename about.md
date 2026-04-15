@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Sobre mí
-permalink: /about/
-section: about
+permalink: /sobre/
+section: sobre
 ---
 <div class="about-profile">
   <img src="{{ '/assets/profile.jpg' | relative_url }}" alt="Mi perfil" />
