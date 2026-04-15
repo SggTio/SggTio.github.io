@@ -59,7 +59,7 @@ section: mates
 
 <h3 class="posts-subheading">Otras notas</h3>
 
-{% assign other_posts = site.mates | where_exp: "item", "item.subsection != 'geometria-computacional' and item.subsection != 'redes-neuronales'" | sort: 'date' | reverse %}
+{% assign other_posts = site.mates | where_exp: "item", "item.subsection != 'geometria-computacional'" | where_exp: "item", "item.subsection != 'redes-neuronales'" | sort: 'date' | reverse %}
 <ul class="posts-list">
   {% for post in other_posts %}
     <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>({{ post.date | date: "%Y-%m-%d" }})</small></li>
