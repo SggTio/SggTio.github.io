@@ -57,9 +57,29 @@ section: mates
 <p class="posts-empty"><em>Próximamente...</em></p>
 {% endif %}
 
+<h2 class="posts-heading">Charlas</h2>
+
+{% assign talk_posts = site.mates | where: "subsection", "charlas" | sort: 'date' | reverse %}
+{% if talk_posts.size > 0 %}
+<div class="posts-grid">
+  {% for post in talk_posts %}
+    <div class="posts-card">
+      <a href="{{ post.url | relative_url }}">
+        <h3>{{ post.title }}</h3>
+        <p><small>{{ post.date | date: "%B %Y" }}</small></p>
+        {% if post.description %}<p><small>{{ post.description }}</small></p>{% endif %}
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="posts-empty"><em>Proximamente...</em></p>
+{% endif %}
+
 <h3 class="posts-subheading">Otras notas</h3>
 
 {% assign other_posts = site.mates | where_exp: "item", "item.subsection != 'geometria-computacional'" | where_exp: "item", "item.subsection != 'redes-neuronales'" | sort: 'date' | reverse %}
+{% assign other_posts = other_posts | where_exp: "item", "item.subsection != 'charlas'" %}
 <ul class="posts-list">
   {% for post in other_posts %}
     <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>({{ post.date | date: "%Y-%m-%d" }})</small></li>
