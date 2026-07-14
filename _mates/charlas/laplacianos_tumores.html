@@ -7,7 +7,6 @@ subsection: charlas
 description: "Exposición sobre laplacianos, geometría y segmentación de tumores."
 permalink: /mates/charlas/laplacianos_tumores/
 ---
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -478,9 +477,11 @@ mjx-container[display="true"]{margin:1.1em 0!important;padding:.15em 0}
       <p style="margin-bottom:.5em">Las cuatro lecturas de abajo:</p>
       <ul class="tight">
         <li><strong>\(t\)</strong> — la única perilla. En \(t=0\) la matriz es el laplaciano de grafo
-        ordinario, el de <span class="geo">cortes normalizados (NCut)</span> y la
-        <span class="geo">desigualdad de Cheeger</span>; su autofunción sólo sabe partir la malla por la
-        mitad. Al subir \(t\), el potencial empieza a mandar.</li>
+        ordinario: el que usan los <span class="geo">cortes normalizados</span> (NCut: partir la imagen
+        minimizando el “corte” relativo al tamaño de cada lado) y el que gobierna la
+        <span class="geo">desigualdad de Cheeger</span> (que ata ese mejor corte al primer autovalor no
+        nulo). En ese régimen su autofunción sólo sabe partir la malla por la mitad. Al subir \(t\), el
+        potencial empieza a mandar.</li>
         <li><strong>\(\lambda_1\)</strong> — el primer autovalor no nulo. Mide qué tan “cara” es esa
         partición. Se hace exponencialmente pequeño cuando \(\varphi_1\) encuentra un pozo real.</li>
         <li><strong>\(-\ln\lambda_1/2t\)</strong> — ese autovalor traducido a una <em>longitud</em>. El
@@ -568,7 +569,7 @@ parénquima. El glioma nace de células gliales, vive <em>dentro</em> y lo infil
 
 <p>Esta tesis trabaja con meningioma porque es un problema de <strong>una sola clase</strong>
 con frontera bien definida: el banco de pruebas correcto para aislar el efecto de un método
-geométrico. El precio lo pagamos en la <a href="#p9">Parte X</a>.</p>
+geométrico. El precio lo pagamos en la <a href="#p9">Parte IX</a>.</p>
 
 <h3>El problema clínico, en un número</h3>
 
@@ -613,7 +614,7 @@ probabilidad desde unas semillas.</p>
           </figure>
           <figure style="margin:0">
             <canvas id="ot-mask" width="44" height="44" aria-label="Máscara de Otsu"></canvas>
-            <figcaption id="ot-cap">\(\{I>\tau\}\)</figcaption>
+            <figcaption id="ot-cap">\(\{I\gt\tau\}\)</figcaption>
           </figure>
         </div>
         <svg id="ot-hist" viewBox="0 0 300 120" role="img"
@@ -671,7 +672,7 @@ probabilidad desde unas semillas.</p>
   </div>
 </div>
 
-<p class="pull">El método de segmentación nunca fue el cuello de botella.<br>Lo fue la semilla.</p>
+<p class="pull">El método de segmentación no suele ser el cuello de botella: lo son las semillas,<br>y en esto se enfoca mucha de la investigación.</p>
 
 <div class="grid2">
   <div class="card geo">
@@ -737,20 +738,20 @@ sobre ella. El <span class="geo">autovalor \(\lambda_1\)</span> es un número; l
 cada nodo interior lleva \(+4\) en la diagonal y \(-1\) hacia cada vecino que <em>también</em> está
 dentro de la forma. Fuera de la forma no hay nodo (condición de Dirichlet \(\varphi=0\)).</p>
 <div class="eq">\[(-\Delta_h\varphi)_{ij}=4\varphi_{ij}-\varphi_{i+1,j}-\varphi_{i-1,j}-\varphi_{i,j+1}-\varphi_{i,j-1}\]</div>
-<p><strong>2 · armar la matriz y resolver \\(A\\varphi=\\lambda\\varphi\\).</strong> El paso 1 nos da una
-matriz \\(A\\) de tamaño (número de nodos)\\(\\times\\)(número de nodos): una fila por nodo interior. Un
-autovalor \\(\\lambda\\) y su autovector \\(\\varphi\\) son un par que cumple \\(A\\varphi=\\lambda\\varphi\\):
-aplicar la matriz al vector es lo mismo que estirarlo por el factor \\(\\lambda\\). Como \\(A\\) es simétrica
-y definida positiva, hay tantos pares como nodos, todos con \\(\\lambda>0\\) reales, y los autovectores son
+<p><strong>2 · armar la matriz y resolver \(A\varphi=\lambda\varphi\).</strong> El paso 1 nos da una
+matriz \(A\) de tamaño (número de nodos)\(\times\)(número de nodos): una fila por nodo interior. Un
+autovalor \(\lambda\) y su autovector \(\varphi\) son un par que cumple \(A\varphi=\lambda\varphi\):
+aplicar la matriz al vector es lo mismo que estirarlo por el factor \(\lambda\). Como \(A\) es simétrica
+y definida positiva, hay tantos pares como nodos, todos con \(\lambda\gt 0\) reales, y los autovectores son
 ortogonales entre sí.</p>
 <p class="tiny">En la práctica no se calcula a mano: se le pide a una rutina de álgebra lineal
 (<code>numpy.linalg.eigh</code> para matrices simétricas, o <code>scipy.sparse.linalg.eigsh</code> cuando
-la malla es grande y sólo queremos los pocos \\(\\lambda\\) más pequeños). La rutina devuelve la lista
-ordenada \\(0<\\lambda_1\\le\\lambda_2\\le\\cdots\\) y, en la misma columna, cada \\(\\varphi_k\\). Tomamos el
-primero: \\(\\lambda_1\\) es la <strong>frecuencia fundamental</strong> y \\(\\varphi_1\\) —que no cambia de
+la malla es grande y sólo queremos los pocos \(\lambda\) más pequeños). La rutina devuelve la lista
+ordenada \(0\lt \lambda_1\le\lambda_2\le\cdots\) y, en la misma columna, cada \(\varphi_k\). Tomamos el
+primero: \(\lambda_1\) es la <strong>frecuencia fundamental</strong> y \(\varphi_1\) —que no cambia de
 signo dentro de la forma— es lo que pintamos en el panel de arriba.</p>
-<p class="tiny muted">Verlo en pequeño ayuda: si la forma fueran sólo dos nodos unidos, \\(A=\\begin{pmatrix}1&-1\\\\-1&1\\end{pmatrix}\\)
-tendría autovalores \\(0\\) (vector \\((1,1)\\)) y \\(2\\) (vector \\((1,-1)\\)). Con la condición de Dirichlet
+<p class="tiny muted">Verlo en pequeño ayuda: si la forma fueran sólo dos nodos unidos, \(A=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}\)
+tendría autovalores \(0\) (vector \((1,1)\)) y \(2\) (vector \((1,-1)\)). Con la condición de Dirichlet
 la constante desaparece y sobrevive el modo que se anula en el borde. Es exactamente lo que hace la rutina,
 sólo que con miles de nodos.</p>
 <p><strong>3 · leer el resultado.</strong> Con la escala de malla fija (\(h=1\)):</p>
@@ -759,7 +760,7 @@ sólo que con miles de nodos.</p>
 <tbody>
 <tr><td class="geo">disco \(r=5\)</td><td class="num">69</td><td class="num">0.2198</td><td>una sola joroba centrada</td></tr>
 <tr><td>cuadrado (≈ igual área)</td><td class="num">81</td><td class="num">0.1958</td><td>joroba \(\sin\cdot\sin\)</td></tr>
-<tr class="hi-topo"><td class="topo">dona \(2.6<r<5.6\)</td><td class="num">76</td><td class="num">0.6516</td><td>anillo; se anula en el agujero</td></tr>
+<tr class="hi-topo"><td class="topo">dona \(2.6\lt r\lt 5.6\)</td><td class="num">76</td><td class="num">0.6516</td><td>anillo; se anula en el agujero</td></tr>
 </tbody>
 </table>
 <p><strong>La lectura.</strong> El disco y el cuadrado tienen casi la misma área pero
@@ -785,6 +786,24 @@ operador cuya primera autofunción se enciende justo sobre el tumor.</p>
 <div class="part-head">
   <span class="num">PARTE I</span>
   <h2>Del cálculo vectorial a la matriz de masa</h2>
+</div>
+
+<div class="card" style="border-left:3px solid var(--teal)">
+<h4>Convención de notación (para toda la charla)</h4>
+<p class="tiny" style="margin:0 0 .4em">Aparecerán varios laplacianos. Cada uno es un operador
+<em>distinto</em>; los distinguimos así:</p>
+<table style="margin:0">
+<tbody>
+<tr><td class="mono">\(\Delta\)</td><td class="tiny">laplaciano clásico (cálculo vectorial), \(\sum\partial_{ii}\)</td></tr>
+<tr><td class="mono">\(\Delta_h\)</td><td class="tiny">su discretización por diferencias finitas con paso \(h\) (esquema de 5 puntos)</td></tr>
+<tr><td class="mono">\(L\)</td><td class="tiny">laplaciano combinatorio de un grafo, \(D-W\)</td></tr>
+<tr><td class="mono">\(\Delta_g\)</td><td class="tiny">operador de Laplace–Beltrami sobre una variedad con métrica \(g\) (<a href="#p3">Parte III</a>)</td></tr>
+<tr><td class="mono">\(\Delta_q\)</td><td class="tiny">laplaciano de Hodge sobre \(q\)-formas (<a href="#p6">Parte VI</a>)</td></tr>
+<tr><td class="mono">\(\Delta_{f,t}\)</td><td class="tiny">laplaciano de Witten deformado por el potencial \(f\) (<a href="#p7">Parte VII</a>)</td></tr>
+</tbody>
+</table>
+<p class="tiny muted" style="margin:.5em 0 0">El primer resultado de esta parte relaciona los dos primeros:
+\(-h^2\Delta_h=L\) sobre la retícula.</p>
 </div>
 
 <div class="grid2">
@@ -813,25 +832,44 @@ operador cuya primera autofunción se enciende justo sobre el tumor.</p>
 </div>
 
 <p class="tiny muted" style="text-align:center;margin-top:-.6rem">
-Ambos miden lo mismo: <strong>cuánto difiere un punto del promedio de sus vecinos</strong>.</p>
+Los dos penalizan lo mismo: <strong>cuánto se aparta un punto del promedio de sus vecinos</strong>. Pero
+son operadores <em>distintos</em> sobre espacios distintos — su vínculo riguroso es la <em>convergencia</em>
+\(-h^2\Delta_h\to-\Delta\) de la <a href="#p1">identificación</a>, no una correspondencia entre teoremas.</p>
+
+<div class="card warn">
+<h4>Una aclaración que conviene hacer de entrada</h4>
+<p class="tiny" style="margin:0">Las dos listas de abajo <strong>no</strong> son "el mismo teorema en
+versión continua y discreta". Son teoremas <em>análogos en espíritu</em> que viven en mundos separados: unos
+hablan de funciones sobre un dominio, otros de vectores sobre un grafo. Algunos sí se corresponden (el
+principio del máximo continuo y el discreto), pero otros no tienen contraparte directa (Kirchhoff cuenta
+árboles generadores; eso no significa nada en el continuo). Lo que <em>sí</em> conecta los dos lados con
+rigor es que \(L=-h^2\Delta_h\) converge a \(-\Delta\) cuando \(h\to0\).</p>
+</div>
 
 <div class="grid2">
   <div class="card geo">
-    <h4>Teoremas · continuo</h4>
-    <p class="tiny"><strong>T1 · valor medio.</strong> \(u\) es armónica \(\iff\) \(u(x)\) es el promedio de \(u\) sobre toda esfera contenida en \(\Omega\).</p>
-    <p class="tiny"><strong>T2 · principio del máximo.</strong> Si \(\Delta u=0\) en \(\Omega\) acotado, \(\max_{\overline\Omega}u=\max_{\partial\Omega}u\). El problema de Dirichlet tiene solución única.</p>
-    <p class="tiny"><strong>T3 · caracterización.</strong> Salvo constante, \(\Delta\) es el único operador diferencial lineal de segundo orden invariante bajo traslaciones y rotaciones.</p>
+    <h4>Teoremas del operador continuo \(\Delta\)</h4>
+    <p class="tiny"><strong>Valor medio.</strong> \(u\) es armónica \(\iff\) \(u(x)\) es el promedio de \(u\)
+    sobre toda esfera contenida en \(\Omega\).</p>
+    <p class="tiny"><strong>Principio del máximo.</strong> Si \(\Delta u=0\) en \(\Omega\) acotado,
+    \(\max_{\overline\Omega}u=\max_{\partial\Omega}u\); el problema de Dirichlet tiene solución única.</p>
+    <p class="tiny"><strong>Caracterización.</strong> Salvo constante, \(\Delta\) es el único operador
+    diferencial lineal de segundo orden invariante bajo traslaciones y rotaciones.</p>
   </div>
   <div class="card geo">
-    <h4>Teoremas · discreto</h4>
-    <p class="tiny"><strong>T1′ · Courant–Fischer.</strong> \(\lambda_k=\min_{\dim S=k}\max_{u\in S\setminus0}\dfrac{u^\top L u}{u^\top u}\).</p>
-    <p class="tiny"><strong>T2′ · Kirchhoff.</strong> El número de árboles generadores de \(G\) es cualquier cofactor de \(L\).</p>
-    <p class="tiny"><strong>T3′ · Fiedler.</strong> \(\lambda_2>0\iff G\) conexo. Su autovector —el <span class="geo">vector de Fiedler</span>— da una bipartición casi óptima.</p>
+    <h4>Teoremas del laplaciano de grafo \(L\)</h4>
+    <p class="tiny"><strong>Courant–Fischer.</strong>
+    \(\lambda_k=\min_{\dim S=k}\max_{u\in S\setminus0}\dfrac{u^\top L u}{u^\top u}\). (Análogo discreto del
+    principio variacional para \(-\Delta\).)</p>
+    <p class="tiny"><strong>Kirchhoff.</strong> El número de árboles generadores de \(G\) es cualquier
+    cofactor de \(L\). (Sin contraparte continua directa: es intrínsecamente combinatorio.)</p>
+    <p class="tiny"><strong>Fiedler.</strong> \(\lambda_2\gt 0\iff G\) conexo; su autovector —el
+    <span class="geo">vector de Fiedler</span>— da una bipartición casi óptima.</p>
   </div>
 </div>
 
-<p class="tiny muted">T2 es la unicidad del <em>random walker</em>. T3′ es el germen de la desigualdad de
-<a href="#p6">Cheeger</a>. Los dos vuelven.</p>
+<p class="tiny muted">El principio del máximo discreto es la unicidad del <em>random walker</em>. Fiedler es
+el germen de la desigualdad de <a href="#p5">Cheeger</a>. Los dos vuelven.</p>
 
 <details class="hand">
 <summary>Dos cuentas que se hacen a mano</summary>
@@ -963,39 +1001,30 @@ balanceado es ambiguo.</p>
 
 <p>Hasta aquí tenemos dos objetos que se <em>parecen</em>: el laplaciano de cálculo \(\Delta\) y el
 laplaciano de grafo \(L\). Ahora probamos que son <strong>el mismo objeto</strong>, uno la versión
-discreta del otro. La herramienta es el desarrollo de Taylor, y el argumento tiene cuatro pasos.</p>
+discreta del otro. La herramienta es el desarrollo de Taylor.</p>
 
-<p><strong>Paso 1 · desarrollar los dos vecinos horizontales.</strong> Fijamos un nodo \((x,y)\) y miramos
-a sus vecinos a distancia \(h\) hacia la derecha y hacia la izquierda. Taylor hasta cuarto orden:</p>
-<div class="eq">\[u(x+h)=u+h\,u_x+\tfrac{h^2}{2}u_{xx}+\tfrac{h^3}{6}u_{xxx}+\tfrac{h^4}{24}u_{xxxx}+\cdots\]</div>
-<div class="eq">\[u(x-h)=u-h\,u_x+\tfrac{h^2}{2}u_{xx}-\tfrac{h^3}{6}u_{xxx}+\tfrac{h^4}{24}u_{xxxx}-\cdots\]</div>
+<p><strong>Primer paso — desarrollar los dos vecinos horizontales.</strong> Fijamos un nodo \((x,y)\) y
+miramos a sus vecinos a distancia \(h\); Taylor hasta cuarto orden:</p>
+<div class="eq">\[u(x\pm h)=u\pm h\,u_x+\tfrac{h^2}{2}u_{xx}\pm\tfrac{h^3}{6}u_{xxx}+\tfrac{h^4}{24}u_{xxxx}+\cdots\]</div>
 
-<p><strong>Paso 2 · sumarlos.</strong> Los términos <em>impares</em> en \(h\) (los de \(u_x\) y
-\(u_{xxx}\)) tienen signo opuesto y se <strong>cancelan</strong>. Sobreviven los pares:</p>
+<details class="hand">
+<summary>El álgebra intermedia (sumar, cancelar impares, repetir en \(y\))</summary>
+<div class="hand-body">
+<p><strong>Sumar los dos vecinos.</strong> Los términos <em>impares</em> en \(h\) (los de \(u_x\) y
+\(u_{xxx}\)) tienen signo opuesto y se cancelan; sobreviven los pares:</p>
 <div class="eq">\[u(x+h)+u(x-h)=2u+h^2\,u_{xx}+\tfrac{h^4}{12}u_{xxxx}+\cdots\]</div>
-<p>Despejando la segunda derivada —que es lo que queríamos aproximar—:</p>
-<div class="eqline">
-  <div class="eq" style="margin:0">\[u_{xx}=\frac{u(x+h)-2u+u(x-h)}{h^2}-\frac{h^2}{12}u_{xxxx}+\cdots\]</div>
-  <div class="rd">La <b>segunda diferencia</b>: vecino derecho, menos dos veces el centro, más vecino
-  izquierdo, todo sobre \(h^2\). Aproxima \(u_{xx}\) con un error de orden \(h^2\).</div>
+<p>Despejando la segunda derivada:</p>
+<div class="eq">\[u_{xx}=\frac{u(x+h)-2u+u(x-h)}{h^2}-\frac{h^2}{12}u_{xxxx}+\cdots\]</div>
+<p>Es la <b>segunda diferencia</b>, que aproxima \(u_{xx}\) con error \(O(h^2)\). <strong>Repetir en
+\(y\)</strong> da \(u_{yy}\); como \(\Delta u=u_{xx}+u_{yy}\), sumamos las dos segundas diferencias y
+obtenemos el esquema de 5 puntos con el mismo error \(O(h^2)\).</p>
 </div>
+</details>
 
-<p><strong>Paso 3 · repetir en \(y\) y sumar.</strong> Lo mismo con los vecinos de arriba y abajo da
-\(u_{yy}\). Como \(\Delta u=u_{xx}+u_{yy}\), sumamos las dos segundas diferencias. En notación de malla
-(\(u_{ij}\) es el valor en el nodo \((i,j)\)):</p>
-<div class="eqline">
-  <div class="eq" style="margin:0">\[\Delta_h u_{ij}:=\frac{u_{i+1,j}+u_{i-1,j}+u_{i,j+1}+u_{i,j-1}-4u_{ij}}{h^2}\]</div>
-  <div class="rd">El <b>esquema de 5 puntos</b>: el nodo central (con el \(-4\)) contra sus cuatro vecinos
-  —arriba, abajo, izquierda, derecha—. Cinco nodos por cuenta: de ahí el nombre. El \(-4\) es exactamente
-  el <em>grado</em> del nodo en la retícula.</div>
-</div>
-<p>y el error total sigue siendo de orden \(h^2\):</p>
-<div class="eq">\[\Delta_h u_{ij}=\Delta u_{ij}+\frac{h^2}{12}\big(\partial_x^4+\partial_y^4\big)u_{ij}+O(h^4).\]</div>
-
-<p><strong>Paso 4 · leerlo como matriz.</strong> El esquema de 5 puntos actúa sobre el vector de valores en
-los nodos: multiplica el nodo central por \(4/h^2\) y le resta \(1/h^2\) por cada vecino. Eso es
-<em>exactamente</em> la acción de una matriz. Multiplicando por \(-h^2\) para quitar el denominador y
-ajustar el signo, aparece la identidad:</p>
+<p><strong>Último paso — leerlo como matriz.</strong> Sumando las segundas diferencias en \(x\) y en \(y\)
+queda el <b>esquema de 5 puntos</b> \(\Delta_h u_{ij}=\big(u_{i+1,j}+u_{i-1,j}+u_{i,j+1}+u_{i,j-1}-4u_{ij}\big)/h^2\),
+que actúa multiplicando el nodo central por \(4/h^2\) y restando \(1/h^2\) por vecino. Eso es exactamente la
+acción de una matriz; multiplicando por \(-h^2\) aparece la identidad:</p>
 
 <div class="card topo">
 <h4>La identificación que atraviesa toda la charla</h4>
@@ -1029,51 +1058,35 @@ unitarios. La diagonal \(D\) guarda el “4” (el grado); \(-W\) guarda los cua
 </div>
 
 <p class="pull geo">Los métodos de “laplaciano de grafo” —cortes normalizados, random walker—
-son EDP discretizadas. No es una analogía: es la misma matriz.</p>
+son EDP discretizadas; en este paso del uno al otro nos movemos.</p>
 
 <h3>¿De dónde sale la matriz de masa?</h3>
 
-<p>Esta es la puerta por donde entrará la geometría. Merece la pena verla despacio, con la matemática a
-un lado y su traducción al otro.</p>
+<p>Esta es la puerta por donde entrará la geometría. El punto de partida es la ecuación fuerte; el de
+llegada, un autoproblema con <em>dos</em> matrices.</p>
 
-<div class="twocol">
-  <div class="mathcol">
-    <h4 class="colhd geo">La cuenta</h4>
+<p><strong>Primer paso — la forma fuerte.</strong> Pedimos que la ecuación valga en cada punto:</p>
+<div class="eq">\[-\Delta u=\lambda u \ \text{ en }\Omega,\qquad u=0 \ \text{ en }\partial\Omega.\]</div>
 
-    <p class="step">1 · Forma fuerte</p>
-    <div class="eqs">\[-\Delta u=\lambda u \ \text{ en }\Omega,\qquad u=0 \ \text{ en }\partial\Omega.\]</div>
-
-    <p class="step">2 · Multiplicar por prueba \(v\in H^1_0\), integrar, Green</p>
-    <div class="eqs">\[\int_\Omega(-\Delta u)\,v=\int_\Omega\nabla u\cdot\nabla v-\underbrace{\oint_{\partial\Omega}\tfrac{\partial u}{\partial n}v}_{=\,0}\]</div>
-
-    <p class="step">3 · Forma débil: dos formas bilineales</p>
-    <div class="eqs">\[a(u,v)=\lambda\,m(u,v),\quad a(u,v)=\!\int\!\nabla u\cdot\nabla v,\quad m(u,v)=\!\int\! u\,v.\]</div>
-
-    <p class="step">4 · Galerkin: base finita \(u_h=\sum_j u_j\varphi_j\)</p>
-    <div class="eqs">\[A_{ij}=\!\int\!\nabla\varphi_i\!\cdot\!\nabla\varphi_j,\quad B_{ij}=\!\int\!\varphi_i\varphi_j,\quad A\mathbf{u}=\lambda B\mathbf{u}.\]</div>
-  </div>
-
-  <div class="plaincol">
-    <h4 class="colhd">Qué está pasando</h4>
-
-    <p class="step-plain">Pedir que la ecuación valga en <em>cada punto</em> exige que \(u\) sea muy
-    suave. Renunciamos a eso.</p>
-
-    <p class="step-plain">En vez de eso, la <strong>probamos</strong> contra toda función de prueba \(v\) y
-    promediamos. La identidad de Green pasa una derivada de \(u\) a \(v\); el término de frontera muere
-    porque \(v=0\) en el borde. Ahora basta con que \(u\) tenga <em>una</em> derivada, no dos.</p>
-
-    <p class="step-plain">Aparecen <strong>dos</strong> formas distintas. \(a\) mide <span class="geo">energía</span>
-    (gradientes: cuánto varía \(u\)). \(m\) mide <span class="geo">solapamiento</span> (valores: cuánto se
-    parecen \(u\) y \(v\)). En la forma fuerte \(m\) estaba escondida, porque el producto interno de \(L^2\)
-    actúa como la identidad.</p>
-
-    <p class="step-plain">Al elegir una base concreta —las funciones sombrero, una por nodo— cada forma se
-    vuelve una matriz. \(a\mapsto A\) (<strong>rigidez</strong>), \(m\mapsto B\) (<strong>masa</strong>). Y
-    el problema de autovalores deja de ser \(A\mathbf u=\lambda\mathbf u\): es <strong>generalizado</strong>,
-    con \(B\) en el lado derecho.</p>
-  </div>
+<details class="hand">
+<summary>El paso a la forma débil (probar contra \(v\), integrar por partes)</summary>
+<div class="hand-body">
+<p>Pedir que la ecuación valga en cada punto exige que \(u\) sea muy suave. En vez de eso la
+<strong>probamos</strong> contra toda función de prueba \(v\in H^1_0\) e integramos; la identidad de Green
+pasa una derivada de \(u\) a \(v\) y el término de borde muere porque \(v=0\) en \(\partial\Omega\):</p>
+<div class="eq">\[\int_\Omega(-\Delta u)\,v=\int_\Omega\nabla u\cdot\nabla v.\]</div>
+<p>Aparecen <strong>dos</strong> formas bilineales: \(a(u,v)=\int\nabla u\cdot\nabla v\) mide
+<span class="geo">energía</span> (gradientes) y \(m(u,v)=\int uv\) mide <span class="geo">solapamiento</span>
+(valores). En la forma fuerte \(m\) estaba escondida porque el producto interno de \(L^2\) actúa como la
+identidad. La ecuación débil es \(a(u,v)=\lambda\,m(u,v)\).</p>
 </div>
+</details>
+
+<p><strong>Último paso — Galerkin.</strong> Al elegir una base concreta (las funciones sombrero, una por
+nodo, \(u_h=\sum_j u_j\varphi_j\)) cada forma se vuelve una matriz, y el autoproblema queda:</p>
+<div class="eq">\[A_{ij}=\!\int\!\nabla\varphi_i\!\cdot\!\nabla\varphi_j\ \text{(rigidez)},\quad B_{ij}=\!\int\!\varphi_i\varphi_j\ \text{(masa)},\quad A\mathbf{u}=\lambda B\mathbf{u}.\]</div>
+<p class="tiny muted">El problema deja de ser \(A\mathbf u=\lambda\mathbf u\): es <strong>generalizado</strong>,
+con la matriz de masa \(B\) en el lado derecho. Ahí es donde entrará la geometría.</p>
 
 <div class="card warn">
 <h4>Por qué \(B\neq I\), y por qué importa</h4>
@@ -1202,9 +1215,35 @@ de ecuaciones en derivadas parciales. El precio de entrada son dos espacios y un
 </div>
 
 <div class="grid2">
+  <div class="card geo">
+    <h4>Teorema espectral discreto (el fácil)</h4>
+    <p class="tiny">El laplaciano de grafo \(L\in\mathbb{R}^{n\times n}\) es simétrico y semidefinido
+    positivo, así que —por el teorema espectral de matrices simétricas— existen</p>
+    <div class="eq">\[0=\lambda_1\le\lambda_2\le\cdots\le\lambda_n\]</div>
+    <p class="tiny">y una <strong>base ortonormal</strong> de \(\mathbb{R}^n\) formada por autovectores,
+    \(L v_k=\lambda_k v_k\). Es álgebra lineal finita: no hace falta nada más que \(L=L^\top\).</p>
+    <p class="tiny muted">Es el fundamento de <em>todo</em> lo espectral discreto de esta charla —Fiedler,
+    Cheeger, Witten— y de la demo del mando \(t\): esos \(\varphi_k\) reales existen por este teorema.</p>
+  </div>
+  <div class="card geo">
+    <h4>Teorema espectral de Dirichlet (el difícil)</h4>
+    <p class="tiny">Para \(\Omega\) acotado existe una sucesión \(0\lt\lambda_1\le\lambda_2\le\cdots\to\infty\)
+    y una <strong>base ortonormal</strong> \(\{\varphi_k\}\) de \(L^2(\Omega)\) con
+    \(-\Delta\varphi_k=\lambda_k\varphi_k\), \(\varphi_k|_{\partial\Omega}=0\).</p>
+    <p class="tiny"><strong>Por qué es cierto.</strong> Coercividad ⇒ el problema \(a(u,v)=\langle f,v\rangle\)
+    tiene solución única (<span class="geo">Lax–Milgram</span>), lo que define el inverso
+    \(T=(-\Delta)^{-1}\). La inclusión \(H^1_0\hookrightarrow L^2\) es <strong>compacta</strong>
+    (Rellich–Kondrachov), luego \(T\) es compacto y autoadjunto; el teorema espectral para operadores
+    compactos autoadjuntos da la base y los \(\lambda_k=1/\mu_k\).</p>
+    <p class="tiny muted">La dificultad es pasar de dimensión finita a dimensión infinita: ahí es donde
+    hacen falta \(L^2\), \(H^1_0\), Poincaré y la compacidad.</p>
+  </div>
+</div>
+
+<div class="grid2">
   <div class="card">
-    <h4>Los dos espacios</h4>
-    <div class="eq">\[L^2(\Omega)=\Big\{\,u:\textstyle\int_\Omega|u|^2<\infty\,\Big\}\]</div>
+    <h4>Los dos espacios que hacen falta en el continuo</h4>
+    <div class="eq">\[L^2(\Omega)=\Big\{\,u:\textstyle\int_\Omega|u|^2\lt\infty\,\Big\}\]</div>
     <p class="tiny">las funciones de <strong>energía finita</strong>, con producto interno
     \(\langle u,v\rangle=\int_\Omega uv\). Es el espacio donde vive el espectro.</p>
     <div class="eq">\[H^1_0(\Omega)=\overline{C_c^\infty(\Omega)}^{\,\|\cdot\|_{H^1}}\]</div>
@@ -1214,16 +1253,12 @@ de ecuaciones en derivadas parciales. El precio de entrada son dos espacios y un
     <em>coerciva</em> en \(H^1_0\): \(a(u,u)\ge c\|u\|^2_{H^1}\) por la desigualdad de Poincaré.</p>
   </div>
   <div class="card geo">
-    <h4>Teorema espectral de Dirichlet</h4>
-    <p class="tiny">Para \(\Omega\) acotado existe una sucesión</p>
-    <div class="eq">\[0<\lambda_1\le\lambda_2\le\cdots\longrightarrow\infty\]</div>
-    <p class="tiny">y una <strong>base ortonormal</strong> \(\{\varphi_k\}\) de \(L^2(\Omega)\) con</p>
-    <div class="eq">\[-\Delta\varphi_k=\lambda_k\varphi_k,\qquad \varphi_k|_{\partial\Omega}=0.\]</div>
-    <p class="tiny"><strong>Por qué es cierto.</strong> Coercividad ⇒ el problema \(a(u,v)=\langle f,v\rangle\)
-    tiene solución única (<span class="geo">Lax–Milgram</span>), lo que define el operador inverso
-    \(T=(-\Delta)^{-1}\). La inclusión \(H^1_0\hookrightarrow L^2\) es <strong>compacta</strong>
-    (Rellich–Kondrachov), luego \(T\) es compacto y autoadjunto. El teorema espectral para operadores
-    compactos autoadjuntos da la base ortonormal y los \(\lambda_k=1/\mu_k\).</p>
+    <h4>La analogía, con cuidado</h4>
+    <p class="tiny">El teorema discreto y el continuo <em>dicen lo mismo</em> —"hay una base ortonormal de
+    autovectores"— pero no son el mismo teorema: uno es un renglón de álgebra lineal, el otro necesita
+    toda la maquinaria de la izquierda. Lo que los conecta es, otra vez, la convergencia
+    \(-h^2\Delta_h\to-\Delta\): los \(\lambda_k\) discretos aproximan a los continuos, con error
+    \(O(h^2)\) (<a href="#p1">Parte I</a>).</p>
   </div>
 </div>
 
@@ -1358,8 +1393,28 @@ en la <a href="#p3">Parte III</a> (el problema de Kac) y como pérdida en los ex
 \(\Omega_t=\{x:f(x)\le t\}\) y preguntar: <em>¿cómo cambia su topología cuando \(t\) crece?</em></p>
 
 <p>Solo cambia al pasar por un <span class="topo">punto crítico</span>. Y entonces cambia de una
-manera precisa. Eso es la teoría de Morse. En la <a href="#p7">Parte VIII</a>, el laplaciano de
+manera precisa. Eso es la teoría de Morse. En la <a href="#p7">Parte VII</a>, el laplaciano de
 Witten unirá las dos vías: \(\varphi_k\) y los puntos críticos de \(f\).</p>
+
+<div class="card topo">
+<h4>Qué topología usamos exactamente</h4>
+<p class="tiny" style="margin:0 0 .5em">Toda la parte topológica de esta charla
+usa <strong>homología simplicial/cúbica</strong> del complejo \(K\) de la imagen (píxeles, aristas,
+caras), con coeficientes en un cuerpo (\(\mathbb{Z}/2\) para el conteo, \(\mathbb{R}\) para la versión
+espectral de Hodge). Los invariantes que leemos son los <strong>números de Betti</strong>
+\(\beta_k=\dim H_k(K)\):</p>
+<table style="margin:0">
+<tbody>
+<tr><td class="mono topo">\(\beta_0\)</td><td class="tiny">número de <strong>componentes conexas</strong> — en una imagen, cuántos focos separados de tumor (multifocalidad).</td></tr>
+<tr><td class="mono topo">\(\beta_1\)</td><td class="tiny">número de <strong>agujeros / lazos</strong> — en un corte 2D, un realce en anillo alrededor de un núcleo necrótico.</td></tr>
+<tr><td class="mono topo">\(\beta_2\)</td><td class="tiny">número de <strong>cavidades encerradas</strong> (vacíos) — en 3D, una necrosis rodeada por completo.</td></tr>
+</tbody>
+</table>
+<p class="tiny muted" style="margin:.5em 0 0">La <strong>homología persistente</strong> (<a href="#p2">más
+abajo</a>) no mira \(K\) fijo sino la familia de subniveles \(\Omega_t\); registra cuándo <em>nace</em> y
+<em>muere</em> cada uno de estos rasgos al variar \(t\). Un rasgo de vida larga es señal; uno de vida
+corta, ruido. Ésos son todos los objetos topológicos que aparecerán.</p>
+</div>
 
 <h3>Morse suave</h3>
 
@@ -1399,10 +1454,10 @@ Witten unirá las dos vías: \(\varphi_k\) y los puntos críticos de \(f\).</p>
 
 <h3>Morse discreta, y por qué es mejor</h3>
 
-<p>Antes de Forman, hay que decir qué es \\(K\\). Un <strong>complejo celular \\(K\\)</strong> es la imagen
-descompuesta en piezas: los píxeles son <span class="mono">vértices</span> (celdas de dimensión 0), los
+<p>El objeto sobre el que trabaja Forman es el <strong>complejo celular \(K\)</strong>: la imagen
+descompuesta en piezas. Los píxeles son <span class="mono">vértices</span> (celdas de dimensión 0), los
 pares de píxeles vecinos son <span class="mono">aristas</span> (dimensión 1), y los cuadrados de 2×2 son
-<span class="mono">caras</span> (dimensión 2). Todas juntas, con sus relaciones de borde, forman \\(K\\).
+<span class="mono">caras</span> (dimensión 2). Todas juntas, con sus relaciones de borde, forman \(K\).
 Es el mismo objeto sobre el que vive el laplaciano: una malla, ahora vista como piezas pegadas.</p>
 
 <figure>
@@ -1450,8 +1505,8 @@ Es el mismo objeto sobre el que vive el laplaciano: una malla, ahora vista como 
     <text x="200" y="128" fill="#C4472F" font-size="8">crítica (mínimo)</text>
   </g>
 </svg>
-<figcaption>Izquierda: \\(K\\) son vértices \\(+\\) aristas \\(+\\) caras. Derecha: Forman <em>empareja</em>
-cada celda con una vecina de dimensión \\(+1\\) (flechas). Las que quedan sin pareja son
+<figcaption>Izquierda: \(K\) son vértices \(+\) aristas \(+\) caras. Derecha: Forman <em>empareja</em>
+cada celda con una vecina de dimensión \(+1\) (flechas). Las que quedan sin pareja son
 <span class="topo">críticas</span> — y hay una por cada rasgo topológico.</figcaption>
 </figure>
 
@@ -1459,11 +1514,11 @@ cada celda con una vecina de dimensión \\(+1\\) (flechas). Las que quedan sin p
   <div class="card">
     <h4>Forman</h4>
     <p class="tiny">Un <em>campo gradiente discreto</em> es ese emparejamiento
-    \\(\\sigma^{(k)}\\prec\\tau^{(k+1)}\\) —una celda con una vecina de una dimensión más—, cada celda en a lo
+    \(\sigma^{(k)}\prec\tau^{(k+1)}\) —una celda con una vecina de una dimensión más—, cada celda en a lo
     más un par y sin ciclos. Las celdas <strong>no emparejadas</strong> son las
     <span class="topo">críticas</span>: juegan el papel de los puntos críticos de Morse suave.</p>
-    <p class="tiny"><strong>Teorema.</strong> \\(K\\) <em>colapsa</em> (se retrae sin cambiar la topología)
-    a un complejo con una \\(k\\)-celda por cada \\(k\\)-celda crítica. Valen las desigualdades de Morse, y
+    <p class="tiny"><strong>Teorema.</strong> \(K\) <em>colapsa</em> (se retrae sin cambiar la topología)
+    a un complejo con una \(k\)-celda por cada \(k\)-celda crítica. Valen las desigualdades de Morse, y
     el resultado pesa una fracción del original.</p>
   </div>
   <div class="card warn">
@@ -1473,8 +1528,8 @@ cada celda con una vecina de dimensión \\(+1\\) (flechas). Las que quedan sin p
     función de Morse discreta concordante, con exactamente las celdas críticas correctas. Demostrado.
     Los empates se rompen por simulación de simplicidad.</p>
     <p class="tiny muted">Filtración de <strong>estrella inferior</strong>: cada celda recibe
-    \\(f(\\sigma)=\\max_{v\\in\\sigma}f(v)\\). La filtración <em>no construye una malla</em>: asigna tiempos de
-    nacimiento a un complejo \\(K\\) fijo.</p>
+    \(f(\sigma)=\max_{v\in\sigma}f(v)\). La filtración <em>no construye una malla</em>: asigna tiempos de
+    nacimiento a un complejo \(K\) fijo.</p>
   </div>
 </div>
 
@@ -1615,14 +1670,12 @@ se tocan — y todavía no hemos hecho nada sofisticado.</p>
   <div class="card warn">
     <h4>Teorema · Gordon–Webb–Wolpert, 1992</h4>
     <p class="tiny">Existen dos dominios planos <strong>no isométricos</strong> con el mismo espectro de
-    Dirichlet. La respuesta a Kac es <strong>no</strong>.</p>
-    <ul class="tight tiny">
-      <li>Antes, Milnor (1964): dos toros planos isoespectrales en dimensión 16.</li>
-      <li>Sunada (1985): un método general para fabricarlos.</li>
-      <li>Los dominios de GWW se arman con 7 triángulos congruentes pegados de dos maneras.</li>
-      <li>Zelditch: para dominios analíticos genéricos con simetría, el espectro <em>sí</em> determina el
-      dominio. No es inyectivo, pero <em>casi</em>.</li>
-    </ul>
+    Dirichlet (se arman con 7 triángulos congruentes pegados de dos maneras). <strong>La respuesta a Kac
+    es no.</strong></p>
+    <p class="tiny">Lo que nos importa de esto no es el contraejemplo en sí, sino su consecuencia: el
+    espectro es <strong>estable</strong> (perturbar poco la forma cambia poco los \(\lambda_k\)) pero
+    <strong class="topo">no inyectivo</strong> (formas distintas pueden sonar igual). Es una huella, no una
+    reconstrucción.</p>
   </div>
   <div class="card">
     <figure style="margin:.2rem 0">
@@ -1636,13 +1689,10 @@ se tocan — y todavía no hemos hecho nada sofisticado.</p>
     </svg>
     <figcaption>Esquema. El par explícito de 7 triángulos está en GWW (1992).</figcaption>
     </figure>
-    <p class="tiny" style="text-align:center">El espectro es <strong>estable</strong> pero
-    <strong class="topo">no inyectivo</strong>.</p>
+    <p class="tiny" style="text-align:center">La misma no-inyectividad reaparece en las <a href="#p3">firmas
+    espectrales</a> (ShapeDNA) y en las imágenes de persistencia.</p>
   </div>
 </div>
-
-<p class="tiny muted">Exactamente el mismo fenómeno que la no inyectividad de las imágenes de
-persistencia. Una huella digital, no una reconstrucción.</p>
 
 <h3>ShapeDNA</h3>
 <p class="mono tiny muted">Reuter, Wolter, Peinecke · <em>CAD</em> 38(4):342–366 · 2006</p>
@@ -1702,119 +1752,66 @@ y ahí es excelente.</p>
 <section id="p4">
 <div class="part-head">
   <span class="num">PARTE IV</span>
-  <h2>Discretización: FEM, DEC y el <em>no free lunch</em></h2>
+  <h2>Discretización: por qué es difícil</h2>
 </div>
 
-<div class="grid2">
-  <div class="card"><h4>FEM</h4>
-    <p class="tiny">\(A_{ij}=\int\nabla\varphi_i\!\cdot\!\nabla\varphi_j\) (rigidez),
-    \(B_{ij}=\int\varphi_i\varphi_j\) (masa). Sobre mallas triangulares, \(A\) <em>es</em> el laplaciano
-    cotangente.</p></div>
-  <div class="card geo"><h4>DEC</h4>
-    <p class="tiny">\(\Delta_q=\delta d+d\delta\) con \(\delta=\star d\star\).
-    La <span class="geo">estrella de Hodge \(\star\)</span> <em>es</em> la matriz de masa.
-    La estrella diagonal = condensación de masa de FEM.</p></div>
-</div>
-
-<p style="text-align:center" class="mono tiny muted">
-laplaciano combinatorio &nbsp;—&nbsp; <span class="geo">añadir \(\star\) (masa) = añadir la métrica</span>
-&nbsp;—&nbsp;→ &nbsp; Laplace–Beltrami</p>
+<p class="lede">Para pasar del operador continuo a una matriz hay que elegir una discretización. Y aquí
+aparece un obstáculo de fondo: <strong>no existe la discretización perfecta</strong>. Ése es el mensaje de
+esta parte, y se resume en un teorema.</p>
 
 <div class="card warn">
-<h4>El <em>no free lunch</em> de Wardetzky</h4>
-<p class="tiny">Ningún laplaciano discreto de superficie satisface las cuatro a la vez:
-<strong>SYM</strong> (simetría), <strong>LOC</strong> (localidad), <strong>LIN</strong> (precisión lineal),
-<strong>POS</strong> (pesos no negativos).</p>
-<p class="tiny">El cotangente cumple SYM, LOC, LIN siempre. Falla POS exactamente cuando
-\(\alpha+\beta>\pi\) para los ángulos opuestos a una arista. Y esa condición tiene nombre:</p>
-<p class="tiny" style="text-align:center">\(w_{ij}=\tfrac12(\cot\alpha+\cot\beta)\ge0
-\iff\alpha+\beta\le\pi\iff\) la arista es <span class="geo">localmente de Delaunay</span>.</p>
-<p class="tiny">No se escapa mejorando el operador. Se escapa <strong>restringiendo la clase de
-mallas</strong>.</p>
+<h4>Teorema · el <em>no free lunch</em> de Wardetzky (2007)</h4>
+<p class="tiny">Ningún laplaciano discreto de superficie puede satisfacer las cuatro propiedades
+deseables <em>a la vez</em>:</p>
+<p class="tiny" style="text-align:center"><strong>SYM</strong> (simetría) · <strong>LOC</strong>
+(localidad) · <strong>LIN</strong> (precisión lineal) · <strong>POS</strong> (pesos no negativos).</p>
+<p class="tiny">El laplaciano cotangente —el estándar sobre mallas— cumple SYM, LOC y LIN siempre, pero
+<strong>falla POS</strong> exactamente cuando los ángulos opuestos a una arista suman más de \(\pi\)
+(la arista deja de ser localmente de Delaunay). No se arregla mejorando el operador: se arregla
+<strong>restringiendo la clase de mallas</strong>. Discretizar bien es, en el fondo, elegir qué propiedad
+sacrificar.</p>
+</div>
+
+<div class="card" style="border-left:3px solid var(--teal)">
+<h4>La buena noticia para imágenes</h4>
+<p class="tiny" style="margin:0">Sobre una retícula de píxeles este dilema casi desaparece: los cuatro
+vértices de un píxel son cocirculares, así que la retícula <em>ya está</em> en el óptimo de Delaunay, y
+el laplaciano cotangente sobre la retícula triangulada coincide con el estencil de 5 puntos que ya
+conocemos. Por eso trabajamos sobre el <strong>complejo cúbico</strong> de la imagen y no sobre mallas: el
+operador es el de siempre, y la geometría interior que habría que codificar es mínima.</p>
 </div>
 
 <details class="hand">
-<summary>A mano: la retícula ya está en el óptimo de Delaunay</summary>
+<summary>Los detalles: FEM, DEC, la cuenta de Delaunay y la topología digital</summary>
 <div class="hand-body">
-<p>Los cuatro vértices de un cuadrado unitario son <strong>cocirculares</strong>: Delaunay es degenerado,
-y el complejo cúbico <em>es</em> el complejo de Delaunay de \(\mathbb{Z}^d\).</p>
-<p>Partimos por una diagonal (Freudenthal). Salen triángulos rectángulos isósceles:</p>
+<p><strong>FEM y DEC son dos rutas al mismo operador.</strong> En FEM, \(A_{ij}=\int\nabla\varphi_i\!\cdot\!\nabla\varphi_j\)
+(rigidez) y \(B_{ij}=\int\varphi_i\varphi_j\) (masa); sobre mallas triangulares \(A\) es el laplaciano
+cotangente. En DEC, \(\Delta_q=\delta d+d\delta\) y la <span class="geo">estrella de Hodge</span> es
+justamente la matriz de masa (la estrella diagonal = condensación de masa de FEM). Añadir la estrella a un
+laplaciano combinatorio equivale a añadir la métrica: así se pasa al de Laplace–Beltrami.</p>
+
+<p><strong>La retícula está en el óptimo de Delaunay (cuenta).</strong> Partimos el cuadrado unitario por
+una diagonal (Freudenthal); salen triángulos rectángulos isósceles, y los pesos cotangentes son:</p>
 <table>
 <thead><tr><th>arista</th><th>ángulos opuestos</th><th class="num">\(w=\tfrac12(\cot\alpha+\cot\beta)\)</th></tr></thead>
 <tbody>
 <tr><td>del eje</td><td>45° y 45°</td><td class="num">½(1+1) = <strong>1</strong></td></tr>
 <tr><td>diagonal</td><td>90° y 90°</td><td class="num">½(0+0) = <strong>0</strong></td></tr>
 </tbody></table>
-<p><strong>El laplaciano cotangente sobre la retícula triangulada es exactamente el stencil de 5
-puntos.</strong> La diagonal es invisible. La retícula escapa al <em>no free lunch</em> por estar ya en el
-óptimo — y por tener poca geometría interior que codificar.</p>
+<p>La diagonal pesa 0: es invisible, y queda exactamente el estencil de 5 puntos.</p>
+
+<p><strong>El único impuesto real: la topología digital.</strong> Cuando dos píxeles se tocan sólo por la
+esquina, ¿están conectados? Con 4-conectividad son dos piezas; con 8-conectividad, una. Para no
+contradecirse, objeto y fondo deben usar conectividades opuestas (4/8 en 2D, 6/26 en 3D; dualidad de
+Alexander), y hay que declararlo explícitamente. Hay incluso un segundo <em>no free lunch</em> (Boutry):
+ninguna interpolación de la imagen es a la vez local, autodual y bien compuesta.</p>
+
+<p class="tiny muted"><strong>¿Cambia el complejo si cambia \(f\)?</strong> No: el complejo cúbico está
+fijo; \(f\) sólo asigna tiempos de nacimiento de estrella inferior. Lo que \(f\) genera es el
+<span class="topo">complejo de Morse</span>, una reducción del mismo complejo equivalente en homotopía
+(no un remallado), que pesa ~2 % del original.</p>
 </div>
 </details>
-
-<div class="grid2">
-  <div class="card">
-    <h4>“Si cambia \(f\), ¿cambia el complejo?”</h4>
-    <p class="tiny"><strong>No.</strong> El complejo está fijo; \(f\) solo asigna tiempos de nacimiento de
-    estrella inferior. Malla de la filtración = malla de FEM = malla de DEC = la retícula de vóxeles.</p>
-  </div>
-  <div class="card topo">
-    <h4>“Entonces, ¿qué <em>sí</em> genera \(f\)?”</h4>
-    <p class="tiny">El <span class="topo">complejo de Morse</span>: una <em>reducción</em> del mismo complejo
-    cúbico, equivalente en homotopía. No es un remallado. Lleva la topología (celdas críticas) y pesa
-    ~2 % del original.</p>
-  </div>
-</div>
-
-<div class="card">
-<h4>El impuesto que la retícula <em>sí</em> paga: topología digital</h4>
-<p>Sobre una malla hay una ambigüedad que no existe en el continuo: cuando dos píxeles del objeto se tocan
-sólo por la <strong>esquina</strong>, ¿están conectados o no? La respuesta cambia la topología —el número
-de componentes y de agujeros— y no hay una elección canónica.</p>
-
-<figure>
-<svg viewBox="0 0 420 130" role="img" aria-label="La paradoja de conectividad: dos píxeles que se tocan en diagonal, con 4-conectividad y con 8-conectividad">
-  <g font-family="IBM Plex Mono,monospace" font-size="9">
-    <!-- config diagonal -->
-    <g transform="translate(10,20)">
-      <rect x="0" y="0" width="28" height="28" fill="#E8624A" fill-opacity=".6" stroke="#C4472F"/>
-      <rect x="28" y="28" width="28" height="28" fill="#E8624A" fill-opacity=".6" stroke="#C4472F"/>
-      <rect x="28" y="0" width="28" height="28" fill="none" stroke="#7E95AB" stroke-dasharray="2 2"/>
-      <rect x="0" y="28" width="28" height="28" fill="none" stroke="#7E95AB" stroke-dasharray="2 2"/>
-      <text x="28" y="74" text-anchor="middle" fill="#7E95AB">se tocan en diagonal</text>
-    </g>
-    <!-- 4-conectividad: dos componentes -->
-    <g transform="translate(150,20)">
-      <rect x="0" y="0" width="28" height="28" fill="#2E8B8B" fill-opacity=".5" stroke="#46B0AC"/>
-      <rect x="28" y="28" width="28" height="28" fill="#8a5cf0" fill-opacity=".4" stroke="#8a5cf0"/>
-      <text x="28" y="74" text-anchor="middle" fill="#7E95AB">4-conex: 2 piezas</text>
-      <text x="28" y="88" text-anchor="middle" fill="#7E95AB" font-size="8">(no cuenta la esquina)</text>
-    </g>
-    <!-- 8-conectividad: una componente -->
-    <g transform="translate(290,20)">
-      <rect x="0" y="0" width="28" height="28" fill="#2E8B8B" fill-opacity=".5" stroke="#46B0AC"/>
-      <rect x="28" y="28" width="28" height="28" fill="#2E8B8B" fill-opacity=".5" stroke="#46B0AC"/>
-      <line x1="28" y1="28" x2="28" y2="28"/>
-      <path d="M22,22 L34,34" stroke="#46B0AC" stroke-width="2.5"/>
-      <text x="28" y="74" text-anchor="middle" fill="#7E95AB">8-conex: 1 pieza</text>
-      <text x="28" y="88" text-anchor="middle" fill="#7E95AB" font-size="8">(sí cuenta la esquina)</text>
-    </g>
-  </g>
-</svg>
-<figcaption>Los mismos dos píxeles: con <strong>4-conectividad</strong> (sólo vecinos por lado) son dos
-componentes; con <strong>8-conectividad</strong> (también por esquina) son una. En 3D lo mismo, con 6 o 26
-vecinos.</figcaption>
-</figure>
-
-<p class="tiny">La regla para no contradecirse: el objeto y el fondo deben usar conectividades
-<strong>opuestas</strong> —4/8 en 2D, 6/26 en 3D— para que valga la dualidad de Alexander. Berger et al.
-(IPMI 2025): hay que <strong>declararla explícitamente</strong>, siempre; dejarla implícita es una fuente
-silenciosa de errores topológicos.</p>
-<p class="tiny muted"><strong>Buena composición</strong> (Latecki): una imagen binaria puede repararse
-localmente para que su frontera sea una superficie sin auto-toques, y entonces la ambigüedad desaparece.
-Pero hay un <em>segundo</em> no free lunch (Boutry): ninguna forma de interpolar la imagen es a la vez
-<strong>local</strong>, <strong>autodual</strong> y <strong>bien compuesta</strong>. Otra vez, hay que
-elegir qué propiedad ceder.</p>
-</div>
 </section>
 
 <!-- ==================== PARTE V ==================== -->
@@ -1991,71 +1988,36 @@ sí tienen \(\beta_1=1\).</p>
 
 <h3>El laplaciano persistente</h3>
 
-<p>Hodge ve la topología de <em>un</em> complejo. Pero nosotros construimos una <strong>filtración</strong>
-—la de estrella inferior de Morse, <a href="#p2">Parte II</a>—: una familia \(K\hookrightarrow L\) que
-crece con el nivel. El laplaciano persistente es Hodge <em>relativo</em> a esa inclusión, y mide los
-agujeros que <strong>sobreviven</strong> de \(K\) a \(L\).</p>
-
-<div class="eqline">
-  <div class="eq" style="margin:0">\[\Delta_q^{K,L}=\partial_{q+1}^{L,K}\big(\partial_{q+1}^{L,K}\big)^{*}+\big(\partial_q^{K}\big)^{*}\partial_q^{K}\]</div>
-  <div class="rd">El primer término sólo mira las \((q{+}1)\)-celdas de \(L\) cuyo borde ya vive en \(K\).
-  Es lo que hace “persistente” al operador.</div>
-</div>
+<p>Hodge ve la topología de <em>un</em> complejo. Nosotros tenemos una <strong>filtración</strong>
+\(K\hookrightarrow L\) —la de estrella inferior, <a href="#p2">Parte II</a>—: el laplaciano persistente
+es Hodge <em>relativo</em> a esa inclusión, y mide los agujeros que <strong>sobreviven</strong> de \(K\)
+a \(L\).</p>
 
 <div class="card topo">
 <h4>Teorema · Mémoli–Wan–Wang</h4>
 <div class="eq">\[\operatorname{nulidad}\big(\Delta_q^{K,L}\big)=\beta_q^{K,L}=\operatorname{rank}\big(H_q(K)\to H_q(L)\big)\]</div>
-<p class="tiny" style="margin:0">La nulidad <em>es</em> el número de Betti persistente: cuántos agujeros de
-\(K\) siguen vivos en \(L\). Es la generalización espectral exacta de la persistencia — homología
-persistente mira sólo el núcleo; el laplaciano persistente añade <em>todo el espectro</em>.</p>
+<p class="tiny" style="margin:0">La nulidad <em>es</em> el número de Betti persistente. Es la generalización
+espectral exacta de la persistencia: la homología persistente mira sólo el núcleo; el laplaciano
+persistente añade además <em>todo el espectro</em>. Y su cómputo se reduce a un complemento de Schur —la
+misma operación que la reducción de Kron en circuitos y la condensación estática en FEM.</p>
 </div>
 
-<h4>El corazón computacional: complemento de Schur, en dos miradas</h4>
-<div class="grid2">
-  <div class="card">
-    <figure style="margin:.2rem 0">
-    <svg viewBox="0 0 300 140" role="img" aria-label="Una estrella de tres hojas se reduce a un triángulo al eliminar el nodo central">
-      <!-- estrella -->
-      <g stroke="#46B0AC" stroke-width="2"><line x1="55" y1="70" x2="20" y2="30"/>
-        <line x1="55" y1="70" x2="20" y2="110"/><line x1="55" y1="70" x2="95" y2="70"/></g>
-      <g fill="#F5F1E8" stroke="#1B3A5C" stroke-width="1.8">
-        <circle cx="20" cy="30" r="8"/><circle cx="20" cy="110" r="8"/><circle cx="95" cy="70" r="8"/></g>
-      <circle cx="55" cy="70" r="9" fill="#E8624A" stroke="#C4472F" stroke-width="1.8"/>
-      <text x="55" y="96" text-anchor="middle" fill="#C4472F" font-family="IBM Plex Mono,monospace" font-size="9">c</text>
-      <text x="150" y="74" text-anchor="middle" fill="#DCE6EF" font-size="20">→</text>
-      <!-- triangulo -->
-      <g stroke="#46B0AC" stroke-width="2" stroke-dasharray="0"><line x1="210" y1="30" x2="210" y2="110"/>
-        <line x1="210" y1="30" x2="280" y2="70"/><line x1="210" y1="110" x2="280" y2="70"/></g>
-      <g fill="#F5F1E8" stroke="#1B3A5C" stroke-width="1.8">
-        <circle cx="210" cy="30" r="8"/><circle cx="210" cy="110" r="8"/><circle cx="280" cy="70" r="8"/></g>
-      <text x="245" y="128" text-anchor="middle" fill="#7E95AB" font-family="IBM Plex Mono,monospace" font-size="9">conductancia ⅓</text>
-    </svg>
-    <figcaption>Eliminar el centro de la estrella deja un triángulo equivalente.</figcaption>
-    </figure>
-  </div>
-  <div class="card">
-    <h4 style="margin-top:0">La cuenta</h4>
-    <p class="tiny" style="margin:.2em 0">Estrella \(K_{1,3}\), conductancias unitarias. Eliminando el
-    centro \(c\) por complemento de Schur:</p>
-    <div class="eq"><small>\[L/L_{cc}=I_3-\tfrac13 J_3\]</small></div>
-    <p class="tiny" style="margin:.2em 0">el laplaciano de un triángulo con conductancia \(\tfrac13\) por
-    arista. La resistencia efectiva entre dos hojas se conserva: estrella \(1+1=2\); triángulo
-    \(3\,\|\,6=2\). ✓</p>
-    <p class="tiny" style="margin:.4em 0 0"><strong>Schur</strong> (álgebra) \(=\) <strong>Kron</strong>
-    (circuitos) \(=\) <strong>condensación estática</strong> (FEM). Tres literaturas, una operación — y
-    es la que hace tratable el laplaciano persistente.</p>
-  </div>
+<details class="hand">
+<summary>La cuenta del complemento de Schur: una estrella se reduce a un triángulo</summary>
+<div class="hand-body">
+<p>Estrella \(K_{1,3}\) con conductancias unitarias. El primer paso es eliminar el centro \(c\) por
+complemento de Schur, \(L/L_{cc}\); el último es leer el resultado:</p>
+<div class="eq">\[L/L_{cc}=I_3-\tfrac13 J_3,\]</div>
+<p>el laplaciano de un triángulo con conductancia \(\tfrac13\) por arista. La resistencia efectiva entre
+dos hojas se conserva: en la estrella \(1+1=2\); en el triángulo \(3\,\|\,6=2\). ✓ Complemento de Schur
+(álgebra) \(=\) reducción de Kron (circuitos) \(=\) condensación estática (FEM): una sola operación en
+tres literaturas.</p>
 </div>
+</details>
 
-<div class="card" style="border-left:3px solid var(--teal)">
-<h4>Por qué hizo falta todo lo anterior</h4>
-<p class="tiny" style="margin:0">El laplaciano persistente <strong>no existe sin una filtración</strong>, y
-la filtración es la de <span class="topo">Morse por estrella inferior</span> (Parte II) sobre el
-<span class="geo">complejo cúbico</span> (Parte IV). Su nulidad es un Betti (Hodge–Eckmann, arriba); su
-estabilidad es CSEH (Parte II); su cómputo es el complemento de Schur (que ya vimos como reducción de Kron).
-No es un tema nuevo: es el punto donde <em>convergen</em> la topología, la geometría discreta y el
-espectro. Por eso hubo que construirlos antes.</p>
-</div>
+<p class="tiny muted">El laplaciano persistente es el punto donde <em>convergen</em> las tres líneas de la
+charla: su nulidad es un Betti (Hodge–Eckmann), su estabilidad es CSEH (<a href="#p2">Parte II</a>), su
+cómputo es Schur/Kron. Por eso hubo que construirlas antes.</p>
 
 <div class="card warn">
 <h4>Wolf–Fan–Monod, 2025 — la limitación que hay que respetar</h4>
@@ -2169,9 +2131,9 @@ M_{ii}=\sum_{j\sim i}e^{-2t(f_j-f_i)_+}\]
     <h4>¿Conserva las propiedades de un laplaciano?</h4>
     <ul class="tight tiny">
       <li><strong>Sí, simétrica</strong>; con exactamente la misma dispersidad que el laplaciano de grafo.</li>
-      <li><strong>Sí, semidefinida positiva</strong>; y el problema es ordinario, no generalizado (\\(B=I\\)).</li>
-      <li>En \\(t=0\\) <em>es</em> el laplaciano de grafo llano: \\(M=L\\).</li>
-      <li>En \\(t\\to\\infty\\), \\(M_{ii}\\to\\#\\{\\text{vecinos más bajos}\\}\\) — los pozos afloran en la diagonal.</li>
+      <li><strong>Sí, semidefinida positiva</strong>; y el problema es ordinario, no generalizado (\(B=I\)).</li>
+      <li>En \(t=0\) <em>es</em> el laplaciano de grafo llano: \(M=L\).</li>
+      <li>En \(t\to\infty\), \(M_{ii}\) tiende al <strong>número de vecinos más bajos</strong> de cada nodo — los pozos afloran en la diagonal.</li>
     </ul>
     <p class="tiny muted" style="margin:.4em 0 0">Es un laplaciano de pleno derecho: sólo le añadimos un
     potencial que rompe el sesgo de balance.</p>
@@ -2179,7 +2141,7 @@ M_{ii}=\sum_{j\sim i}e^{-2t(f_j-f_i)_+}\]
   <div class="card geo">
     <h4>Cómo se construye, en una línea</h4>
     <p class="mono" style="font-size:.95rem;color:#fff">M = L + sp.diags(V_t)</p>
-    <p class="tiny muted">El laplaciano que ya teníamos, más un término diagonal que depende de \\(t\\) y de
+    <p class="tiny muted">El laplaciano que ya teníamos, más un término diagonal que depende de \(t\) y de
     la intensidad. Nada más.</p>
   </div>
 </div>
@@ -2291,8 +2253,7 @@ asintóticamente determinados por las <strong>longitudes del código de barras</
 <strong>Hay que reportar la curva.</strong></p>
 </div>
 
-<p class="pull">El “método espectral” y el “método de Morse discreta” no son rivales.<br>
-Son los dos extremos de una familia de un parámetro.</p>
+<p class="pull">El “método espectral” y el “método de Morse discreta” son 2 caras de una misma familia de un parámetro.</p>
 </section>
 
 <!-- ==================== PARTE IX ==================== -->
