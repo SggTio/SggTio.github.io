@@ -79,10 +79,10 @@ defaults:
       type: "notas"
     values:
       section: "notas"
-      layout: "post"
+      layout: "nota"
   - scope:
       path: ""
       type: "escritos"
     values:
       section: "escritos"
-      layout: "post"
+      layout: "escrito"

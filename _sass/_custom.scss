@@ -211,3 +211,158 @@ h1, h2, h3 {
 body.layout-wide .container {
   max-width: 62rem;
 }
+
+// ==============================================================
+//  Plantilla: escrito (cuentos cortos, una columna simple)
+// ==============================================================
+.escrito {
+  max-width: 36rem;
+  margin: 0 auto;
+
+  .escrito-header {
+    margin-bottom: var(--spacer-2);
+  }
+
+  .escrito-title {
+    margin: 0 0 .3rem;
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .escrito-date {
+    display: block;
+    color: var(--gray-500);
+    font-size: .85rem;
+    letter-spacing: .03em;
+  }
+
+  .escrito-content {
+    font-size: 1.02rem;
+    line-height: 1.75;
+
+    p { margin-bottom: 1.2rem; }
+  }
+}
+
+// ==============================================================
+//  Plantilla: poema (texto pegado a la izquierda, verso preservado)
+//  - El contenedor se vuelve full-width y todo el layout se pega
+//    al borde izquierdo del viewport (masthead incluido, coherente).
+//  - El contenido de los párrafos usa `white-space: pre-line`
+//    para que un salto de línea en el markdown = un verso.
+// ==============================================================
+body.layout-poema .container {
+  max-width: none;
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: var(--spacer-2);
+  padding-right: var(--spacer-2);
+}
+
+.poema {
+  max-width: 38rem;
+  margin: 0;
+
+  .poema-header {
+    margin-bottom: var(--spacer-2);
+  }
+
+  .poema-title {
+    margin: 0 0 .3rem;
+    font-size: 1.9rem;
+    font-style: italic;
+    line-height: 1.2;
+  }
+
+  .poema-epigrafe {
+    margin: .5rem 0 .3rem;
+    color: var(--gray-500);
+    font-size: .9rem;
+    font-style: italic;
+  }
+
+  .poema-date {
+    display: block;
+    color: var(--gray-500);
+    font-size: .8rem;
+    letter-spacing: .03em;
+  }
+
+  .poema-content {
+    font-size: 1.05rem;
+    line-height: 1.9;
+
+    // Un `\n` del markdown se convierte en verso; los párrafos
+    // separados por línea en blanco son estrofas.
+    p {
+      white-space: pre-line;
+      margin-bottom: 1.6rem;
+    }
+  }
+}
+
+// ==============================================================
+//  Plantilla: nota (texto largo, mezcla de 1-col y 2-col)
+//  - El autor mete secciones <section class="one-col" markdown="1">
+//    o <section class="two-col" markdown="1"> dentro del markdown.
+//  - `markdown="1"` es obligatorio para que kramdown procese el
+//    markdown anidado dentro del bloque HTML.
+// ==============================================================
+body.layout-nota .container {
+  max-width: 52rem;
+}
+
+.nota {
+  .nota-header {
+    margin-bottom: var(--spacer-2);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nota-title {
+    margin: 0 0 .3rem;
+    font-size: 2.2rem;
+    line-height: 1.15;
+  }
+
+  .nota-date {
+    display: block;
+    color: var(--gray-500);
+    font-size: .85rem;
+    letter-spacing: .03em;
+  }
+
+  .nota-lead {
+    margin: .8rem 0 0;
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: var(--gray-400);
+    font-style: italic;
+  }
+
+  .nota-content {
+    font-size: 1rem;
+    line-height: 1.7;
+
+    // Sección de una sola columna (angosta, centrada) dentro de
+    // la nota ancha. Útil para intros, párrafos clave, remates.
+    .one-col {
+      max-width: 36rem;
+      margin: 2rem auto;
+    }
+
+    // Sección de dos columnas. Colapsa a una en móvil.
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+
+      > *:first-child { margin-top: 0; }
+    }
+
+    @media (max-width: 720px) {
+      .two-col { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  }
+}

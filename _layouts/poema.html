@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<article class="poema">
+  <header class="poema-header">
+    <h1 class="poema-title">{{ page.title }}</h1>
+    {% if page.epigrafe %}
+    <p class="poema-epigrafe">{{ page.epigrafe }}</p>
+    {% endif %}
+    {% if page.date %}
+    <time datetime="{{ page.date | date_to_xmlschema }}" class="poema-date">
+      {{ page.date | date: "%Y-%m-%d" }}
+    </time>
+    {% endif %}
+  </header>
+
+  <div class="poema-content">
+    {{ content }}
+  </div>
+</article>
