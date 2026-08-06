@@ -162,7 +162,7 @@ Esta es la visualización más importante del post. Una red configurable — pod
 
 <div id="viz-backprop" class="viz">
   <h3 class="viz-title">Visualización 2 · explorador de backpropagation</h3>
-  <p class="viz-sub">Configurá la arquitectura, elegí un dataset y mirá la red aprender. Cada botón de <strong>paso</strong> hace una iteración completa forward+backward+update.</p>
+  <p class="viz-sub">Configurá la arquitectura, elegí un dataset y mirá la red aprender. Cada botón de <strong>paso</strong> hace una iteración completa forward+backward+update. <em>(Versión completa próximamente.)</em></p>
   <div class="viz-stage"></div>
   <div class="viz-controls"></div>
   <div class="viz-readout"></div>
@@ -288,7 +288,7 @@ La operación central de una CNN — convolucionar una imagen con un filtro pequ
 
 <div id="viz-convolution" class="viz">
   <h3 class="viz-title">Visualización 3 · convolución, píxel a píxel</h3>
-  <p class="viz-sub">Demostración mínima: una imagen pequeña, un filtro 3×3, y la salida calculándose en tiempo real.</p>
+  <p class="viz-sub">Demostración mínima: una imagen pequeña, un filtro 3×3, y la salida calculándose en tiempo real. <em>(Versión completa próximamente.)</em></p>
   <div class="viz-stage"></div>
   <div class="viz-controls"></div>
 </div>
@@ -347,6 +347,3 @@ Lo que hay que llevarse de este post es la idea de **convergencia**. El deep lea
 - **Deng, J. et al. (2009).** *ImageNet: A large-scale hierarchical image database.* CVPR.
 
 <script src="{{ '/assets/posts/avances-redes-neuronales/ai-winters.js' | relative_url }}"></script>
-<script src="{{ '/assets/posts/avances-redes-neuronales/backprop-explorer.js' | relative_url }}"></script>
-<script src="{{ '/assets/posts/avances-redes-neuronales/convolution-playground.js' | relative_url }}"></script>
-<script src="{{ '/assets/posts/avances-redes-neuronales/convergence-dashboard.js' | relative_url }}"></script>
