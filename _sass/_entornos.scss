@@ -9,7 +9,7 @@
 .entorno {
   margin: 1.5rem 0;
   padding: 1rem 1.25rem;
-  background: var(--surface-flat);
+  background: var(--surface);
   border-left: 3px solid var(--accent-color);
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
 
@@ -51,7 +51,7 @@
   margin: 1.5rem 0;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  background: var(--surface-flat);
+  background: var(--surface);
 
   > summary {
     padding: .7rem 1rem;

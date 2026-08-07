@@ -56,9 +56,10 @@
   --spacer-3: calc(var(--spacer) * 3);
 
   // ---- Superficies ----
-  --surface-sunken: #1c1c1c;   // tarjetas de post, bloque de contacto
-  --surface-flat:   #1e1e1e;   // bloques de introducción y "sobre mí"
-  --surface-raised: #1f1f1f;   // masthead
+  // Un solo gris para toda superficie: tarjetas, bloques de introducción,
+  // "sobre mí", contacto, masthead y entornos matemáticos. Antes eran tres
+  // valores casi idénticos (#1c1c1c, #1e1e1e, #1f1f1f) sin criterio detrás.
+  --surface: #1c1c1c;
   --surface-border: #444;      // borde de tarjeta
 
   // ---- Texto ----

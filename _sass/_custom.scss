@@ -40,7 +40,7 @@ h1, h2, h3 {
 
 .intro-block {
   flex: 1 1 300px;
-  background: var(--surface-flat);
+  background: var(--surface);
   padding: 1.2rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
@@ -63,7 +63,7 @@ h1, h2, h3 {
 }
 
 .posts-card {
-  background: var(--surface-sunken);
+  background: var(--surface);
   padding: 1rem;
   border: 1px solid var(--surface-border);
   border-radius: 8px;
@@ -163,7 +163,7 @@ h1, h2, h3 {
 
 .about-block {
   flex: 1 1 300px;
-  background: var(--surface-flat);
+  background: var(--surface);
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
@@ -186,7 +186,7 @@ h1, h2, h3 {
 }
 
 .contact-block {
-  background: var(--surface-sunken);
+  background: var(--surface);
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
