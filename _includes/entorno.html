@@ -1,0 +1,22 @@
+{%- comment -%}
+  Entorno matemático genérico.
+
+  No se invoca directamente: lo usan los envoltorios de _includes/entornos/,
+  que son los que se escriben en un post.
+
+  Parámetros
+    tipo     obligatorio  definicion | teorema | proposicion | demostracion | observacion
+    rotulo   obligatorio  texto visible ("Teorema")
+    cuerpo   obligatorio  markdown del enunciado, normalmente vía un bloque capture
+    numero   opcional     "2.1". Necesario para poder referenciarlo desde otro punto.
+    titulo   opcional     nombre entre paréntesis ("Gauss-Bonnet")
+    id       opcional     ancla. Convención: thm- def- prop- obs- dem- + slug descriptivo
+    qed      opcional     true añade el símbolo de fin de demostración
+
+  Ver docs/guia-rigor-divulgacion.md §4.
+{%- endcomment -%}
+<div class="entorno {{ include.tipo }}"{% if include.id %} id="{{ include.id }}"{% endif %}{% if include.numero %} data-numero="{{ include.numero }}"{% endif %}>
+  <p class="entorno-etiqueta">{{ include.rotulo }}{% if include.numero %} {{ include.numero }}{% endif %}{% if include.titulo %} ({{ include.titulo }}){% endif %}.</p>
+  {{ include.cuerpo | markdownify }}
+  {%- if include.qed %}<span class="qed" aria-hidden="true">□</span>{% endif -%}
+</div>

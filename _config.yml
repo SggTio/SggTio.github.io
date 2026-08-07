@@ -1,5 +1,7 @@
 # Setup
 title: Un Santajaro
+tagline: Santiago Gil Gallego
+description: "Escribo sobre lo que me gusta: matemáticas, computación, cuentos y poesía."
 url: https://sggtio.github.io
 lang: es
 baseurl: ""
@@ -8,6 +10,7 @@ permalink: pretty
 # Gems
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Optimize Jekyll
 exclude:
@@ -18,6 +21,8 @@ exclude:
   - Gemfile.lock
   - LICENSE.md
   - README.md
+  - CLAUDE.md
+  - docs
 
 sass:
   sass_dir: _sass
@@ -63,6 +68,15 @@ collections:
   notas:
     output: true
     permalink: /notas/:name/
+  proyectos:
+    output: true
+    permalink: /proyectos/:name/
+  investigacion:
+    output: true
+    permalink: /investigacion/:name/
+  series:
+    output: true
+    permalink: /series/:name/
 
 # Valores por defecto para items de colecciones.
 # Hereda `section` para que la navbar pueda marcar el link activo
@@ -74,15 +88,44 @@ defaults:
     values:
       section: "mates"
       layout: "post"
+      area: "matematicas"
+      genero: "articulo"
+      nivel: "intermedio"
   - scope:
       path: ""
       type: "notas"
     values:
       section: "notas"
       layout: "nota"
+      genero: "nota"
+      nivel: "divulgativo"
   - scope:
       path: ""
       type: "escritos"
     values:
+      # `section` pasa a "letras" en la Fase 7, junto con el permalink
       section: "escritos"
       layout: "escrito"
+      genero: "cuento"
+
+  # Colecciones nuevas. Sin carpeta todavía: no generan ninguna página.
+  - scope:
+      path: ""
+      type: "proyectos"
+    values:
+      section: "proyectos"
+      layout: "proyecto"
+      estado: "en-desarrollo"
+      draft: true
+  - scope:
+      path: ""
+      type: "investigacion"
+    values:
+      section: "investigacion"
+      layout: "linea-investigacion"
+  - scope:
+      path: ""
+      type: "series"
+    values:
+      section: "escritos"
+      layout: "serie"

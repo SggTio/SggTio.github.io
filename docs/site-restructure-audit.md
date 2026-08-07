@@ -486,7 +486,7 @@ Todo está a salvo bajo el tag `pre-restructure`.
 | F6 | Sin `sitemap.xml` ni `robots.txt` | peor indexación |
 | F7 | `site.description` viene del campo *About* del repo | ver abajo |
 | F8 | `_syntax.scss` claro sobre fondo oscuro | contraste insuficiente en código |
-| F9 | MathJax SVG sin MathML asistivo | fórmulas ilegibles para lectores de pantalla |
+| F9 | ~~MathJax SVG sin MathML asistivo~~ | **CORREGIDO — ver abajo. Este hallazgo era falso.** |
 | F10 | `docs/` sin excluir | este mismo documento se publicaría; ver abajo |
 
 **Sobre F7 — corrige la premisa de la Fase 3 del plan.**
@@ -505,6 +505,32 @@ en GitHub**, que `jekyll-github-metadata` inyecta en `site.description` cuando
 - Arreglarlo del todo son dos acciones, y una es fuera del repo.
 - Ese mismo mecanismo inyecta más metadatos del repo en el sitio, sin que nada
   en el código lo indique.
+
+**Sobre F9 — CORRECCIÓN, 2026-08-07 (Fase 3).**
+
+**El hallazgo original era falso y se retira.** Decía que MathJax con salida SVG
+no genera MathML asistivo y que las fórmulas eran ilegibles para lectores de
+pantalla. No es cierto.
+
+La documentación de MathJax indica que en la **versión 3** el MathML asistivo
+«se incluye en todos los componentes combinados y está activo por defecto».
+`tex-svg.js` es un componente combinado. Verificado además descargando el bundle
+que sirve el sitio (`cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js`):
+
+    AssistiveMmlHandler    3 ocurrencias
+    mjx-assistive-mml      3 ocurrencias
+    assistiveMml           9 ocurrencias
+
+La implementación está dentro y activa. **Las fórmulas del sitio ya eran
+accesibles antes de la Fase 3.**
+
+Lo que sí se hizo en la Fase 3, y es otra cosa: declarar
+`options.menuOptions.settings.assistiveMml: true` de forma explícita, porque en
+MathJax 4 el valor por defecto cambió. No arregla nada hoy; evita una regresión
+silenciosa si algún día se sube de versión.
+
+Queda en pie la otra observación del §6: la charla `laplacianos_tumores` carga
+su propia instancia de MathJax con salida `chtml` y delimitadores distintos.
 
 **Sobre F10 — afecta a este documento.**
 `_config.yml` no excluye `docs/`. Como el plan crea `docs/site-restructure-audit.md`,

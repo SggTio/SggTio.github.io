@@ -1,0 +1,55 @@
+# =============================================================================
+#  Glosario de notación compartido
+#
+#  El problema que resuelve: en una serie de seis entregas, la misma letra debe
+#  significar lo mismo en todas. Sin un lugar central, M es una variedad en la
+#  entrega 1 y una matriz en la 4, y quien las lea seguidas se pierde.
+#
+#  Ver docs/guia-rigor-divulgacion.md §3.
+# =============================================================================
+#
+#  REGLA DE LA SERIE
+#
+#  Todas las entregas de una serie usan las mismas claves. Si una entrega
+#  necesita redefinir un símbolo, CREA UNA CLAVE NUEVA en vez de reutilizar la
+#  existente con otro significado. Este archivo es la memoria de la serie.
+#
+# -----------------------------------------------------------------------------
+#  CAMPOS
+#
+#  simbolo      obligatorio  cómo se ve ("M", "Δ")
+#  latex        obligatorio  cómo se escribe ("\\mathcal{M}")
+#  significado  obligatorio  una frase, sin fórmulas
+#  area         opcional     matematicas | computacion | ia
+#  nota         opcional     para convenciones que confunden más que el símbolo
+#                            (el signo del laplaciano es el caso canónico)
+#  ver_tambien  opcional     otras claves relacionadas
+#
+# -----------------------------------------------------------------------------
+#  USO
+#
+#  Primera aparición de un símbolo en el cuerpo:
+#      Sea {% include notacion.html key="variedad" %} una variedad …
+#
+#  Tabla al final de un post o de una serie:
+#      {% include tabla-notacion.html claves=page.notacion %}
+#
+# -----------------------------------------------------------------------------
+#  EJEMPLOS DE FORMA (comentados)
+#
+#  variedad:
+#    simbolo: "M"
+#    latex: "\\mathcal{M}"
+#    significado: "Variedad riemanniana suave, compacta y sin borde."
+#    area: matematicas
+#    ver_tambien: [laplaciano]
+#
+#  laplaciano:
+#    simbolo: "Δ"
+#    latex: "\\Delta"
+#    significado: "Operador de Laplace-Beltrami sobre una variedad riemanniana."
+#    area: matematicas
+#    nota: "Signo: se adopta el laplaciano geométrico, positivo semidefinido."
+#    ver_tambien: [variedad]
+#
+# =============================================================================

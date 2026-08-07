@@ -23,11 +23,50 @@
         displayMath: [['$$', '$$'], ['\\[', '\\]']],
         processEscapes: true
       },
-      svg: { fontCache: 'global' }
+      svg: { fontCache: 'global' },
+      // MathJax 3 ya activa el MathML asistivo en los bundles combinados como
+      // tex-svg. Se declara explícito para que siga siendo cierto si algún día
+      // se sube a MathJax 4, donde el valor por defecto cambió.
+      options: {
+        menuOptions: { settings: { assistiveMml: true } }
+      }
     };
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script>
+    // Una fórmula dentro de un <details> cerrado no tiene dimensiones y puede
+    // componerse con el tamaño equivocado. Se recompone al primer despliegue.
+    // `toggle` no burbujea: de ahí la captura.
+    document.addEventListener('toggle', function (e) {
+      var d = e.target;
+      if (d.tagName !== 'DETAILS' || !d.open || d.dataset.mathListo) return;
+      if (window.MathJax && MathJax.typesetPromise) {
+        d.dataset.mathListo = '1';
+        MathJax.typesetPromise([d]);
+      }
+    }, true);
+  </script>
   {% endif %}
+
+  <script>
+    // La Capa 2 vive en <details>, y su contenido no se imprime si está
+    // cerrado: los navegadores lo ocultan con content-visibility y ninguna
+    // regla de `display` lo revierte. Se abre todo antes de imprimir y se
+    // restaura después. Sin JavaScript no se rompe nada: solo se pierde la
+    // Capa 2 al imprimir.
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details:not([open])').forEach(function (d) {
+        d.dataset.cerrado = '1';
+        d.open = true;
+      });
+    });
+    window.addEventListener('afterprint', function () {
+      document.querySelectorAll('details[data-cerrado]').forEach(function (d) {
+        d.open = false;
+        delete d.dataset.cerrado;
+      });
+    });
+  </script>
 
   {% if page.extra_css %}
     {% for css in page.extra_css %}

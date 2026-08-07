@@ -3,8 +3,8 @@
 // ==============================================================
 
 .masthead {
-  background-color: #1f1f1f;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: var(--surface-raised);
+  border-bottom: 1px solid var(--border-color);
   padding: 1.2rem 0;
   margin-bottom: var(--spacer-3);
 }
@@ -40,7 +40,7 @@
 }
 
 .nav a {
-  color: #fff;
+  color: var(--nav-color);
   text-decoration: none;
   padding: .25rem .55rem;
   border-radius: 4px;

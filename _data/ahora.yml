@@ -1,0 +1,33 @@
+# =============================================================================
+#  Página /ahora/ — qué está pasando ahora mismo
+#
+#  Ver docs/content-model.md §7. Se llena en la Fase 8.
+# =============================================================================
+#
+#  ESTRUCTURA
+#
+#  `bloques` es una LISTA, no un conjunto de claves fijas: así se añade o se
+#  quita un bloque editando solo este archivo, sin tocar la plantilla.
+#
+#      actualizado: 2026-08-07     # fecha visible al pie de la página
+#
+#      bloques:
+#        - titulo: "Qué estudio"
+#          items:
+#            - "Una línea por cosa."
+#            - "Frases cortas, no párrafos."
+#
+#        - titulo: "Qué investigo"
+#          items: []
+#
+#  Bloques previstos:
+#    Qué estudio · Qué investigo · Qué construyo · Qué escribo ·
+#    Qué quiero aprender después
+#
+# -----------------------------------------------------------------------------
+#  REGLA
+#
+#  Nada de fechas, titulaciones ni instituciones que no sean ciertas
+#  (CLAUDE.md §2). Lo que falte va como TODO(santiago) y al content-backlog.
+#
+# =============================================================================

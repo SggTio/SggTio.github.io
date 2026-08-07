@@ -4,13 +4,13 @@
 //  que se convierte en `body.section-<nombre>` en el layout.
 // ==============================================================
 body.section-default,
-body.section-inicio    { --accent-color: #8d99ab; }
-body.section-mates     { --accent-color: #e5d6c7; }
-body.section-notas     { --accent-color: #e5d6c7; }
-body.section-escritos  { --accent-color: #e5d6c7; }
-body.section-sobre     { --accent-color: #95c9a0; }
+body.section-inicio    { --accent-color: var(--accent-azulgris); }
+body.section-mates     { --accent-color: var(--accent-crema); }
+body.section-notas     { --accent-color: var(--accent-crema); }
+body.section-escritos  { --accent-color: var(--accent-crema); }
+body.section-sobre     { --accent-color: var(--accent-verde); }
 body.section-archivo,
-body.section-etiquetas { --accent-color: #8d99ab; }
+body.section-etiquetas { --accent-color: var(--accent-azulgris); }
 
 // ==============================================================
 //  Colores base dependientes del acento
@@ -40,7 +40,7 @@ h1, h2, h3 {
 
 .intro-block {
   flex: 1 1 300px;
-  background: #1e1e1e;
+  background: var(--surface-flat);
   padding: 1.2rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
@@ -63,9 +63,9 @@ h1, h2, h3 {
 }
 
 .posts-card {
-  background: #1c1c1c;
+  background: var(--surface-sunken);
   padding: 1rem;
-  border: 1px solid #444;
+  border: 1px solid var(--surface-border);
   border-radius: 8px;
   text-align: center;
   transition: background-color .2s ease-in-out, border-color .2s ease-in-out;
@@ -83,7 +83,7 @@ h1, h2, h3 {
   &:hover {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
-    color: #fff;
+    color: var(--on-accent);
   }
 }
 
@@ -107,7 +107,7 @@ h1, h2, h3 {
 
 .posts-empty {
   text-align: center;
-  color: #888;
+  color: var(--text-muted);
   margin: 1.5rem 0 2rem;
 }
 
@@ -118,7 +118,7 @@ h1, h2, h3 {
   text-align: center;
   font-style: italic;
   font-size: 1rem;
-  color: #aaa;
+  color: var(--text-quiet);
   margin-bottom: 2rem;
   line-height: 1.6;
 }
@@ -134,7 +134,7 @@ h1, h2, h3 {
     max-width: 100%;
     height: auto;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px var(--shadow-soft);
   }
 }
 
@@ -150,7 +150,7 @@ h1, h2, h3 {
     max-width: 150px;
     border-radius: 50%;
     border: 2px solid var(--accent-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 8px var(--shadow-strong);
   }
 }
 
@@ -163,7 +163,7 @@ h1, h2, h3 {
 
 .about-block {
   flex: 1 1 300px;
-  background: #1e1e1e;
+  background: var(--surface-flat);
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);
@@ -180,13 +180,13 @@ h1, h2, h3 {
   text-align: center;
   font-style: italic;
   font-size: .95rem;
-  color: #aaa;
+  color: var(--text-quiet);
   margin: 0 auto 1.5rem;
   max-width: 420px;
 }
 
 .contact-block {
-  background: #1c1c1c;
+  background: var(--surface-sunken);
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid var(--accent-color);

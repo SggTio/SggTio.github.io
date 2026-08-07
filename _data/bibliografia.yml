@@ -1,0 +1,63 @@
+# =============================================================================
+#  Bibliografía del sitio — una sola para todo
+#
+#  Una referencia se escribe UNA vez aquí y la citan todos los posts, las
+#  líneas de investigación y el CV. Corregir un año lo corrige en todas partes.
+#
+#  Ver docs/guia-rigor-divulgacion.md §2.
+# =============================================================================
+#
+#  REGLA DE VERIFICACIÓN (CLAUDE.md §2)
+#
+#  `verificado: true` significa que Santiago abrió el DOI o el arXiv y confirmó
+#  autores, título y año. NO significa "me suena".
+#
+#  Una referencia con `verificado: false` no se renderiza en producción:
+#  aparece como TODO en desarrollo y se lista en docs/content-backlog.md.
+#
+# -----------------------------------------------------------------------------
+#  CAMPOS
+#
+#  Obligatorios:   tipo, autores, titulo, anio, verificado
+#  Al menos uno:   doi, arxiv, url
+#
+#  tipo: libro | articulo | preprint | capitulo | tesis | software | web
+#
+# -----------------------------------------------------------------------------
+#  CÓMO SE CITA
+#
+#  El post declara sus claves en el front matter, EN EL ORDEN EN QUE QUIERE
+#  NUMERARLAS, porque el número de cada cita es su posición en ese array:
+#
+#      bibliografia: [lee2018, carlsson2009]
+#
+#  Y en el cuerpo:
+#
+#      … la homología persistente {% include cita.html key="carlsson2009" %} …
+#
+# -----------------------------------------------------------------------------
+#  EJEMPLOS DE FORMA (comentados: no son referencias del sitio todavía)
+#
+#  lee2018:
+#    tipo: libro
+#    autores: ["Lee, John M."]
+#    titulo: "Introduction to Riemannian Manifolds"
+#    anio: 2018
+#    editorial: "Springer"
+#    edicion: "2ª"
+#    doi: "10.1007/978-3-319-91755-9"
+#    verificado: true
+#
+#  carlsson2009:
+#    tipo: articulo
+#    autores: ["Carlsson, Gunnar"]
+#    titulo: "Topology and data"
+#    publicacion: "Bulletin of the AMS"
+#    volumen: 46
+#    numero: 2
+#    paginas: "255–308"
+#    anio: 2009
+#    doi: "10.1090/S0273-0979-09-01249-X"
+#    verificado: true
+#
+# =============================================================================

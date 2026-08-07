@@ -1,0 +1,65 @@
+# =============================================================================
+#  CV — datos editables en un solo archivo
+#
+#  Ver docs/content-model.md §7. Se llena en la Fase 8.
+# =============================================================================
+#
+#  REGLAS DURAS (CLAUDE.md §2)
+#
+#  - No se inventa NINGUNA empresa, fecha, cargo, titulación ni publicación.
+#  - Solo se recupera lo que ya exista en el repositorio. Hoy eso es: nombre,
+#    email, GitHub, Twitter e Instagram, de about.md. Nada más.
+#  - Todo lo demás nace como TODO(santiago) y se lista en content-backlog.md.
+#  - Sin barras de progreso, porcentajes ni rankings (CLAUDE.md §6):
+#    `tecnologias` es una lista agrupada, sin nivel de dominio.
+#  - `proyectos_seleccionados` guarda SLUGS de _proyectos, no texto. Un proyecto
+#    se describe una vez, en su ficha.
+#
+#  PENDIENTE DE SANTIAGO: qué parte del CV es pública. Decidir antes de la Fase 8.
+#
+# -----------------------------------------------------------------------------
+#  ESTRUCTURA
+#
+#      actualizado: 2026-08-07
+#      pdf: /assets/cv/santiago-gil-gallego.pdf    # opcional
+#
+#      perfil:
+#        nombre: Santiago Gil Gallego
+#        titulo: "Matemático computacional"
+#        resumen: "…"
+#        ubicacion: "TODO(santiago)"
+#        email: santiagogilgallego@gmail.com
+#        enlaces:
+#          github: https://github.com/SggTio
+#          orcid: "TODO(santiago)"
+#
+#      formacion:
+#        - titulo: "…"
+#          institucion: "…"
+#          desde: 2024
+#          hasta: null            # null = en curso
+#          estado: en-curso       # en-curso | completado
+#          notas: "…"
+#
+#      experiencia:
+#        - cargo: "…"
+#          organizacion: "…"
+#          desde: 2020
+#          hasta: 2023
+#          descripcion: "…"
+#          tecnologias: []
+#
+#      investigacion: []
+#      proyectos_seleccionados: []   # slugs de _proyectos
+#      publicaciones: []             # claves de _data/bibliografia.yml
+#      docencia: []
+#
+#      tecnologias:
+#        - grupo: "Lenguajes"
+#          items: []
+#
+#      idiomas:
+#        - idioma: Español
+#          nivel: nativo
+#
+# =============================================================================

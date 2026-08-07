@@ -54,6 +54,27 @@
   --spacer: 1rem;
   --spacer-2: calc(var(--spacer) * 1.5);
   --spacer-3: calc(var(--spacer) * 3);
+
+  // ---- Superficies ----
+  --surface-sunken: #1c1c1c;   // tarjetas de post, bloque de contacto
+  --surface-flat:   #1e1e1e;   // bloques de introducción y "sobre mí"
+  --surface-raised: #1f1f1f;   // masthead
+  --surface-border: #444;      // borde de tarjeta
+
+  // ---- Texto ----
+  --on-accent:  #fff;          // texto sobre fondo de acento
+  --nav-color:  #fff;          // enlaces de la navegación
+  --text-muted: #888;          // "Próximamente…"
+  --text-quiet: #aaa;          // citas centradas, cita de "sobre mí"
+
+  // ---- Sombras ----
+  --shadow-soft:   rgba(0, 0, 0, 0.3);
+  --shadow-strong: rgba(0, 0, 0, 0.4);
+
+  // ---- Acentos de sección ----
+  --accent-azulgris: #8d99ab;  // inicio, archivo, etiquetas
+  --accent-crema:    #e5d6c7;  // mates, notas, escritos
+  --accent-verde:    #95c9a0;  // sobre mí
 }
 
 @media (prefers-color-scheme: dark) {

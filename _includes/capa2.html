@@ -1,0 +1,20 @@
+{%- comment -%}
+  Capa 2 — los detalles, colapsados.
+
+  Demostraciones, derivaciones, casos borde, complejidad, código completo.
+  Un lector debe poder abandonar el texto sin abrir esto y llevarse algo
+  completo (CLAUDE.md §3).
+
+  Se usa <details> nativo: navegable por teclado, anunciado por lectores de
+  pantalla y funcional sin JavaScript. La impresión la resuelve head.html.
+
+  Parámetros
+    titulo   opcional     texto del <summary>. Por defecto "Detalles".
+    cuerpo   obligatorio  markdown, normalmente vía un bloque capture
+
+  Ver docs/guia-rigor-divulgacion.md §1.
+{%- endcomment -%}
+<details class="capa-2">
+  <summary>{{ include.titulo | default: "Detalles" }}</summary>
+  {{ include.cuerpo | markdownify }}
+</details>
