@@ -1,0 +1,34 @@
+{%- comment -%}
+  Línea de tiempo. Genérica a propósito: la usan formación, experiencia y
+  docencia del CV, y el historial de un proyecto.
+
+  Va en <ol> porque el orden es información, no presentación.
+
+  Parámetros
+    eventos  obligatorio  array. Cada elemento admite:
+                            desde        año o fecha de inicio
+                            hasta        opcional. null o ausente = en curso
+                            titulo       obligatorio
+                            subtitulo    opcional (institución, organización)
+                            descripcion  opcional, markdown
+    titulo   opcional     rótulo accesible de la lista
+{%- endcomment -%}
+{%- assign eventos = include.eventos -%}
+{%- if eventos and eventos != empty -%}
+<ol class="linea-tiempo" aria-label="{{ include.titulo | default: 'Cronología' }}">
+  {%- for e in eventos -%}
+  <li class="linea-tiempo-evento">
+    <p class="linea-tiempo-fecha">
+      {{ e.desde }}{% if e.hasta %}–{{ e.hasta }}{% else %} – actualidad{% endif %}
+    </p>
+    <p class="linea-tiempo-titulo">
+      <strong>{{ e.titulo }}</strong>
+      {%- if e.subtitulo %} · <span class="linea-tiempo-subtitulo">{{ e.subtitulo }}</span>{% endif -%}
+    </p>
+    {%- if e.descripcion -%}
+    <div class="linea-tiempo-descripcion">{{ e.descripcion | markdownify }}</div>
+    {%- endif -%}
+  </li>
+  {%- endfor -%}
+</ol>
+{%- endif -%}

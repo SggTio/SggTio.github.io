@@ -1,0 +1,29 @@
+{%- comment -%}
+  Enlaces de contacto y perfiles.
+
+  Lee de site.social. Sin iconos ni emojis: el nombre de la red ES el texto
+  del enlace, que es lo que un lector de pantalla necesita (CLAUDE.md §6).
+
+  No se abre en pestaña nueva: hacerlo sin avisar rompe el botón "atrás" y
+  desorienta a quien usa lector de pantalla.
+
+  Parámetros
+    titulo  opcional  rótulo accesible. Por defecto "Contacto y perfiles".
+{%- endcomment -%}
+{%- assign s = site.social -%}
+{%- if s -%}
+<ul class="enlaces-sociales" aria-label="{{ include.titulo | default: 'Contacto y perfiles' }}">
+  {%- if s.email -%}
+  <li><a href="mailto:{{ s.email }}">Correo: {{ s.email }}</a></li>
+  {%- endif -%}
+  {%- if s.github -%}
+  <li><a href="https://github.com/{{ s.github }}" rel="me">GitHub: {{ s.github }}</a></li>
+  {%- endif -%}
+  {%- if s.twitter -%}
+  <li><a href="https://twitter.com/{{ s.twitter }}" rel="me">Twitter: @{{ s.twitter }}</a></li>
+  {%- endif -%}
+  {%- if s.instagram -%}
+  <li><a href="https://instagram.com/{{ s.instagram }}" rel="me">Instagram: @{{ s.instagram }}</a></li>
+  {%- endif -%}
+</ul>
+{%- endif -%}

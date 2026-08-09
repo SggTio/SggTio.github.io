@@ -22,6 +22,11 @@
       </main>
 
       <footer class="footer">
+        <nav class="nav-pie" aria-label="Enlaces secundarios">
+          <a href="{{ '/archivo/' | relative_url }}">Archivo</a>
+          <a href="{{ '/etiquetas/' | relative_url }}">Etiquetas</a>
+          <a href="{{ '/atom.xml' | relative_url }}">Feed</a>
+        </nav>
         <small>
           &copy;
           <time datetime="{{ site.time | date_to_xmlschema }}">

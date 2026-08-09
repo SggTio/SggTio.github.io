@@ -1,0 +1,25 @@
+{%- comment -%}
+  Lista de etiquetas de un texto o proyecto.
+
+  Parámetros
+    etiquetas  obligatorio  array (normalmente page.tags)
+    enlazar    opcional     true enlaza al índice de etiquetas
+    titulo     opcional     rótulo accesible de la lista
+
+  Hoy enlaza al ancla de /etiquetas/. Cuando jekyll-archives esté activo
+  (tras migrar a Actions) pasará a /etiquetas/<etiqueta>/.
+{%- endcomment -%}
+{%- assign etiquetas = include.etiquetas -%}
+{%- if etiquetas and etiquetas != empty -%}
+<ul class="lista-etiquetas" aria-label="{{ include.titulo | default: 'Etiquetas' }}">
+  {%- for t in etiquetas -%}
+  <li>
+    {%- if include.enlazar -%}
+    <a href="{{ '/etiquetas/' | relative_url }}#{{ t | slugify }}">{{ t }}</a>
+    {%- else -%}
+    <span>{{ t }}</span>
+    {%- endif -%}
+  </li>
+  {%- endfor -%}
+</ul>
+{%- endif -%}

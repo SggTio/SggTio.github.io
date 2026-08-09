@@ -11,6 +11,9 @@ body.section-escritos  { --accent-color: var(--accent-crema); }
 body.section-sobre     { --accent-color: var(--accent-verde); }
 body.section-archivo,
 body.section-etiquetas { --accent-color: var(--accent-azulgris); }
+// Página de desarrollo: no existe en producción, pero sin esta regla se
+// quedaría sin --accent-color y los enlaces no tendrían color declarado.
+body.section-desarrollo { --accent-color: var(--accent-azulgris); }
 
 // ==============================================================
 //  Colores base dependientes del acento

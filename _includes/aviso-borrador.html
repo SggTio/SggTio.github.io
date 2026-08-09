@@ -1,0 +1,16 @@
+{%- comment -%}
+  Aviso de contenido sin terminar.
+
+  Nunca aparece en producción: es la red de seguridad de CLAUDE.md §2,
+  que prohíbe que un TODO(santiago) llegue al sitio publicado.
+
+  Parámetros
+    draft  obligatorio  true muestra el aviso
+    nota   opcional     texto alternativo
+{%- endcomment -%}
+{%- if include.draft and jekyll.environment != "production" -%}
+<p class="aviso-borrador" role="note">
+  <strong>Borrador.</strong>
+  {{ include.nota | default: "Esta ficha está sin terminar y no se publica." }}
+</p>
+{%- endif -%}

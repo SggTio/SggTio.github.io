@@ -21,13 +21,13 @@ section: etiquetas
   {% for tag in tag_list %}
     {% assign tagged = all_items | where_exp: "item", "item.tags contains tag" %}
     <li>
-      <a href="#{{ tag }}">{{ tag }}</a> ({{ tagged.size }})
+      <a href="#{{ tag | slugify }}">{{ tag }}</a> ({{ tagged.size }})
     </li>
   {% endfor %}
 </ul>
 
 {% for tag in tag_list %}
-  <h3 id="{{ tag }}">{{ tag }}</h3>
+  <h3 id="{{ tag | slugify }}">{{ tag }}</h3>
   <ul>
     {% assign tagged = all_items | where_exp: "item", "item.tags contains tag" %}
     {% for item in tagged %}

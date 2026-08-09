@@ -1,0 +1,38 @@
+{%- comment -%}
+  Proyecto destacado, para la portada. Formato ancho, una fila por proyecto:
+  imagen a un lado, narración al otro.
+
+  Es más grande que tarjeta-proyecto porque en la portada hay 3-6, no veinte.
+  Muestra `resumen` si existe, y si no cae a `description`.
+
+  Parámetros
+    proyecto  obligatorio  elemento de _proyectos
+    invertir  opcional     true pone la imagen a la derecha (filas alternas)
+{%- endcomment -%}
+{%- assign p = include.proyecto -%}
+{%- assign img = p.imagenes | where: "principal", true | first -%}
+{%- unless img -%}{%- assign img = p.imagenes | first -%}{%- endunless -%}
+<article class="proyecto-destacado{% if include.invertir %} proyecto-destacado-invertido{% endif %}">
+  {%- if img -%}
+  <div class="proyecto-destacado-imagen">
+    <img src="{{ img.src | relative_url }}" alt="{{ img.alt }}" loading="lazy">
+  </div>
+  {%- endif -%}
+
+  <div class="proyecto-destacado-cuerpo">
+    <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+
+    <p class="proyecto-destacado-meta">
+      {%- include insignia-estado.html estado=p.estado -%}
+      <span>{{ p.anio }}{% if p.anio_fin %}–{{ p.anio_fin }}{% endif %}</span>
+    </p>
+
+    {%- if p.resumen -%}
+    {{ p.resumen | markdownify }}
+    {%- elsif p.description -%}
+    <p>{{ p.description }}</p>
+    {%- endif -%}
+
+    {%- include aviso-borrador.html draft=p.draft -%}
+  </div>
+</article>

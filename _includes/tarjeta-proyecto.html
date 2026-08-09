@@ -1,0 +1,44 @@
+{%- comment -%}
+  Tarjeta de proyecto, para el índice de /proyectos/.
+
+  Las secciones vacías no se renderizan: un proyecto sin imagen ni
+  tecnologías produce una tarjeta corta y honesta, no una con huecos.
+
+  Parámetros
+    proyecto       obligatorio  elemento de _proyectos
+    nivel_titulo   opcional     2 o 3. Por defecto 3.
+    tecnologias    opcional     false las oculta. Por defecto true.
+{%- endcomment -%}
+{%- assign p = include.proyecto -%}
+{%- assign img = p.imagenes | where: "principal", true | first -%}
+{%- unless img -%}{%- assign img = p.imagenes | first -%}{%- endunless -%}
+<article class="tarjeta-proyecto">
+  {%- if img -%}
+  <img class="tarjeta-proyecto-imagen" src="{{ img.src | relative_url }}" alt="{{ img.alt }}" loading="lazy">
+  {%- endif -%}
+
+  <div class="tarjeta-proyecto-cuerpo">
+    {%- if include.nivel_titulo == 2 -%}
+    <h2><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
+    {%- else -%}
+    <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+    {%- endif -%}
+
+    <p class="tarjeta-proyecto-meta">
+      {%- include insignia-estado.html estado=p.estado -%}
+      <span class="tarjeta-proyecto-anio">{{ p.anio }}{% if p.anio_fin %}–{{ p.anio_fin }}{% endif %}</span>
+    </p>
+
+    {%- if p.description -%}
+    <p>{{ p.description }}</p>
+    {%- endif -%}
+
+    {%- unless include.tecnologias == false -%}
+    {%- if p.tecnologias -%}
+    {%- include lista-etiquetas.html etiquetas=p.tecnologias titulo="Tecnologías" -%}
+    {%- endif -%}
+    {%- endunless -%}
+
+    {%- include aviso-borrador.html draft=p.draft -%}
+  </div>
+</article>

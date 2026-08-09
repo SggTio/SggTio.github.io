@@ -1,0 +1,58 @@
+{%- comment -%}
+  Bloque de una línea de investigación.
+
+  Los proyectos NO se declaran aquí: se deducen. Cada proyecto declara a qué
+  línea pertenece, y la línea consulta. Así el dato vive en un solo sitio
+  (docs/content-model.md §4).
+
+  Parámetros
+    linea          obligatorio  elemento de _investigacion
+    nivel_titulo   opcional     2 o 3. Por defecto 3.
+    preguntas      opcional     true lista las preguntas abiertas
+    proyectos      opcional     true lista los proyectos relacionados
+{%- endcomment -%}
+{%- assign l = include.linea -%}
+<article class="area-investigacion">
+  {%- if include.nivel_titulo == 2 -%}
+  <h2><a href="{{ l.url | relative_url }}">{{ l.title }}</a></h2>
+  {%- else -%}
+  <h3><a href="{{ l.url | relative_url }}">{{ l.title }}</a></h3>
+  {%- endif -%}
+
+  <p class="area-investigacion-meta">
+    {%- include insignia-estado.html estado=l.estado -%}
+    {%- if l.desde %}<span>desde {{ l.desde }}</span>{% endif -%}
+  </p>
+
+  {%- if l.description -%}
+  <p>{{ l.description }}</p>
+  {%- endif -%}
+
+  {%- if l.metodos -%}
+  {%- include lista-etiquetas.html etiquetas=l.metodos titulo="Métodos" -%}
+  {%- endif -%}
+
+  {%- if include.proyectos -%}
+    {%- assign relacionados = site.proyectos | where_exp: "p", "p.investigacion contains l.slug" -%}
+    {%- assign relacionados = relacionados | where_exp: "p", "p.draft != true" -%}
+    {%- if relacionados.size > 0 -%}
+    <h4 class="area-investigacion-subtitulo">Proyectos</h4>
+    <ul class="area-investigacion-lista">
+      {%- for p in relacionados -%}
+      <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if include.preguntas and l.preguntas_abiertas -%}
+  <h4 class="area-investigacion-subtitulo">Preguntas abiertas</h4>
+  <ul class="area-investigacion-preguntas">
+    {%- for q in l.preguntas_abiertas -%}
+    <li class="pregunta-{{ q.estado | default: 'abierta' }}">{{ q.pregunta }}</li>
+    {%- endfor -%}
+  </ul>
+  {%- endif -%}
+
+  {%- include aviso-borrador.html draft=l.draft -%}
+</article>

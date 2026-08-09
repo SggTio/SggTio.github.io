@@ -1,0 +1,255 @@
+// ==============================================================
+//  Componentes reutilizables (Fase 4)
+//  Ver los includes de _includes/ para sus parámetros.
+//
+//  Solo se usan variables ya existentes: ningún color nuevo entra
+//  en la paleta por este archivo.
+// ==============================================================
+
+// ---- Insignias de estado ----
+// Los cinco estados se distinguen por trazo y peso, no por cinco colores
+// nuevos. El texto siempre está presente: nunca solo color (CLAUDE.md §7).
+.insignia {
+  display: inline-block;
+  padding: .1rem .5rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius);
+  font-size: .75rem;
+  letter-spacing: .03em;
+  color: var(--text-quiet);
+  white-space: nowrap;
+}
+
+.insignia-idea          { border-style: dashed; }
+.insignia-en-desarrollo { border-color: var(--accent-color); }
+.insignia-activo        { border-color: var(--accent-color);
+                          color: var(--accent-color);
+                          font-weight: 600; }
+.insignia-terminado     { /* estado neutro: hereda el estilo base */ }
+.insignia-archivado     { opacity: .6; }
+
+// ---- Aviso de borrador (solo en desarrollo) ----
+.aviso-borrador {
+  margin: 1rem 0;
+  padding: .6rem .9rem;
+  border: 1px dashed var(--accent-color);
+  border-radius: var(--border-radius);
+  font-size: .9rem;
+  color: var(--text-quiet);
+}
+
+// ---- Listas de etiquetas ----
+.lista-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .5rem;
+  list-style: none;
+  padding-left: 0;
+  margin: .6rem 0;
+
+  li > a,
+  li > span {
+    display: inline-block;
+    padding: .1rem .5rem;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    font-size: .78rem;
+    color: var(--text-quiet);
+    text-decoration: none;
+  }
+
+  li > a:hover,
+  li > a:focus-visible {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+}
+
+// ---- Encabezado de sección ----
+.encabezado-seccion { margin: var(--spacer-3) 0 var(--spacer-2); }
+.encabezado-seccion-titulo { margin: 0 0 .3rem; }
+.encabezado-seccion-descripcion {
+  margin: 0;
+  color: var(--text-quiet);
+  font-size: .95rem;
+}
+
+// ---- Tarjeta de post: área de clic estirada ----
+// Solo el título es enlace, pero toda la tarjeta responde al clic. Así el
+// nombre accesible del enlace es el título, no la tarjeta entera.
+.posts-card { position: relative; }
+.posts-card h2 a,
+.posts-card h3 a { text-decoration: none; color: inherit; }
+.posts-card h2 a::after,
+.posts-card h3 a::after { content: ""; position: absolute; inset: 0; }
+
+// Sin esto el foco de teclado quedaría invisible bajo el pseudo-elemento.
+.posts-card:focus-within {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+// ---- Tarjeta de proyecto ----
+.tarjeta-proyecto {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  overflow: hidden;
+
+  h2 a, h3 a { text-decoration: none; color: var(--accent-color); }
+  h2 a::after, h3 a::after { content: ""; position: absolute; inset: 0; }
+
+  &:focus-within {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+}
+
+.tarjeta-proyecto-imagen { width: 100%; margin: 0; border-radius: 0; }
+.tarjeta-proyecto-cuerpo { padding: 1rem 1.1rem 1.2rem; }
+
+.tarjeta-proyecto-meta,
+.proyecto-destacado-meta,
+.area-investigacion-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem;
+  margin: .4rem 0 .7rem;
+  font-size: .85rem;
+  color: var(--text-quiet);
+}
+
+// ---- Metadatos de proyecto ----
+.meta-proyecto {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: .4rem 1rem;
+  margin: var(--spacer-2) 0;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border-radius: var(--border-radius);
+
+  dt { font-weight: 600; color: var(--text-quiet); font-size: .85rem; }
+  dd { margin: 0; }
+}
+
+.meta-proyecto-enlaces {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+
+  li { margin-bottom: .2rem; }
+}
+
+@media (max-width: 32rem) {
+  .meta-proyecto {
+    grid-template-columns: 1fr;
+    gap: .15rem;
+
+    dd { margin-bottom: .6rem; }
+  }
+}
+
+// ---- Proyecto destacado ----
+.proyecto-destacado {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--spacer-2);
+  align-items: start;
+  margin: var(--spacer-3) 0;
+}
+
+.proyecto-destacado-invertido {
+  direction: rtl;
+  > * { direction: ltr; }
+}
+
+.proyecto-destacado-imagen img { width: 100%; border-radius: 8px; margin: 0; }
+.proyecto-destacado-cuerpo h3 { margin-top: 0; }
+
+@media (max-width: 45rem) {
+  .proyecto-destacado,
+  .proyecto-destacado-invertido {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+}
+
+// ---- Línea de investigación ----
+.area-investigacion {
+  padding: 1.1rem 1.2rem;
+  background: var(--surface);
+  border-left: 3px solid var(--accent-color);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  margin: var(--spacer-2) 0;
+
+  h2, h3 { margin-top: 0; }
+}
+
+.area-investigacion-subtitulo {
+  margin: 1rem 0 .3rem;
+  font-size: .9rem;
+  color: var(--text-quiet);
+}
+
+.area-investigacion-lista,
+.area-investigacion-preguntas {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: .95rem;
+
+  li { margin-bottom: .25rem; }
+}
+
+.area-investigacion-preguntas .pregunta-respondida { color: var(--text-muted); }
+
+// ---- Línea de tiempo ----
+.linea-tiempo {
+  list-style: none;
+  padding-left: 1.1rem;
+  margin: var(--spacer-2) 0;
+  border-left: 1px solid var(--border-color);
+}
+
+.linea-tiempo-evento { margin-bottom: 1.4rem; }
+.linea-tiempo-fecha {
+  margin: 0;
+  font-size: .8rem;
+  letter-spacing: .03em;
+  color: var(--text-quiet);
+}
+.linea-tiempo-titulo { margin: .15rem 0 .3rem; }
+.linea-tiempo-subtitulo { color: var(--text-quiet); font-weight: 400; }
+.linea-tiempo-descripcion {
+  font-size: .95rem;
+  > :last-child { margin-bottom: 0; }
+}
+
+// ---- Navegación secundaria del pie ----
+.nav-pie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  margin-bottom: .6rem;
+
+  a {
+    font-size: .8rem;
+    color: var(--text-quiet);
+    text-decoration: none;
+    padding: .15rem 0;
+  }
+
+  a:hover,
+  a:focus-visible { color: var(--accent-color); text-decoration: underline; }
+}
+
+// ---- Enlaces sociales ----
+.enlaces-sociales {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+
+  li { margin-bottom: .35rem; }
+}

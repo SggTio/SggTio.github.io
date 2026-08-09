@@ -1,0 +1,23 @@
+{%- comment -%}
+  Encabezado de sección: título y, opcionalmente, una frase que lo explica.
+
+  `nivel` existe para no romper la jerarquía de encabezados: una página
+  tiene un solo <h1> (CLAUDE.md §7). Usa nivel=1 solo si eres el título
+  principal de la página.
+
+  Parámetros
+    titulo       obligatorio
+    descripcion  opcional
+    nivel        opcional  1 o 2. Por defecto 2.
+    id           opcional  ancla
+{%- endcomment -%}
+<header class="encabezado-seccion"{% if include.id %} id="{{ include.id }}"{% endif %}>
+  {%- if include.nivel == 1 -%}
+  <h1 class="encabezado-seccion-titulo">{{ include.titulo }}</h1>
+  {%- else -%}
+  <h2 class="encabezado-seccion-titulo">{{ include.titulo }}</h2>
+  {%- endif -%}
+  {%- if include.descripcion -%}
+  <p class="encabezado-seccion-descripcion">{{ include.descripcion }}</p>
+  {%- endif -%}
+</header>

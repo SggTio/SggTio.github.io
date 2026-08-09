@@ -1,0 +1,19 @@
+{%- comment -%}
+  Insignia de estado de un proyecto o línea de investigación.
+
+  El estado se comunica con TEXTO, no solo con color: quien no distinga
+  los tonos sigue leyendo "En desarrollo" (CLAUDE.md §7).
+
+  Parámetros
+    estado  obligatorio  idea | en-desarrollo | activo | terminado | archivado
+{%- endcomment -%}
+{%- assign e = include.estado | default: "en-desarrollo" -%}
+{%- case e -%}
+  {%- when "idea" -%}          {%- assign rotulo = "Idea" -%}
+  {%- when "en-desarrollo" -%} {%- assign rotulo = "En desarrollo" -%}
+  {%- when "activo" -%}        {%- assign rotulo = "Activo" -%}
+  {%- when "terminado" -%}     {%- assign rotulo = "Terminado" -%}
+  {%- when "archivado" -%}     {%- assign rotulo = "Archivado" -%}
+  {%- else -%}                 {%- assign rotulo = e -%}
+{%- endcase -%}
+<span class="insignia insignia-{{ e }}">{{ rotulo }}</span>

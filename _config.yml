@@ -39,6 +39,13 @@ author:
   url: https://github.com/SggTio
   email: santiagogilgallego@gmail.com
 
+# Perfiles públicos. Los consume _includes/enlaces-sociales.html
+social:
+  email: santiagogilgallego@gmail.com
+  github: SggTio
+  twitter: Un_Santajaro
+  instagram: snttrcio
+
 # Custom vars
 version: 3.0.0
 

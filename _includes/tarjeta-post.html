@@ -1,0 +1,34 @@
+{%- comment -%}
+  Tarjeta de un texto, para grillas y listados.
+
+  Conserva la clase .posts-card del sitio, así que hereda el estilo actual.
+  A diferencia del marcado antiguo, solo el título es enlace: el área de clic
+  se estira por CSS. Así el lector de pantalla no lee la tarjeta entera como
+  texto de enlace (CLAUDE.md §6 y §7).
+
+  Parámetros
+    post           obligatorio  elemento de colección
+    nivel_titulo   opcional     2 o 3. Por defecto 3.
+    etiquetas      opcional     true muestra las etiquetas
+    fecha          opcional     false la oculta. Por defecto true.
+{%- endcomment -%}
+{%- assign p = include.post -%}
+<article class="posts-card">
+  {%- if include.nivel_titulo == 2 -%}
+  <h2><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
+  {%- else -%}
+  <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+  {%- endif -%}
+
+  {%- unless include.fecha == false -%}
+  <p><small><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%b %d, %Y" }}</time></small></p>
+  {%- endunless -%}
+
+  {%- if p.description -%}
+  <p><small>{{ p.description }}</small></p>
+  {%- endif -%}
+
+  {%- if include.etiquetas and p.tags -%}
+  {%- include lista-etiquetas.html etiquetas=p.tags -%}
+  {%- endif -%}
+</article>

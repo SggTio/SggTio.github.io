@@ -1,0 +1,49 @@
+{%- comment -%}
+  Bloque de metadatos de la página de un proyecto: año, estado, tipo, área,
+  tecnologías y enlaces.
+
+  Va en <dl> porque es literalmente una lista de pares término/definición.
+  El texto de cada enlace describe su destino: nunca "aquí" (CLAUDE.md §6).
+
+  Parámetros
+    proyecto  obligatorio  elemento de _proyectos
+{%- endcomment -%}
+{%- assign p = include.proyecto -%}
+<dl class="meta-proyecto">
+  {%- if p.anio -%}
+  <dt>Año</dt>
+  <dd>{{ p.anio }}{% if p.anio_fin %}–{{ p.anio_fin }}{% else %}{% if p.estado == "activo" or p.estado == "en-desarrollo" %} – en curso{% endif %}{% endif %}</dd>
+  {%- endif -%}
+
+  {%- if p.estado -%}
+  <dt>Estado</dt>
+  <dd>{% include insignia-estado.html estado=p.estado %}</dd>
+  {%- endif -%}
+
+  {%- if p.tipo -%}
+  <dt>Tipo</dt>
+  <dd>{{ p.tipo | replace: "-", " " | capitalize }}</dd>
+  {%- endif -%}
+
+  {%- if p.area -%}
+  <dt>Área</dt>
+  <dd>{{ p.area | replace: "-", " " | capitalize }}</dd>
+  {%- endif -%}
+
+  {%- if p.tecnologias -%}
+  <dt>Tecnologías</dt>
+  <dd>{% include lista-etiquetas.html etiquetas=p.tecnologias titulo="Tecnologías" %}</dd>
+  {%- endif -%}
+
+  {%- if p.enlaces -%}
+  <dt>Enlaces</dt>
+  <dd>
+    <ul class="meta-proyecto-enlaces">
+      {%- if p.enlaces.repo -%}<li><a href="{{ p.enlaces.repo }}">Repositorio</a></li>{%- endif -%}
+      {%- if p.enlaces.demo -%}<li><a href="{{ p.enlaces.demo }}">Demostración interactiva</a></li>{%- endif -%}
+      {%- if p.enlaces.publicacion -%}<li><a href="{{ p.enlaces.publicacion }}">Publicación</a></li>{%- endif -%}
+      {%- if p.enlaces.paper -%}<li><a href="{{ p.enlaces.paper }}">Artículo en arXiv</a></li>{%- endif -%}
+    </ul>
+  </dd>
+  {%- endif -%}
+</dl>
