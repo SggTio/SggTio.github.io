@@ -133,6 +133,30 @@ solo en el front matter de este archivo.
 
 {% include enlaces-sociales.html %}
 
+{% include encabezado-seccion.html titulo="Secciones de una y dos columnas" descripcion="No son includes: son clases que se escriben en el markdown. Antes solo funcionaban en las notas; ahora sirven en cualquier página." %}
+
+<section class="one-col" markdown="1">
+
+Esta es una sección `one-col`: columna angosta y centrada dentro del ancho
+normal. Sirve para bajar el ritmo, introducir una idea sola o rematar un
+argumento sin que el ojo recorra líneas largas.
+
+</section>
+
+<section class="two-col" markdown="1">
+
+### Columna izquierda
+
+Dos bloques en paralelo. Útil para contrastar dos posturas, comparar dos
+algoritmos, o poner ejemplo y contraejemplo uno al lado del otro.
+
+### Columna derecha
+
+En pantalla estrecha se apilan. A 45rem de contenedor cada columna da unos
+cincuenta caracteres por línea: cómodo para bloques cortos, no para prosa larga.
+
+</section>
+
 {% include encabezado-seccion.html titulo="Entornos matemáticos (Fase 3)" descripcion="Aquí para poder revisarlos junto al resto." %}
 
 {% capture c1 %}Un espacio localmente euclídeo, con fórmula $x^2 + y^2 = 1$.{% endcapture %}

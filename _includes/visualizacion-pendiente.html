@@ -1,0 +1,39 @@
+{%- comment -%}
+  Hueco reservado para una visualización que todavía no existe.
+
+  Se pinta solo en desarrollo, igual que aviso-borrador: sirve para revisar el
+  plan visual de una ficha antes de que nadie escriba una línea de JavaScript.
+  Cuando la visualización se construya, su entrada pasa a `estado: hecha` y
+  este recuadro deja de aparecer.
+
+  Parámetros
+    lista    obligatorio  page.visualizaciones
+    seccion  obligatorio  qué sección se está renderizando; filtra la lista
+
+  Esquema de cada entrada en el front matter:
+    id           ancla, prefijo viz-
+    titulo       nombre de la visualización
+    seccion      dónde va: problema | motivacion | contribucion |
+                 enfoque_matematico | enfoque_computacional | resultados |
+                 limitaciones | aprendizajes | proximos_pasos
+    tipo         interactiva | figura | animacion
+    estado       pendiente | hecha
+    que_muestra  descripción en markdown
+    ensena       una frase: qué debe entender el lector al verla
+{%- endcomment -%}
+{%- if jekyll.environment != "production" and include.lista -%}
+  {%- assign de_esta_seccion = include.lista | where: "seccion", include.seccion -%}
+  {%- assign pendientes = de_esta_seccion | where: "estado", "pendiente" -%}
+  {%- for v in pendientes -%}
+  <div class="viz-pendiente" role="note"{% if v.id %} id="{{ v.id }}"{% endif %}>
+    <p class="viz-pendiente-etiqueta">Visualización pendiente · {{ v.tipo | default: "figura" }}</p>
+    <p class="viz-pendiente-titulo">{{ v.titulo }}</p>
+    {%- if v.que_muestra %}
+    <div class="viz-pendiente-desc">{{ v.que_muestra | markdownify }}</div>
+    {%- endif %}
+    {%- if v.ensena %}
+    <p class="viz-pendiente-ensena">Qué enseña: {{ v.ensena }}</p>
+    {%- endif %}
+  </div>
+  {%- endfor -%}
+{%- endif -%}

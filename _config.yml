@@ -123,7 +123,12 @@ defaults:
       section: "proyectos"
       layout: "proyecto"
       estado: "en-desarrollo"
+      # `draft` lo leen las plantillas: pinta el aviso y filtra los listados.
       draft: true
+      # `published` lo lee Jekyll: la página NO se genera. Es la garantía dura
+      # de que ningún TODO(santiago) llegue a producción (CLAUDE.md §2).
+      # Para revisarlas en local: bundle exec jekyll serve --unpublished
+      published: false
   - scope:
       path: ""
       type: "investigacion"

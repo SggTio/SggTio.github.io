@@ -346,26 +346,38 @@ body.layout-nota .container {
   .nota-content {
     font-size: 1rem;
     line-height: 1.7;
-
-    // Sección de una sola columna (angosta, centrada) dentro de
-    // la nota ancha. Útil para intros, párrafos clave, remates.
-    .one-col {
-      max-width: 36rem;
-      margin: 2rem auto;
-    }
-
-    // Sección de dos columnas. Colapsa a una en móvil.
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-
-      > *:first-child { margin-top: 0; }
-    }
-
-    @media (max-width: 720px) {
-      .two-col { grid-template-columns: 1fr; gap: 1rem; }
-    }
   }
+}
+
+// ==============================================================
+//  Secciones de una y dos columnas — disponibles en CUALQUIER página
+//
+//  Estaban acotadas a .nota-content; se liberan para poder alternar
+//  el ritmo también en fichas de proyecto y páginas largas. El autor
+//  las mete en el markdown:
+//    <section class="one-col" markdown="1"> … </section>
+//    <section class="two-col" markdown="1"> … </section>
+//  `markdown="1"` es obligatorio: sin él kramdown no procesa el
+//  markdown anidado dentro del bloque HTML.
+// ==============================================================
+
+// Columna angosta y centrada dentro de un contenedor ancho.
+// Útil para intros, párrafos clave, remates.
+.one-col {
+  max-width: 36rem;
+  margin: 2rem auto;
+}
+
+// Dos columnas en paralelo. Colapsan a una en móvil.
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+
+  > *:first-child { margin-top: 0; }
+}
+
+@media (max-width: 720px) {
+  .two-col { grid-template-columns: 1fr; gap: 1rem; }
 }

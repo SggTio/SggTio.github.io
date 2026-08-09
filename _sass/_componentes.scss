@@ -227,6 +227,131 @@
   > :last-child { margin-bottom: 0; }
 }
 
+// ---- Página de proyecto ----
+.proyecto-header {
+  margin-bottom: var(--spacer-2);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.proyecto-titulo { margin: 0 0 .4rem; line-height: 1.15; }
+
+// La autoría no es un pie de nota: los coautores se leen bajo el título.
+.proyecto-autoria {
+  margin: 0 0 .5rem;
+  font-size: 1rem;
+  color: var(--body-color);
+}
+
+// Cuando hace falta una frase entera para delimitar quién hizo qué.
+.proyecto-nota-autoria {
+  margin: .8rem 0 0;
+  padding: .6rem .9rem;
+  border-left: 3px solid var(--accent-color);
+  font-size: .92rem;
+  color: var(--text-quiet);
+}
+
+.proyecto-dominio {
+  &::before { content: "·"; margin-right: .6rem; color: var(--surface-border); }
+}
+
+// Frase de entrada: sitúa al lector antes de la narración.
+.proyecto-entrada {
+  margin: 0 0 var(--spacer-2);
+  color: var(--body-color);
+}
+
+.proyecto-portada {
+  margin: 0 0 var(--spacer-2);
+
+  img { width: 100%; border-radius: 8px; margin: 0; }
+
+  figcaption {
+    margin-top: .5rem;
+    font-size: .85rem;
+    color: var(--text-quiet);
+  }
+}
+
+.proyecto-resumen {
+  font-size: 1.1rem;
+  line-height: 1.6;
+
+  > :first-child { margin-top: 0; }
+}
+
+.proyecto h2 { margin-top: var(--spacer-3); }
+
+// ---- Índice de áreas (anclas, sin JavaScript) ----
+.indice-areas {
+  margin: var(--spacer-2) 0 var(--spacer-3);
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .75rem;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  a {
+    display: inline-block;
+    padding: .3rem .7rem;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: .9rem;
+  }
+
+  a:hover,
+  a:focus-visible { border-color: var(--accent-color); }
+}
+
+.indice-areas-cuenta {
+  color: var(--text-muted);
+  font-size: .8rem;
+}
+
+// ---- Hueco de visualización pendiente (solo en desarrollo) ----
+.viz-pendiente {
+  margin: var(--spacer-2) 0;
+  padding: 1rem 1.1rem;
+  border: 2px dashed var(--surface-border);
+  border-radius: var(--border-radius);
+  background: var(--surface);
+}
+
+.viz-pendiente-etiqueta {
+  margin: 0 0 .3rem;
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.viz-pendiente-titulo {
+  margin: 0 0 .5rem;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.viz-pendiente-desc {
+  font-size: .92rem;
+  color: var(--text-quiet);
+
+  > :first-child { margin-top: 0; }
+  > :last-child  { margin-bottom: 0; }
+}
+
+.viz-pendiente-ensena {
+  margin: .6rem 0 0;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--text-quiet);
+}
+
 // ---- Navegación secundaria del pie ----
 .nav-pie {
   display: flex;

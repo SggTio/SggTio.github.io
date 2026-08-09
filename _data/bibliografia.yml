@@ -61,3 +61,18 @@
 #    verificado: true
 #
 # =============================================================================
+
+# Referencia central del método basado en forma de `interpolacion-contornos`.
+# Marcada como verificada en el material de origen.
+raya1990:
+  tipo: articulo
+  autores: ["Raya, S. P.", "Udupa, J. K."]
+  titulo: "Shape-based interpolation of multidimensional objects"
+  publicacion: "IEEE Transactions on Medical Imaging"
+  volumen: 9
+  numero: 1
+  paginas: "32–42"
+  anio: 1990
+  doi: "10.1109/42.52980"
+  verificado: true
+

@@ -207,7 +207,8 @@ frase para tarjetas y buscadores, otro es el párrafo narrativo de apertura.
 | `anio` | int | año de inicio; ordena el índice |
 | `estado` | enum | `idea` `en-desarrollo` `activo` `terminado` `archivado` |
 | `tipo` | enum | `investigacion` `software` `experimento` `visualizacion` `infraestructura` `divulgacion` |
-| `area` | enum | `matematicas` `computacion` `ia` |
+| `area` | enum | `matematicas` `ciencias-computacionales` `ia` |
+| `autoria` | string | **quién hizo el proyecto.** Se renderiza bajo el título, nunca en un pie de nota |
 
 **Narrativos — opcionales, y su ausencia oculta la sección**
 
@@ -250,10 +251,45 @@ imagenes:
 investigacion: [geometria-aprendizaje]   # slugs de _investigacion
 escritos_relacionados: [2026-04-14-fundamentos-redes-neuronales]
 
+nota_autoria: "…"         # frase entera cuando hace falta delimitar quién hizo qué
+dominio: ["Imágenes médicas", "Topología aplicada"]   # texto legible, no slugs
+
 destacado: false          # true ⇒ candidato a portada
-draft: true               # true ⇒ nunca en producción
+draft: true               # true ⇒ aviso en desarrollo, filtrado en listados
+published: false          # Jekyll: la página NO se genera. Garantía dura.
 orden: 0                  # desempata entre proyectos del mismo año
+
+visualizaciones:          # plan visual; se construyen en una fase posterior
+  - id: viz-algo
+    titulo: "…"
+    seccion: problema     # dónde se ancla, ver más abajo
+    tipo: interactiva     # interactiva | figura | animacion
+    estado: pendiente     # pendiente | hecha
+    que_muestra: |
+      Descripción en markdown.
+    ensena: "Una frase: qué debe entender el lector al verla."
 ```
+
+### `draft` y `published`: dos interruptores, a propósito
+
+`draft` es campo nuestro: lo leen las plantillas para pintar el aviso y filtrar
+listados. **Jekyll lo ignora**, así que por sí solo no impide que la página se
+genere con sus `TODO(santiago)` dentro.
+
+`published: false` sí es de Jekyll: la página no existe. Es la garantía dura de
+CLAUDE.md §2. Ambos están en los defaults de la colección; para revisar las
+fichas en local, `bundle exec jekyll serve --unpublished`.
+
+### Visualizaciones pendientes
+
+El campo `visualizaciones` declara el plan visual antes de que exista el
+código. En desarrollo, `_includes/visualizacion-pendiente.html` pinta un
+recuadro punteado en el punto exacto donde irá cada una, con su descripción.
+En producción no aparece nada.
+
+Anclas disponibles en `seccion`: `problema`, `motivacion`, `contribucion`,
+`enfoque_matematico`, `enfoque_computacional`, `resultados`, `limitaciones`,
+`aprendizajes`, `proximos_pasos`.
 
 ### Reglas
 
@@ -409,7 +445,8 @@ declara `genero: ensayo`. Todo lo demás hereda.
 
 | Eje | Campo | Cardinalidad | Valores |
 |---|---|---|---|
-| **Área** | `area` | una | `matematicas` `computacion` `ia` |
+| **Área** | `area` | una | `matematicas` `ciencias-computacionales` `ia` |
+| **Dominio** | `dominio` | varios | texto legible: «Imágenes médicas», «Geometría computacional»… |
 | **Género** | `genero` | uno | `articulo` `nota` `ensayo` `cuento` `poema` `charla` |
 | **Etiquetas** | `tags` | muchas | libres |
 | **Serie** | `serie` | una o ninguna | slug de `_series` |

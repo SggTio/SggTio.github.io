@@ -1,0 +1,124 @@
+---
+layout: default
+---
+{%- comment -%}
+  Página de un proyecto.
+
+  No es una ficha técnica: es una narración. Se lee de corrido sin conocer el
+  tema, y los detalles técnicos van colapsados (modelo de tres capas,
+  CLAUDE.md §3).
+
+  Orden: Capa 0 (resumen, problema, motivación) · Capa 1 (qué hice) ·
+  Capa 2 colapsada (matemáticas, implementación) · Capa 1 (resultados,
+  limitaciones, aprendizajes, qué falta) · metadatos al final.
+
+  Toda sección ausente del front matter simplemente no se renderiza.
+{%- endcomment -%}
+<article class="proyecto">
+  <header class="proyecto-header">
+    <h1 class="proyecto-titulo">{{ page.title }}</h1>
+
+    {%- if page.autoria %}
+    <p class="proyecto-autoria">{{ page.autoria }}</p>
+    {%- endif %}
+
+    <p class="proyecto-meta">
+      {%- include insignia-estado.html estado=page.estado -%}
+      <span>{{ page.anio }}{% if page.anio_fin %}–{{ page.anio_fin }}{% endif %}</span>
+      {%- if page.dominio %}
+        {%- for d in page.dominio %}
+        <span class="proyecto-dominio">{{ d }}</span>
+        {%- endfor %}
+      {%- endif %}
+    </p>
+
+    {%- if page.nota_autoria %}
+    <p class="proyecto-nota-autoria">{{ page.nota_autoria }}</p>
+    {%- endif %}
+  </header>
+
+  {% include aviso-borrador.html draft=page.draft %}
+
+  {%- comment -%}
+    Capa 0 — la idea. `description` es la frase de entrada: sitúa al lector
+    antes de que empiece la narración. `resumen` la amplía cuando hay material.
+  {%- endcomment -%}
+  {%- if page.description %}
+  <p class="lead proyecto-entrada">{{ page.description }}</p>
+  {%- endif %}
+
+  {%- comment -%} Imagen de portada: la marcada `principal`, o la primera {%- endcomment -%}
+  {%- assign portada = page.imagenes | where: "principal", true | first -%}
+  {%- unless portada -%}{%- assign portada = page.imagenes | first -%}{%- endunless -%}
+  {%- if portada %}
+  <figure class="proyecto-portada">
+    <img src="{{ portada.src | relative_url }}" alt="{{ portada.alt }}">
+    {%- if portada.caption %}
+    <figcaption>{{ portada.caption }}</figcaption>
+    {%- endif %}
+  </figure>
+  {%- endif %}
+
+  {%- if page.resumen %}
+  <div class="proyecto-resumen">{{ page.resumen | markdownify }}</div>
+  {%- endif %}
+
+  {%- if page.problema %}
+  <h2>El problema</h2>
+  {{ page.problema | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="problema" %}
+  {%- endif %}
+
+  {%- if page.motivacion %}
+  <h2>Por qué es interesante</h2>
+  {{ page.motivacion | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="motivacion" %}
+  {%- endif %}
+
+  {%- comment -%} Capa 1 — el desarrollo {%- endcomment -%}
+  {%- if page.contribucion %}
+  <h2>Qué hice</h2>
+  {{ page.contribucion | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="contribucion" %}
+  {%- endif %}
+
+  {%- comment -%} Capa 2 — los detalles, colapsados {%- endcomment -%}
+  {%- if page.enfoque_matematico %}
+  {% include capa2.html titulo="Las matemáticas que usa" cuerpo=page.enfoque_matematico %}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="enfoque_matematico" %}
+  {%- endif %}
+
+  {%- if page.enfoque_computacional %}
+  {% include capa2.html titulo="Cómo está implementado" cuerpo=page.enfoque_computacional %}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="enfoque_computacional" %}
+  {%- endif %}
+
+  {%- if page.resultados %}
+  <h2>Qué obtuve</h2>
+  {{ page.resultados | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="resultados" %}
+  {%- endif %}
+
+  {%- if page.limitaciones %}
+  <h2>Limitaciones</h2>
+  {{ page.limitaciones | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="limitaciones" %}
+  {%- endif %}
+
+  {%- if page.aprendizajes %}
+  <h2>Qué aprendí</h2>
+  {{ page.aprendizajes | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="aprendizajes" %}
+  {%- endif %}
+
+  {%- if page.proximos_pasos %}
+  <h2>Qué falta</h2>
+  {{ page.proximos_pasos | markdownify }}
+  {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="proximos_pasos" %}
+  {%- endif %}
+
+  {%- comment -%} Cuerpo libre, para lo que no encaje en el esquema {%- endcomment -%}
+  {{ content }}
+
+  {% include meta-proyecto.html proyecto=page %}
+</article>
