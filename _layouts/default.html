@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'es' }}" data-theme="dark-poole">
+<html lang="{{ site.lang | default: 'es' }}">
   {% include head.html %}
 
   <body class="section-{{ page.section | downcase | default: 'default' }}{% if page.layout %} layout-{{ page.layout }}{% endif %}{% if page.wide %} layout-wide{% endif %}">
@@ -26,6 +26,7 @@
           <a href="{{ '/archivo/' | relative_url }}">Archivo</a>
           <a href="{{ '/etiquetas/' | relative_url }}">Etiquetas</a>
           <a href="{{ '/atom.xml' | relative_url }}">Feed</a>
+          {% include alternador-tema.html %}
         </nav>
         <small>
           &copy;

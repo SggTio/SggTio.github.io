@@ -2,6 +2,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <script>
+    // El sitio es oscuro por defecto. Si el lector eligió claro alguna vez, se
+    // aplica ANTES de pintar: si esto fuera al final del body, la página
+    // aparecería oscura y saltaría a clara de golpe.
+    // Sin JavaScript no pasa nada: se queda en oscuro, que es el valor normal.
+    try {
+      if (localStorage.getItem("tema") === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    } catch (e) {}
+  </script>
+
   <title>
     {% if page.title == "Inicio" %}
       {{ site.title }}{% if site.tagline %} &middot; {{ site.tagline }}{% endif %}
