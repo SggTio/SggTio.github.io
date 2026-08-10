@@ -2,7 +2,7 @@
 title: "Dónde fallan los métodos clásicos en glioma post-tratamiento"
 description: "Caracterizar los modos de fallo de la segmentación clásica en glioma tratado, para saber exactamente dónde duele antes de proponer métodos nuevos."
 area: matematicas
-dominio: ["Imágenes médicas", "Topología aplicada"]
+dominio: ["Imágenes médicas", "Geometría y topología"]
 tipo: investigacion
 estado: activo
 anio: 2026

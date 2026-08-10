@@ -2,7 +2,7 @@
 title: "Topología algebraica para segmentación de tumores"
 description: "Enseñarle a una red a ver la forma, no solo el volumen: por qué una máscara con el agujero relleno puede tener una puntuación excelente, y qué matemáticas hacen falta para penalizarlo."
 area: matematicas
-dominio: ["Topología aplicada", "Imágenes médicas", "Aprendizaje profundo"]
+dominio: ["Geometría y topología", "Imágenes médicas", "Aprendizaje automático"]
 tipo: investigacion
 estado: activo
 anio: 2026

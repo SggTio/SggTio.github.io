@@ -2,7 +2,7 @@
 title: "Los cimientos de la inteligencia artificial"
 description: "Serie de divulgación que recorre la historia y la matemática de las redes neuronales, con visualizaciones interactivas."
 area: ia
-dominio: ["Divulgación", "Historia de la ciencia"]
+dominio: ["Aprendizaje automático"]
 tipo: divulgacion
 estado: activo
 anio: 2026

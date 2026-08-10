@@ -2,7 +2,7 @@
 title: "Cuadernos de geometría computacional"
 description: "Triangulación de polígonos, programación lineal geométrica, grafos duales y envolventes convexas: el andamiaje que hace posible el resto."
 area: ciencias-computacionales
-dominio: ["Geometría computacional"]
+dominio: ["Geometría y topología"]
 tipo: software
 estado: terminado
 anio: 2026

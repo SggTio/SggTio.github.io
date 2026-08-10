@@ -39,11 +39,6 @@ section: sobre
 <hr />
 
 <div class="contact-block">
-  <h2>📬 Contacto</h2>
-  <ul>
-    <li>Email: <a href="mailto:santiagogilgallego@gmail.com">sggtio</a></li>
-    <li>Twitter: <a href="https://twitter.com/Un_Santajaro" target="_blank">@Un_Santajaro</a></li>
-    <li>Instagram: <a href="https://instagram.com/snttrcio" target="_blank">@snttrcio</a></li>
-    <li>GitHub: <a href="https://github.com/SggTio" target="_blank">github.com/SggTio</a></li>
-  </ul>
+  <h2>Contacto</h2>
+  {% include enlaces-sociales.html titulo="Contacto" %}
 </div>

@@ -77,7 +77,7 @@ layout: default
 
   {%- comment -%} Capa 1 — el desarrollo {%- endcomment -%}
   {%- if page.contribucion %}
-  <h2>Qué hice</h2>
+  <h2>Qué se hizo</h2>
   {{ page.contribucion | markdownify }}
   {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="contribucion" %}
   {%- endif %}
@@ -94,7 +94,7 @@ layout: default
   {%- endif %}
 
   {%- if page.resultados %}
-  <h2>Qué obtuve</h2>
+  <h2>Qué se obtuvo</h2>
   {{ page.resultados | markdownify }}
   {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="resultados" %}
   {%- endif %}
@@ -106,7 +106,7 @@ layout: default
   {%- endif %}
 
   {%- if page.aprendizajes %}
-  <h2>Qué aprendí</h2>
+  <h2>Qué se aprendió</h2>
   {{ page.aprendizajes | markdownify }}
   {% include visualizacion-pendiente.html lista=page.visualizaciones seccion="aprendizajes" %}
   {%- endif %}

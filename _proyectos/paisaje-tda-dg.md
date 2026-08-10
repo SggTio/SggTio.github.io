@@ -2,7 +2,7 @@
 title: "Mapa del terreno entre topología, geometría y aplicaciones"
 description: "Cuatro revisiones sistemáticas convertidas en un mapa navegable de qué se está haciendo dónde, en la intersección entre topología algebraica, geometría diferencial y dominios aplicados."
 area: matematicas
-dominio: ["Topología aplicada", "Geometría diferencial"]
+dominio: ["Geometría y topología"]
 tipo: investigacion
 estado: idea
 anio: 2026

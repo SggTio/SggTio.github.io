@@ -25,13 +25,7 @@ section: mates
 {% if nn_posts.size > 0 %}
 <div class="posts-grid">
   {% for post in nn_posts %}
-    <div class="posts-card">
-      <a href="{{ post.url | relative_url }}">
-        <h3>{{ post.title }}</h3>
-        <p><small>{{ post.date | date: "%B %Y" }}</small></p>
-        {% if post.description %}<p><small>{{ post.description }}</small></p>{% endif %}
-      </a>
-    </div>
+    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
   {% endfor %}
 </div>
 {% else %}
@@ -44,13 +38,7 @@ section: mates
 {% if geo_posts.size > 0 %}
 <div class="posts-grid">
   {% for post in geo_posts %}
-    <div class="posts-card">
-      <a href="{{ post.url | relative_url }}">
-        <h3>{{ post.title }}</h3>
-        <p><small>{{ post.date | date: "%B %Y" }}</small></p>
-        {% if post.description %}<p><small>{{ post.description }}</small></p>{% endif %}
-      </a>
-    </div>
+    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
   {% endfor %}
 </div>
 {% else %}
@@ -63,13 +51,7 @@ section: mates
 {% if talk_posts.size > 0 %}
 <div class="posts-grid">
   {% for post in talk_posts %}
-    <div class="posts-card">
-      <a href="{{ post.url | relative_url }}">
-        <h3>{{ post.title }}</h3>
-        <p><small>{{ post.date | date: "%B %Y" }}</small></p>
-        {% if post.description %}<p><small>{{ post.description }}</small></p>{% endif %}
-      </a>
-    </div>
+    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
   {% endfor %}
 </div>
 {% else %}

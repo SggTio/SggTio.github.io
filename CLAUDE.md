@@ -210,3 +210,39 @@ Cada fase que toque plantillas verifica antes de cerrar:
 - Tag antes de empezar todo: `pre-restructure`
 - Un commit por fase aprobada, con el mensaje que propusiste y Santiago aceptó
 - Nunca `push`
+
+---
+
+## 9. Autoría y trabajo colaborativo
+
+Varios de los trabajos de este sitio son colaborativos, y en al menos uno Santiago
+no es el autor principal. Esto no se maneja con un pie de nota.
+
+- Todo contenido con coautores los nombra **en el encabezado** de la página, no al final.
+- Cuando Santiago no es el autor principal, la página lo dice explícitamente y delimita
+  cuál fue su contribución. Si esa delimitación no está en el material, es
+  `TODO(santiago)` — no la infieras ni la suavices.
+- Nunca uses primera persona del singular para describir trabajo colaborativo.
+  "Hicimos", no "hice", donde corresponda.
+- Ningún proyecto con coautores se publica (`draft: false`) sin que Santiago confirme
+  que tiene permiso. Si no hay confirmación, sigue en borrador.
+
+## 10. Cifras, embargo y sobreventa
+
+- **Toda cifra de este repositorio es provisional.** Las métricas provienen de corridas
+  concretas que pueden estar superadas. No las redondees, no las reformules, no derives
+  números nuevos a partir de ellas, no las conviertas en porcentajes ni en
+  comparaciones que el material no hace. Si necesitas un número que no está, es
+  `TODO(santiago)`.
+- **Trabajo sin publicar.** Cualquier resultado asociado a un paper en revisión o en
+  preparación no se publica sin decisión explícita de Santiago. Por defecto: método,
+  motivación y limitaciones sí; cifras no.
+- **No promuevas el alcance de un resultado.** Sintético es sintético; un experimento
+  no es un hallazgo clínico; un ejemplo de juguete no es una validación. Si el material
+  de origen dice "dataset sintético", el texto publicado dice "dataset sintético".
+- **No sobrevendas la matemática.** Si un método se reduce por construcción a algo más
+  simple de lo que su nombre sugiere, el texto lo dice. Un revisor que abra el código
+  debe encontrar exactamente lo que la página prometía.
+- **Ninguna referencia bibliográfica se publica sin verificación contra la fuente
+  primaria**, con DOI o arXiv ID. Esto incluye las referencias que vengan en material
+  que Santiago te entregue: el material de origen no es verificación.

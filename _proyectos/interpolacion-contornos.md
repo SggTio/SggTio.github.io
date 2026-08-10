@@ -2,7 +2,7 @@
 title: "Reconstrucción 3D de tumores entre cortes"
 description: "El tumor entre dos cortes de resonancia es una inferencia geométrica, no un dato. Tres algoritmos de interpolación comparados, y por qué interpolar la forma gana a interpolar la etiqueta."
 area: ciencias-computacionales
-dominio: ["Geometría computacional", "Imágenes médicas"]
+dominio: ["Geometría y topología", "Imágenes médicas"]
 tipo: software
 estado: terminado
 anio: 2026

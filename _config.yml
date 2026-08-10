@@ -51,6 +51,9 @@ version: 3.0.0
 
 # Navbar page list
 nav:
+  - title: Proyectos
+    url: /proyectos/
+    section: proyectos
   - title: Mates
     url: /mates/
     section: mates
@@ -78,9 +81,6 @@ collections:
   proyectos:
     output: true
     permalink: /proyectos/:name/
-  investigacion:
-    output: true
-    permalink: /investigacion/:name/
   series:
     output: true
     permalink: /series/:name/
@@ -129,12 +129,6 @@ defaults:
       # de que ningún TODO(santiago) llegue a producción (CLAUDE.md §2).
       # Para revisarlas en local: bundle exec jekyll serve --unpublished
       published: false
-  - scope:
-      path: ""
-      type: "investigacion"
-    values:
-      section: "investigacion"
-      layout: "linea-investigacion"
   - scope:
       path: ""
       type: "series"

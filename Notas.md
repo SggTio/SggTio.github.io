@@ -25,12 +25,7 @@ section: notas
 {% if notas_posts.size > 0 %}
 <div class="posts-grid">
   {% for post in notas_posts limit:3 %}
-    <div class="posts-card">
-      <a href="{{ post.url | relative_url }}">
-        <h3>{{ post.title }}</h3>
-        <p><small>{{ post.date | date: "%B %Y" }}</small></p>
-      </a>
-    </div>
+    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
   {% endfor %}
 </div>
 {% else %}

@@ -11,8 +11,12 @@
     nivel_titulo   opcional     2 o 3. Por defecto 3.
     etiquetas      opcional     true muestra las etiquetas
     fecha          opcional     false la oculta. Por defecto true.
+    formato_fecha  opcional     strftime. Por defecto "%b %d, %Y".
+                                Las páginas de sección usan "%B %Y".
+    descripcion    opcional     false la oculta. Por defecto true.
 {%- endcomment -%}
 {%- assign p = include.post -%}
+{%- assign fmt = include.formato_fecha | default: "%b %d, %Y" -%}
 <article class="posts-card">
   {%- if include.nivel_titulo == 2 -%}
   <h2><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
@@ -21,10 +25,10 @@
   {%- endif -%}
 
   {%- unless include.fecha == false -%}
-  <p><small><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%b %d, %Y" }}</time></small></p>
+  <p><small><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: fmt }}</time></small></p>
   {%- endunless -%}
 
-  {%- if p.description -%}
+  {%- if p.description and include.descripcion != false -%}
   <p><small>{{ p.description }}</small></p>
   {%- endif -%}
 

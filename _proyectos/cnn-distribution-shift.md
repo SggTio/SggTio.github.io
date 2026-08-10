@@ -2,7 +2,7 @@
 title: "Cuando el problema no era la arquitectura"
 description: "Siete modelos para clasificar resonancia cerebral en cuatro categorías, y el hallazgo de que la capacidad de la red nunca fue el cuello de botella."
 area: ia
-dominio: ["Imágenes médicas", "Visión por computador"]
+dominio: ["Imágenes médicas", "Aprendizaje automático"]
 tipo: experimento
 estado: terminado
 anio: 2026

@@ -27,11 +27,6 @@ section: inicio
 {% assign all_posts = site.mates | concat: site.notas | concat: site.escritos | sort: 'date' | reverse %}
 <div class="posts-grid">
   {% for post in all_posts limit:9 %}
-    <div class="posts-card">
-      <a href="{{ post.url | relative_url }}">
-        <h3>{{ post.title }}</h3>
-        <p><small>{{ post.date | date: "%b %d, %Y" }}</small></p>
-      </a>
-    </div>
+    {% include tarjeta-post.html post=post descripcion=false %}
   {% endfor %}
 </div>

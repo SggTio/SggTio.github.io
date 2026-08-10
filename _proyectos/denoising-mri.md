@@ -2,7 +2,7 @@
 title: "Tres filtros de ruido sobre volúmenes de resonancia"
 description: "Implementación y comparación de tres filtros de denoising sobre volúmenes de resonancia magnética, con evaluación por nivel de ruido."
 area: ciencias-computacionales
-dominio: ["Imágenes médicas", "Procesamiento de señales"]
+dominio: ["Imágenes médicas", "Software y señales"]
 tipo: software
 estado: terminado
 anio: 2026

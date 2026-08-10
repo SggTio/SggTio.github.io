@@ -2,7 +2,7 @@
 title: "Pipeline modular de limpieza y segmentación clásica"
 description: "Catorce módulos de Python para que un proyecto de imágenes médicas no acabe siendo un notebook de cuatrocientas celdas que solo corre en una máquina."
 area: ciencias-computacionales
-dominio: ["Imágenes médicas", "Ingeniería de software"]
+dominio: ["Imágenes médicas", "Software y señales"]
 tipo: software
 estado: terminado
 anio: 2026

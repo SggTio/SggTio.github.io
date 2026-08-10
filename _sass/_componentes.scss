@@ -110,8 +110,7 @@
 .tarjeta-proyecto-cuerpo { padding: 1rem 1.1rem 1.2rem; }
 
 .tarjeta-proyecto-meta,
-.proyecto-destacado-meta,
-.area-investigacion-meta {
+.proyecto-destacado-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -176,34 +175,6 @@
     direction: ltr;
   }
 }
-
-// ---- Línea de investigación ----
-.area-investigacion {
-  padding: 1.1rem 1.2rem;
-  background: var(--surface);
-  border-left: 3px solid var(--accent-color);
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  margin: var(--spacer-2) 0;
-
-  h2, h3 { margin-top: 0; }
-}
-
-.area-investigacion-subtitulo {
-  margin: 1rem 0 .3rem;
-  font-size: .9rem;
-  color: var(--text-quiet);
-}
-
-.area-investigacion-lista,
-.area-investigacion-preguntas {
-  margin: 0;
-  padding-left: 1.1rem;
-  font-size: .95rem;
-
-  li { margin-bottom: .25rem; }
-}
-
-.area-investigacion-preguntas .pregunta-respondida { color: var(--text-muted); }
 
 // ---- Línea de tiempo ----
 .linea-tiempo {
@@ -314,6 +285,29 @@
   font-size: .8rem;
 }
 
+// ---- Índice por dominio ----
+.indice-dominios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--spacer-2);
+  margin: var(--spacer-2) 0;
+}
+
+.indice-dominio {
+  h3 {
+    margin: 0 0 .4rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: .92rem;
+  }
+
+  li { margin-bottom: .25rem; }
+}
+
 // ---- Hueco de visualización pendiente (solo en desarrollo) ----
 .viz-pendiente {
   margin: var(--spacer-2) 0;
@@ -368,6 +362,137 @@
 
   a:hover,
   a:focus-visible { color: var(--accent-color); text-decoration: underline; }
+}
+
+// ---- Índice de áreas (anclas, sin JavaScript) ----
+.indice-areas {
+  margin: var(--spacer-2) 0 var(--spacer-3);
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .75rem;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  a {
+    display: inline-block;
+    padding: .3rem .7rem;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: .9rem;
+  }
+
+  a:hover,
+  a:focus-visible { border-color: var(--accent-color); }
+}
+
+.indice-areas-cuenta {
+  color: var(--text-muted);
+  font-size: .8rem;
+}
+
+// ---- Índice por dominio ----
+.indice-dominios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--spacer-2);
+  margin: var(--spacer-2) 0;
+}
+
+.indice-dominio {
+  h3 {
+    margin: 0 0 .4rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: .92rem;
+  }
+
+  li { margin-bottom: .25rem; }
+}
+
+// ---- Hueco de visualización pendiente (solo en desarrollo) ----
+.viz-pendiente {
+  margin: var(--spacer-2) 0;
+  padding: 1rem 1.1rem;
+  border: 2px dashed var(--surface-border);
+  border-radius: var(--border-radius);
+  background: var(--surface);
+}
+
+.viz-pendiente-etiqueta {
+  margin: 0 0 .3rem;
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.viz-pendiente-titulo {
+  margin: 0 0 .5rem;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.viz-pendiente-desc {
+  font-size: .92rem;
+  color: var(--text-quiet);
+
+  > :first-child { margin-top: 0; }
+  > :last-child  { margin-bottom: 0; }
+}
+
+.viz-pendiente-ensena {
+  margin: .6rem 0 0;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--text-quiet);
+}
+
+// ---- Navegación secundaria del pie ----
+.nav-pie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
+  margin-bottom: .6rem;
+
+  a {
+    font-size: .8rem;
+    color: var(--text-quiet);
+    text-decoration: none;
+    padding: .15rem 0;
+  }
+
+  a:hover,
+  a:focus-visible { color: var(--accent-color); text-decoration: underline; }
+}
+
+// ---- Alternador de tema ----
+// Vive en el pie, junto a los enlaces secundarios: es un control de lectura,
+// no una sección del sitio. Nace oculto y lo revela su propio script.
+.alternador-tema {
+  padding: .15rem 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: .8rem;
+  color: var(--text-quiet);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible { color: var(--accent-color); text-decoration: underline; }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
 }
 
 // ---- Enlaces sociales ----

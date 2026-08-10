@@ -69,6 +69,42 @@ section: proyectos
   {%- endif -%}
 {%- endfor -%}
 
+{%- comment -%}
+  Índice por dominio: el eje de aplicación, transversal a las áreas. Un
+  proyecto puede aparecer en varios, porque toca varios. Son enlaces, no
+  tarjetas, para que se lea como un índice y no compita con las secciones
+  de arriba.
+{%- endcomment -%}
+{%- assign dominios = "" | split: "" -%}
+{%- for p in todos -%}
+  {%- for d in p.dominio -%}
+    {%- unless dominios contains d -%}
+      {%- assign dominios = dominios | push: d -%}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign dominios = dominios | sort -%}
+
+{%- if dominios.size > 0 %}
+
+{% include encabezado-seccion.html titulo="Por dominio" id="dominios" descripcion="El eje de aplicación, transversal a las áreas. Un proyecto puede estar en varios." %}
+
+<div class="indice-dominios">
+  {%- for d in dominios -%}
+    {%- assign del_dominio = todos | where_exp: "p", "p.dominio contains d" %}
+  <section class="indice-dominio">
+    <h3>{{ d }}</h3>
+    <ul>
+      {%- for p in del_dominio %}
+      <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endfor -%}
+</div>
+
+{%- endif -%}
+
 {%- else %}
 
 <p class="posts-empty"><em>Próximamente…</em></p>

@@ -31,21 +31,6 @@ ejemplo_proyecto:
     demo: "https://example.org"
     publicacion: "https://doi.org/10.0000/ejemplo"
 
-ejemplo_linea:
-  title: "Línea de investigación de ejemplo"
-  url: "/desarrollo/"
-  slug: ejemplo
-  description: "Qué se investiga en esta línea, en una frase."
-  estado: activo
-  desde: 2024
-  metodos: ["homología persistente", "laplacianos", "curvatura discreta"]
-  draft: false
-  preguntas_abiertas:
-    - pregunta: "¿Una pregunta que sigue abierta?"
-      estado: abierta
-    - pregunta: "¿Una que ya tiene respuesta?"
-      estado: respondida
-
 ejemplo_eventos:
   - desde: 2024
     titulo: "Un evento en curso"
@@ -66,10 +51,10 @@ Esta página solo existe en desarrollo.
 {% else %}
 
 <p class="lead">
-Los once componentes de la Fase 4, con datos de ejemplo. Esta página está
+Los componentes reutilizables del sitio, con datos de ejemplo. Esta página está
 excluida del sitemap, marcada <code>noindex</code> y no se renderiza en
-producción. Los datos de proyecto y de investigación son inventados y viven
-solo en el front matter de este archivo.
+producción. Los datos de proyecto son inventados y viven solo en el front
+matter de este archivo.
 </p>
 
 {% include encabezado-seccion.html titulo="insignia-estado" descripcion="Parámetro: estado. Los cinco valores posibles." %}
@@ -119,11 +104,6 @@ solo en el front matter de este archivo.
 {% include encabezado-seccion.html titulo="proyecto-destacado" descripcion="Parámetros: proyecto, invertir. Sin imagen aquí, porque no hay ninguna real que usar." %}
 
 {% include proyecto-destacado.html proyecto=page.ejemplo_proyecto %}
-
-{% include encabezado-seccion.html titulo="area-investigacion" descripcion="Parámetros: linea, nivel_titulo, preguntas, proyectos." %}
-
-{% include area-investigacion.html linea=page.ejemplo_linea %}
-{% include area-investigacion.html linea=page.ejemplo_linea preguntas=true proyectos=true %}
 
 {% include encabezado-seccion.html titulo="linea-tiempo" descripcion="Parámetros: eventos, titulo. El segundo evento tiene fecha de fin; el primero no." %}
 

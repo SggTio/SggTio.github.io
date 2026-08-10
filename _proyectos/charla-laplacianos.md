@@ -2,7 +2,7 @@
 title: "Laplacianos en biología de tumores"
 description: "Exposición sobre laplacianos, geometría y segmentación de tumores: del gradiente del cálculo vectorial a las semillas de Witten."
 area: matematicas
-dominio: ["Geometría espectral", "Imágenes médicas", "Divulgación"]
+dominio: ["Geometría y topología", "Imágenes médicas"]
 tipo: divulgacion
 estado: terminado
 anio: 2026
