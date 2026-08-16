@@ -1,0 +1,64 @@
+name: Publicar en GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+      - 'restructure/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v7
+
+      - name: Preparar Ruby e instalar gemas
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      # Sin `static_site_generator: jekyll` a propósito: esa opción le daría
+      # permiso para reescribir _config.yml e inyectar un baseurl. Este es un
+      # sitio de usuario y se sirve en la raíz, así que manda `baseurl: ""`.
+      - name: Configurar Pages
+        uses: actions/configure-pages@v6
+
+      # JEKYLL_ENV=production es la línea crítica del archivo. El build
+      # heredado de Pages la exportaba solo; Actions no. Sin ella se publican
+      # /desarrollo/, los avisos de borrador y los recuadros de visualización
+      # pendiente.
+      - name: Construir el sitio
+        env:
+          JEKYLL_ENV: production
+        run: bundle exec jekyll build --destination ./_site
+
+      - name: Subir el artefacto
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    # Solo master despliega. Las ramas de trabajo construyen y suben artefacto,
+    # para poder revisarlo antes de fusionar.
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Desplegar
+        id: deployment
+        uses: actions/deploy-pages@v5
