@@ -447,3 +447,17 @@ mjx-container[display="true"] {
 .muted { color: var(--post-text-soft); }
 .accent { color: var(--accent-color); }
 .small { font-size: .85rem; }
+
+/* ---------------------------------------------------------------
+   Los paneles de este post tienen fondo oscuro fijo (#0f1216), pero
+   usaban var(--accent-color), que sí cambia con el tema del sitio.
+   En tema claro el acento cae a #8d6741 y da 3.71:1 sobre ese fondo,
+   por debajo de AA. Como el fondo es oscuro pase lo que pase, aquí
+   se fija el acento a su valor de tema oscuro: 13.21:1.
+   --------------------------------------------------------------- */
+.viz,
+.viz-stage,
+.viz-controls,
+.viz-readout {
+  --accent-color: #e5d6c7;
+}

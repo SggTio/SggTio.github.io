@@ -162,7 +162,7 @@ Esta es la visualización más importante del post. Una red configurable — pod
 
 <div id="viz-backprop" class="viz">
   <h3 class="viz-title">Visualización 2 · explorador de backpropagation</h3>
-  <p class="viz-sub">Configurá la arquitectura, elegí un dataset y mirá la red aprender. Cada botón de <strong>paso</strong> hace una iteración completa forward+backward+update. <em>(Versión completa próximamente.)</em></p>
+  <p class="viz-sub">Configurá la arquitectura, elegí un dataset y mirá la red aprender. Cada botón de <strong>paso</strong> hace una iteración completa forward+backward+update.</p>
   <div class="viz-stage"></div>
   <div class="viz-controls"></div>
   <div class="viz-readout"></div>
@@ -284,11 +284,11 @@ Con backpropagation funcionando, los investigadores empezaron a diseñar **arqui
 
 ### 3.1 Convolución en vivo
 
-La operación central de una CNN — convolucionar una imagen con un filtro pequeño — es muy visual y muy fácil de intuir. Esta visualización te permite mover el filtro sobre la imagen y ver, píxel a píxel, cómo se construye la salida. *(Versión completa con presets de filtros reales — bordes, sharpen, blur — en la siguiente revisión del post.)*
+La operación central de una CNN — convolucionar una imagen con un filtro pequeño — es muy visual y muy fácil de intuir. Esta visualización te permite mover el filtro sobre la imagen y ver, píxel a píxel, cómo se construye la salida. Trae seis filtros preparados: identidad, bordes, realce, desenfoque y los dos Sobel.
 
 <div id="viz-convolution" class="viz">
   <h3 class="viz-title">Visualización 3 · convolución, píxel a píxel</h3>
-  <p class="viz-sub">Demostración mínima: una imagen pequeña, un filtro 3×3, y la salida calculándose en tiempo real. <em>(Versión completa próximamente.)</em></p>
+  <p class="viz-sub">Una imagen sintética de 10×10, un filtro 3×3 y la salida calculándose en tiempo real. Mueve la ventana, elige un filtro, y abajo verás los nueve productos que dan ese píxel.</p>
   <div class="viz-stage"></div>
   <div class="viz-controls"></div>
 </div>
@@ -307,7 +307,7 @@ El detalle que todo el mundo pasa por alto cuando cuenta la historia del deep le
 
 <div id="viz-convergence" class="viz">
   <h3 class="viz-title">Visualización 4 · la convergencia perfecta</h3>
-  <p class="viz-sub">Tres curvas en el tiempo: tamaño de datasets, FLOPs disponibles por dólar, y publicaciones sobre deep learning. El cruce de 2012. <em>(Versión completa próximamente.)</em></p>
+  <p class="viz-sub">Los tres ingredientes —algoritmos, cómputo y datos— y la fecha en que cada uno estuvo disponible. Mueve el año y mira cuántos había. Las franjas son esquemáticas; los hitos, fechas citadas en este mismo artículo.</p>
   <div class="viz-stage"></div>
   <div class="viz-controls"></div>
 </div>
@@ -347,3 +347,6 @@ Lo que hay que llevarse de este post es la idea de **convergencia**. El deep lea
 - **Deng, J. et al. (2009).** *ImageNet: A large-scale hierarchical image database.* CVPR.
 
 <script src="{{ '/assets/posts/avances-redes-neuronales/ai-winters.js' | relative_url }}"></script>
+<script src="{{ '/assets/posts/avances-redes-neuronales/backprop-explorer.js' | relative_url }}"></script>
+<script src="{{ '/assets/posts/avances-redes-neuronales/convolution-playground.js' | relative_url }}"></script>
+<script src="{{ '/assets/posts/avances-redes-neuronales/convergence-dashboard.js' | relative_url }}"></script>
