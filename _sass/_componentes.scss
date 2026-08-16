@@ -346,6 +346,48 @@
   color: var(--text-quiet);
 }
 
+// ---- Página "Sobre mí" ----
+// Las tres frases protegidas de CLAUDE.md §1 comparten clase y peso: no son
+// adorno al pie, son el esqueleto de la página.
+.frase-protegida {
+  margin: var(--spacer-2) 0;
+  font-size: 1.35rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--accent-color);
+  text-wrap: balance;
+}
+
+.about-profile ~ .two-col h3 {
+  margin: 0 0 .4rem;
+  font-size: 1.02rem;
+  color: var(--accent-color);
+}
+
+.about-profile ~ .two-col > div > p:last-child { margin-bottom: 0; }
+
+.tercet {
+  margin: var(--spacer-2) 0;
+
+  p {
+    margin: 0 0 .4rem;
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: var(--accent-color);
+  }
+}
+
+// Bloque de pendientes: el include lo envuelve en un condicional de entorno,
+// así que nunca llega a producción.
+.solo-desarrollo {
+  margin: var(--spacer-2) 0;
+  padding: .8rem 1rem;
+  border: 2px dashed var(--surface-border);
+  border-radius: var(--border-radius);
+  font-size: .9rem;
+  color: var(--text-quiet);
+}
+
 // ---- Navegación secundaria del pie ----
 .nav-pie {
   display: flex;

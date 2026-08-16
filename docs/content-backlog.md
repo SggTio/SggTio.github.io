@@ -103,6 +103,36 @@ Sin huecos pendientes.
 
 ---
 
+## Página /sobre/
+
+Reescrita el 2026-08-12. Los pendientes viven en un bloque visible solo en
+desarrollo dentro de `about.md`; ninguno se publica.
+
+**No bloquean:**
+
+- [ ] **Crear un ORCID.** Gratuito, cuestión de minutos, y pesa en una
+      candidatura doctoral. Hoy la sección de contacto solo tiene correo,
+      GitHub, Twitter e Instagram.
+- [ ] Perfil de Google Scholar, solo si existe.
+
+**Revisar en la Fase 7:**
+
+- [ ] El enlace de «Lo demás» apunta a `/escritos/`. Cuando lo literario se
+      mude a `/letras/`, hay que actualizarlo.
+
+**Decidido:** sin sección de CV y sin trayectoria académica en `/sobre/`.
+Ambas se retiraron del alcance a petición de Santiago; la biografía cubre lo
+esencial. Si alguna vuelve, harán falta instituciones y años.
+
+**Pendiente de estructura, en todo el sitio:**
+
+- [ ] El masthead usa `<h3 class="masthead-title">` para el nombre del sitio, y
+      aparece **antes** del `<h1>` en todas las páginas. Es un encabezado de
+      navegación, no de contenido: debería ser un `<p>` o un `<div>`. Viene del
+      tema Poole. Afecta a la jerarquía de encabezados de CLAUDE.md §7.
+
+---
+
 ## Referencias retenidas — pendientes de verificación
 
 Estas atribuciones aparecen en el material de `paisaje-tda-dg`, revisión 2.

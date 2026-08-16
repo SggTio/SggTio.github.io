@@ -18,7 +18,7 @@
     {% if page.title == "Inicio" %}
       {{ site.title }}{% if site.tagline %} &middot; {{ site.tagline }}{% endif %}
     {% else %}
-      {{ page.title }} &middot; {{ site.title }}
+      {{ page.title_seo | default: page.title }} &middot; {{ site.title }}
     {% endif %}
   </title>
 
