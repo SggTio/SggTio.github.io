@@ -270,6 +270,18 @@ visualizaciones:          # plan visual; se construyen en una fase posterior
     ensena: "Una frase: qué debe entender el lector al verla."
 ```
 
+### Trampa: Liquid NO se evalúa dentro del front matter
+
+Jekyll procesa Liquid en el **cuerpo** del documento, no en los valores YAML.
+Un `{{ '/ruta/' | relative_url }}` escrito dentro de un campo como `motivacion`
+o `resultados` **se imprime literalmente** en la página.
+
+Como este sitio tiene `baseurl: ""`, la solución es escribir la ruta absoluta
+tal cual: `[texto](/proyectos/slug/)`. Si algún día hubiera `baseurl`, habría
+que revisar todos esos enlaces.
+
+Lo mismo aplicará a `_data/cv.yml` y `_data/ahora.yml` en la Fase 8.
+
 ### `draft` y `published`: dos interruptores, a propósito
 
 `draft` es campo nuestro: lo leen las plantillas para pintar el aviso y filtrar

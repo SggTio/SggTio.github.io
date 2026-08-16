@@ -54,10 +54,6 @@ contribucion: |
   **4 · Panorama de geómetras diferenciales activos** en geometría aplicada y
   computacional.
 
-proximos_pasos: |
-  TODO(santiago): decidir si se publica como página interactiva, como serie de
-  posts, o ambas.
-
 limitaciones: |
   **Ninguna referencia de este material se publica sin verificar.**
 

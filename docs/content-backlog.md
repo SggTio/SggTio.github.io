@@ -1,7 +1,7 @@
 # Contenido pendiente
 
-Fecha: 2026-08-07
-Origen: Fase 5 — sección de proyectos.
+Fecha: 2026-08-12
+Origen: Fases 5 y 5.5 — sección de proyectos y aprobación de fichas.
 
 Lo que falta y **solo Santiago puede aportar**. Nada de esto se inventa
 (CLAUDE.md §2). Cada hueco existe en las fichas como `TODO(santiago)`.
@@ -14,10 +14,31 @@ Lo que falta y **solo Santiago puede aportar**. Nada de esto se inventa
 |---|---|---|
 | **Repositorios** | Ninguno se publica como repositorio | Ninguna ficha lleva `enlaces.repo`. No es un hueco pendiente |
 | **Cifras** | Ninguna ficha publica números | Las mediciones viven en los papers y los informes |
-| **Coautores** | Permiso concedido | Aparecen en la cabecera de su ficha, no en pie de nota |
+| **Nombres de terceros** | Ninguno se publica | El trabajo compartido se describe como trabajo de equipo, en plural (CLAUDE.md §9) |
 | **Áreas** | `matematicas`, `ciencias-computacionales`, `ia` | Los dominios de aplicación van en `dominio` |
-| **Destacados** | Cinco | tda-segunet, brats-clasico, brats-pipeline, interpolacion-contornos, cnn-distribution-shift |
-| **Estado de publicación** | Las once nacen con `draft: true` y `published: false` | No se generan en producción. Para verlas: `jekyll serve --unpublished` |
+| **Destacados** | Cuatro | tda-segunet, brats-clasico, brats-pipeline, cnn-distribution-shift |
+| **Estado de publicación** | Las diez nacen con `draft: true` y `published: false` | No se generan en producción. Para verlas: `jekyll serve --unpublished` |
+| **interpolacion-contornos** | Retirada | No se encontró en el repositorio del proyecto: cero rastro de CGAL, Delaunay, Voronoi, visor Plotly o presentación reveal.js en las tres ramas. Los trece fuentes C++ del repositorio son ejemplos de ITK |
+
+---
+
+## Estado de publicación
+
+**Seis publicadas** · charla-laplacianos, cnn-distribution-shift,
+geometria-computacional-fundamentos, segmentacion-clasica-et,
+serie-redes-neuronales, tda-segunet.
+
+**Cuatro en borrador**, por decisión de Santiago:
+
+| Ficha | Por qué sigue oculta |
+|---|---|
+| `brats-clasico` | esperando el resultado de SIPAIM |
+| `brats-pipeline` | falta el listado de los catorce módulos |
+| `denoising-mri` | trabajo pequeño; no merece publicación por ahora |
+| `paisaje-tda-dg` | es un panorama del estado del arte, no una publicación todavía |
+
+**Al publicar `paisaje-tda-dg`**, restaurar en `charla-laplacianos` el enlace a
+esa ficha: se retiró para no dejar un enlace roto en producción.
 
 ---
 
@@ -31,72 +52,54 @@ resuelto los huecos de esa ficha.
 
 ## Por proyecto
 
+**Nueve de diez no tienen ningún hueco bloqueante.** Lo que queda aquí es
+material que enriquecería la ficha, no que impida publicarla — salvo donde se
+diga lo contrario.
+
+### brats-pipeline — BLOQUEADA
+
+- [ ] **Listado completo de los catorce módulos.** Hoy la ficha nombra cinco y
+      admite que faltan nueve. Es un TODO en medio del texto.
+
 ### tda-segunet
 
-- [ ] **Los cuatro cuadrantes están vacíos.** La tabla existe pero no hay
-      contenido para las celdas. Qué va en «topología algebraica sin redes»,
-      «con redes», y lo mismo para geometría diferencial.
-- [ ] Estado actual del roadmap de 9 pasos y qué cuadrantes siguen pendientes.
 - [ ] ¿El paper A (MICCAI) es citable o está en preparación?
-- [ ] Confirmar las cifras retiradas contra la última corrida, para el paper.
+- [ ] Confirmar contra la última corrida las cifras que no se publican.
 - [ ] Figura de portada.
 
 ### brats-clasico
 
 - [ ] Estado del envío a SIPAIM 2026.
-- [ ] Qué figuras son publicables.
-- [ ] Estado de generación de figuras y consolidación de reportes.
 - [ ] **Decisión pendiente:** si el artículo se acepta, ¿se añaden las cifras a
       la ficha o se deja el enlace al paper? Hoy la ficha dice «en revisión».
+- [ ] Qué figuras son publicables.
 
 ### paisaje-tda-dg
 
-- [ ] **Verificación bibliográfica completa antes de publicar.** Este material
-      salió de búsquedas. Ver la sección de referencias retenidas, abajo.
-- [ ] Decidir formato: página interactiva, serie de posts, o ambas.
-
-### brats-pipeline
-
-- [ ] Nombre del compañero de equipo que hizo el registro, si quiere aparecer.
-- [ ] Listado completo de los catorce módulos. Hoy hay cinco identificados.
-- [ ] ¿Se publica como repositorio abierto? *(La decisión global dice que no;
-      confirmar si este es excepción.)*
-
-### interpolacion-contornos
-
-- [ ] **Qué parte hizo Santiago exactamente.** La ficha lo pide en la cabecera
-      y hoy lleva un TODO visible. Es lo más urgente de esta ficha: el proyecto
-      es de Abel Albuez Sanchez y la atribución debe ser precisa.
-- [ ] Dónde alojar el visor 3D de unos 20 MB. Probablemente no en el
-      repositorio del sitio.
-
-### cnn-distribution-shift
-
-- [ ] El artículo IEEE existe en LaTeX: decidir si se publica y dónde.
+- [ ] **Verificación bibliográfica completa.** Ver las referencias retenidas
+      más abajo. La ficha describe los temas sin nombrar autores.
 
 ### denoising-mri
 
 - [ ] **Por qué es interesante** — la ficha no tiene esa sección.
 - [ ] **Limitaciones** — tampoco.
-- [ ] **Qué falta** — tampoco.
-- [ ] Referencia completa de Ali (2018), verificada contra la fuente primaria.
+- [ ] Referencia de Ali (2018): la mención se retiró del texto para poder
+      publicar. Si aparece el DOI, se añade a `_data/bibliografia.yml` y se
+      restaura la atribución.
 - [ ] Imagen de portada.
+
+### cnn-distribution-shift
+
+- [ ] El artículo IEEE existe en LaTeX: decidir si se publica y dónde.
 
 ### serie-redes-neuronales
 
 - [ ] Publicar el post 02. Está escrito y commiteado, sin publicar, y le faltan
       tres visualizaciones.
-- [ ] Decidir si la serie continúa hacia el territorio de la tesis.
 
-### charla-laplacianos
+### charla-laplacianos · geometria-computacional-fundamentos
 
-- [ ] **Dónde se presentó, ante qué audiencia y con qué duración.** Sin esto la
-      ficha se queda en una línea.
-- [ ] ¿Hay diapositivas o grabación enlazables?
-
-### geometria-computacional-fundamentos
-
-- [ ] Destino final: ficha de proyecto, serie de notas en Escritos, o ambas.
+Sin huecos pendientes.
 
 ---
 
@@ -120,11 +123,11 @@ en el texto.
 | Solomon et al. | transporte óptimo convolucional (Wasserstein) |
 | Mérigot | transporte óptimo semidiscreto |
 
-También pendientes: Ali (2018) en `denoising-mri`, y Bauer–Lesnick (2015) en
-`tda-segunet`.
+También pendiente: Ali (2018), retirada del texto de `denoising-mri`.
 
-**Verificada y ya en `_data/bibliografia.yml`:** Raya y Udupa (1990),
-doi:10.1109/42.52980.
+**Verificadas y ya en `_data/bibliografia.yml`:**
+Raya y Udupa (1990), doi:10.1109/42.52980 ·
+Bauer y Lesnick (2015), arXiv:1311.3681, comprobada el 2026-08-12.
 
 ---
 
@@ -140,25 +143,25 @@ visualizaciones correspondientes las convertirían en la opción (c):
 | Afirmación | Ficha | Visualización que la saldaría |
 |---|---|---|
 | El estimador de varianza de Wiener promedia las varianzas locales porque están infladas en la misma cantidad | denoising-mri | `viz-wiener-varianza` |
-| La estabilidad de Bauer–Lesnick acota el cambio del código de barras ante perturbaciones | tda-segunet | `viz-estabilidad` |
+| La estabilidad de Bauer–Lesnick acota el cambio del código de barras ante perturbaciones | tda-segunet | ya trazable por (a): arXiv:1311.3681 |
 
 ---
 
 ## Visualizaciones planificadas
 
-**33 en total**, declaradas en el campo `visualizaciones` de cada ficha, con
+**32 en total**, declaradas en el campo `visualizaciones` de cada ficha, con
 qué muestra y qué enseña cada una. Se construyen en una fase posterior.
 
 | Proyecto | Pendientes |
 |---|---|
 | tda-segunet | 7 |
 | brats-clasico | 4 |
-| interpolacion-contornos | 4 |
 | cnn-distribution-shift | 3 |
 | denoising-mri | 3 |
 | geometria-computacional-fundamentos | 3 |
 | paisaje-tda-dg | 3 |
 | serie-redes-neuronales | 3 |
+| segmentacion-clasica-et | 3 |
 | brats-pipeline | 2 |
 | charla-laplacianos | 2 |
 
@@ -175,4 +178,4 @@ existen en el texto, marcados como pendientes.
 - **Modo claro.** Decidido en la Fase 1. Los colores ya son variables; las
   variantes claras de los tres acentos están medidas en
   `docs/site-restructure-audit.md`.
-- **Construir las 33 visualizaciones.**
+- **Construir las 32 visualizaciones.**

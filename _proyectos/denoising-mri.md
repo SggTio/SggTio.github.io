@@ -88,9 +88,6 @@ resultados: |
   literatura. Las cifras concretas viven en el informe, no aquí: esta ficha
   explica qué se comparó y por qué, no reporta mediciones.
 
-  TODO(santiago): referencia bibliográfica completa de Ali (2018) — verificar
-  contra la fuente primaria antes de publicar.
-
 aprendizajes: |
   Un detalle de ingeniería que merece contarse: la capa C++ de ITK no procesa
   rutas con caracteres no ASCII en Windows, y el proyecto vivía en una carpeta

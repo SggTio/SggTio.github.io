@@ -218,12 +218,17 @@ Cada fase que toque plantillas verifica antes de cerrar:
 Varios de los trabajos de este sitio son colaborativos, y en al menos uno Santiago
 no es el autor principal. Esto no se maneja con un pie de nota.
 
-- Todo contenido con coautores los nombra **en el encabezado** de la página, no al final.
-- Cuando Santiago no es el autor principal, la página lo dice explícitamente y delimita
-  cuál fue su contribución. Si esa delimitación no está en el material, es
-  `TODO(santiago)` — no la infieras ni la suavices.
-- Nunca uses primera persona del singular para describir trabajo colaborativo.
-  "Hicimos", no "hice", donde corresponda.
+- **Por defecto no se nombra a nadie más que a Santiago.** El trabajo compartido se
+  describe como trabajo de equipo. Un nombre propio solo aparece si Santiago confirma
+  que esa persona quiere aparecer.
+- No nombrar a nadie **no autoriza a apropiarse del trabajo**. Cuando Santiago no
+  lideró un proyecto, la ficha lo dice en el encabezado y delimita cuál fue su
+  contribución, aunque sea sin nombres. Si esa delimitación no está en el material,
+  es `TODO(santiago)` — no la infieras ni la suavices.
+- **Habla en plural del trabajo compartido**: "comparamos", "estudiamos", "miramos".
+  Nunca primera persona del singular para describir lo que hizo un equipo.
+- Los encabezados de plantilla van en impersonal —"Qué se hizo"— porque sirven igual
+  para trabajo propio y compartido.
 - Ningún proyecto con coautores se publica (`draft: false`) sin que Santiago confirme
   que tiene permiso. Si no hay confirmación, sigue en borrador.
 

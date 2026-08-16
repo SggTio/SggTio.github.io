@@ -7,7 +7,9 @@ tipo: experimento
 estado: terminado
 anio: 2026
 destacado: true
-autoria: "Santiago Gil Gallego y Silvio Mauricio Morales"
+draft: false
+published: true
+autoria: "Trabajo de un equipo de dos personas"
 tecnologias: [Python, TensorFlow, Keras]
 
 problema: |

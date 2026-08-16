@@ -7,6 +7,8 @@ tipo: divulgacion
 estado: activo
 anio: 2026
 destacado: false
+draft: false
+published: true
 autoria: "Santiago Gil Gallego"
 tecnologias: [JavaScript, MathJax]
 
@@ -16,7 +18,7 @@ resumen: |
 
 contribucion: |
   **Post 01 — De la neurona lógica al MLP.** Publicado:
-  [Los cimientos de la inteligencia artificial]({{ '/mates/2026-04-14-fundamentos-redes-neuronales/' | relative_url }}).
+  [Los cimientos de la inteligencia artificial](/mates/2026-04-14-fundamentos-redes-neuronales/).
 
   Cuatro secciones: el contexto del siglo XIX —teoría celular, la tinción de
   plata de Golgi, la doctrina de la neurona de Cajal, la sinapsis de
@@ -47,8 +49,6 @@ proximos_pasos: |
   Publicar el post 02, una vez estén sus tres visualizaciones.
 
   Post 03, comenzando en AlexNet.
-
-  TODO(santiago): decidir si la serie continúa hacia el territorio de la tesis.
 
 visualizaciones:
   - id: viz-backprop-explorer

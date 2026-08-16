@@ -7,6 +7,8 @@ tipo: software
 estado: terminado
 anio: 2026
 destacado: false
+draft: false
+published: true
 autoria: "Santiago Gil Gallego"
 math: true
 tecnologias: ["C++", CGAL]
@@ -19,17 +21,12 @@ contribucion: |
   CGAL los implementa mediante clases de *traits* y *kernels*.
 
 motivacion: |
-  Es el andamiaje que hace posible la
-  [reconstrucción 3D de tumores entre cortes]({{ '/proyectos/interpolacion-contornos/' | relative_url }}).
-  Delaunay, Voronoi y los ejes mediales que allí se aplican se aprendieron
-  aquí.
+  Es el andamiaje de todo lo demás. Delaunay, Voronoi y los ejes mediales
+  aparecen luego en cualquier problema que toque mallas, superficies o
+  reconstrucción a partir de puntos; aquí es donde se aprenden con las manos.
 
   Como proyecto público funciona mejor como **material didáctico** que como
   portafolio: no resuelve un problema propio, enseña las piezas.
-
-proximos_pasos: |
-  TODO(santiago): decidir el destino final de este material — ficha de
-  proyecto, serie de notas en Escritos, o ambas cosas enlazadas.
 
 visualizaciones:
   - id: viz-envolvente-convexa

@@ -101,8 +101,6 @@ aprendizajes: |
 proximos_pasos: |
   Validación externa congelada.
 
-  TODO(santiago): estado de generación de figuras y consolidación de reportes.
-
 visualizaciones:
   - id: viz-inundacion
     titulo: "La inundación de falsos positivos"

@@ -7,9 +7,12 @@ tipo: investigacion
 estado: activo
 anio: 2026
 destacado: true
+draft: false
+published: true
 autoria: "Santiago Gil Gallego (tesis de maestría, PUJ)"
 math: true
 tecnologias: [Python, TPU, GUDHI]
+bibliografia: [bauer2015]
 
 problema: |
   Una red de segmentación entrenada con Dice puede alcanzar un solapamiento
@@ -117,20 +120,23 @@ enfoque_matematico: |
   y una función que salta no se puede optimizar por descenso de gradiente. La
   estabilidad es lo que convierte «contar agujeros» en algo entrenable.
 
-  TODO(santiago): verificar Bauer–Lesnick (2015) contra la fuente primaria y
-  añadirla a `_data/bibliografia.yml` con su DOI antes de publicar.
+  ### Dos formas de meter topología en una red de segmentación
 
-  ### Dónde encaja esto en la tesis
+  Hay dos sitios por donde puede entrar, y el experimento los prueba a la vez.
 
-  La taxonomía general son cuatro cuadrantes: topología algebraica y geometría
-  diferencial, cada una con y sin redes neuronales.
+  **Como entrada.** Se calculan descriptores topológicos de la imagen y se le
+  dan a la red como información adicional, junto a la intensidad. La red decide
+  qué hacer con ellos — y ahí está el riesgo de la pereza modal: puede decidir
+  ignorarlos.
 
-  | | Sin redes neuronales | Con redes neuronales |
-  |---|---|---|
-  | **Topología algebraica** | · | · |
-  | **Geometría diferencial** | · | · |
+  **Como supervisión.** La topología no entra por delante sino por detrás, en la
+  función de pérdida, comparando la estructura de la predicción con la de la
+  máscara verdadera. Es lo que hace la Betti Matching Loss, y no depende de que
+  la red quiera prestarle atención.
 
-  TODO(santiago): qué va en cada celda.
+  Las dos son compatibles, y no son alternativas: la ablación 3×3 mide
+  exactamente su combinación — tres formas de inyectar la entrada topológica,
+  incluida ninguna, contra tres regímenes de supervisión.
 
 enfoque_computacional: |
   Entrenamiento espacial en TPU v5e-1 sobre Colab; el cálculo de Betti corre en
@@ -177,10 +183,6 @@ limitaciones: |
 
   Y la limitación de fondo: **los resultados son sobre datos sintéticos, no
   clínicos.**
-
-proximos_pasos: |
-  TODO(santiago): estado actual del roadmap de 9 pasos y qué cuadrantes siguen
-  pendientes.
 
 visualizaciones:
   - id: viz-anillo-relleno

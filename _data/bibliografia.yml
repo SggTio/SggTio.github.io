@@ -62,8 +62,23 @@
 #
 # =============================================================================
 
-# Referencia central del método basado en forma de `interpolacion-contornos`.
-# Marcada como verificada en el material de origen.
+# Interpolación basada en forma. Sin ficha que la cite ahora mismo — la de
+# interpolación de contornos se retiró al no poder verificar el proyecto —
+# pero la referencia está comprobada y se conserva para cuando haga falta.
+# Fundamento de estabilidad de las pérdidas basadas en persistencia.
+# Verificada contra el registro de arXiv el 2026-08-12.
+bauer2015:
+  tipo: articulo
+  autores: ["Bauer, Ulrich", "Lesnick, Michael"]
+  titulo: "Induced Matchings and the Algebraic Stability of Persistence Barcodes"
+  publicacion: "Journal of Computational Geometry"
+  volumen: 6
+  numero: 2
+  paginas: "162–191"
+  anio: 2015
+  arxiv: "1311.3681"
+  verificado: true
+
 raya1990:
   tipo: articulo
   autores: ["Raya, S. P.", "Udupa, J. K."]

@@ -7,28 +7,29 @@ tipo: divulgacion
 estado: terminado
 anio: 2026
 destacado: false
+draft: false
+published: true
 autoria: "Santiago Gil Gallego"
 math: true
 tecnologias: [MathJax]
 
 resumen: |
   La charla ya está publicada:
-  [Laplacianos en biología de tumores]({{ '/mates/charlas/laplacianos_tumores/' | relative_url }}).
+  [Laplacianos en biología de tumores](/mates/charlas/laplacianos_tumores/).
   Esta ficha la sitúa dentro del trabajo, no la duplica.
 
 contribucion: |
-  Exposición sobre laplacianos, geometría y segmentación de tumores.
+  Exposición sobre laplacianos, geometría y segmentación de tumores, presentada
+  en la **UAM Iztapalapa** ante una audiencia de matemáticos.
 
-  TODO(santiago): dónde se presentó, ante qué audiencia, duración, y si hay
-  diapositivas o grabación enlazables. Sin eso, esta sección se queda en una
-  línea.
+  No hay diapositivas: la charla **es** la página. Está escrita como un
+  documento autónomo, con sus fórmulas y sus figuras dentro, y se lee igual de
+  bien después de haberla escuchado que sin haber estado.
 
 motivacion: |
-  Conecta directamente con el
-  [mapa del terreno entre topología, geometría y aplicaciones]({{ '/proyectos/paisaje-tda-dg/' | relative_url }}),
-  donde el **laplaciano persistente** aparece como la dirección de mayor
-  apalancamiento para la tesis, precisamente por el trabajo previo en
-  topología.
+  El **laplaciano persistente** es, de todas las direcciones que abre la
+  geometría espectral, la que más se apoya en el trabajo previo en topología —
+  y por eso es la que más apalancamiento tiene para la tesis.
 
   La charla es la versión divulgativa de ese hilo: por qué un operador que se
   estudia en cálculo vectorial acaba sirviendo para separar tejido.

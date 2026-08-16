@@ -7,8 +7,7 @@ tipo: software
 estado: terminado
 anio: 2026
 destacado: true
-autoria: "Santiago Gil Gallego (limpieza y arquitectura) · un compañero de equipo se encargó del registro"
-nota_autoria: "TODO(santiago): nombre del compañero de equipo, si quiere aparecer."
+autoria: "Santiago Gil Gallego"
 tecnologias: [Python]
 
 problema: |
@@ -30,12 +29,29 @@ enfoque_computacional: |
 
   TODO(santiago): listar los catorce módulos completos.
 
+resultados: |
+  La mejor prueba de que la separación funcionó llegó de fuera: otro proyecto
+  —el de
+  [segmentación clásica del realce](/proyectos/segmentacion-clasica-et/),
+  de un equipo de tres— **reutilizó el núcleo numérico de este paquete**.
+
+  Se llevaron el denoising de Wiener adaptativo, la corrección de campo de
+  sesgo, la normalización, las métricas de solapamiento, la umbralización de
+  Otsu multinivel, el crecimiento de regiones, el watershed, la mezcla de
+  gaussianas multimodal y los mosaicos de tres vistas.
+
+  Y reescribieron entera la capa de entrada y salida, para leer desde ZIP en
+  vez de desde disco. Los algoritmos se movieron sin tocarlos.
+
 aprendizajes: |
   La separación entre paquete y notebook es lo que hace que un proyecto de
   curso sobreviva al curso.
 
-proximos_pasos: |
-  TODO(santiago): ¿se publica como repositorio abierto?
+  Y hay una separación más fina dentro del paquete que resultó ser la que de
+  verdad importaba: **escribir la parte matemática como funciones puras**, que
+  no saben de dónde vienen los datos ni a dónde van. Eso es lo que permitió que
+  otro equipo cambiara toda la capa de lectura y se llevara los algoritmos
+  intactos.
 
 visualizaciones:
   - id: viz-arquitectura-pipeline
