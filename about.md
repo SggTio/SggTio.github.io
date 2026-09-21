@@ -11,9 +11,9 @@ wide: true
 <div class="about-page">
   <div class="about-intro">
     <div class="about-intro__text">
-      <p>Soy Santiago Gil Gallego, matemático. Me gustan especialmente la topología algebraica y la geometría diferencial, tanto en sus preguntas teóricas como en sus posibilidades computacionales. Construyo software y soy más lector que escritor.</p>
+      <p>Soy Santiago y soy matemático. Me gustan sobre todo las ecuaciones diferenciales, la topología algebraica y la geometría diferencial, tanto por sus preguntas teóricas como por sus aplicaciones computacionales. Vivo de construir software y hacer matemáticas. En mi tiempo libre me gusta leer, jugar ajedrez y escribir, en ese orden.</p>
 
-      <p>Tengo estudios de posgrado en ingeniería y ciencias de la computación. Mi siguiente etapa de formación es un doctorado en matemáticas.</p>
+      <p>Hice una maestría en métodos matemáticos aplicados a imágenes y otra en ciencias de la computación y sistemas. Ahora soy estudiante de doctorado en matemáticas en Ciudad de México.</p>
     </div>
 
     <figure class="about-profile">
@@ -26,15 +26,15 @@ wide: true
 
   <div class="about-pair">
     <section class="about-section" aria-labelledby="matematicas">
-      <h2 id="matematicas">Matemáticas que estoy estudiando</h2>
+      <h2 id="matematicas">Matemáticas que me interesan mucho</h2>
 
       <ul>
-        <li>Investigo aplicaciones de operadores geométricos, como los laplacianos, en problemas de imágenes médicas. En particular, estudio su uso en la segmentación de gliomas y meningiomas.</li>
-        <li>Investigo la geometría riemanniana y sus interacciones con otras estructuras, como los corchetes de Poisson, para estudiar distintos tipos de variedades.</li>
-        <li>Me interesan también los problemas de cambios de fase que involucran las ecuaciones de Allen–Cahn, Cahn–Hilliard y modelos relacionados, así como sus conexiones con la geometría, los fluidos y la biofísica del cáncer.</li>
+        <li>Investigo aplicaciones de operadores geométricos, como los laplacianos, en problemas de imágenes médicas. En particular, estudio su uso en la segmentación de gliomas y meningiomas, pero también me interesan mucho las posibilidades computacionales de estos operadores. Este fue el tema de uno de mis trabajos de maestría.</li>
+        <li>Investigo la geometría riemanniana y sus interacciones con otras estructuras, como los corchetes de Poisson, para estudiar distintos tipos de variedades. En particular, me interesan los problemas que buscan cerrar la brecha en el cálculo de la cohomología de Poisson y extender la cohomología L² a variedades. También quiero estudiar foliaciones riemannianas singulares cuando la foliación está inducida por una estructura geométrica, como una estructura de Poisson.</li>
+        <li>Me interesan también los problemas de cambios de fase que involucran las ecuaciones de Allen–Cahn, Cahn–Hilliard y modelos relacionados, así como sus conexiones con la geometría, los fluidos y la biofísica del cáncer. Este es, en particular, el tema de mi estudio doctoral, junto con las interacciones entre estos cambios de fase y operadores de carácter global, como los operadores fraccionarios, y la relación de todo ello con problemas de tipo Yamabe.</li>
       </ul>
 
-      <p>Trabajar con imágenes y geometría computacional me ha llevado a profundizar en C/C++ y CGAL: implementar las matemáticas que estudio también forma parte de aprenderlas.</p>
+      <p>Trabajar con matemáticas aplicadas me ha llevado a profundizar en C/C++, CGAL y análisis numérico. Implementar matemáticas en código me ha ayudado a entenderlas mejor.</p>
     </section>
 
     <section class="about-section" aria-labelledby="software">
