@@ -1,0 +1,116 @@
+---
+layout: default
+---
+{%- comment -%}
+  Índice de sección y listas de publicaciones (rediseño v2; componente
+  ListaPublicaciones). Lo usan Mates, Notas, Escritos, Archivo y
+  Etiquetas.
+
+    <h1> con el título de la página, en el estilo de título de su voz
+    el contenido de la página (epígrafe y texto de entrada, tal cual)
+    la(s) lista(s): <h2 class="lista-titulo"> + <ul class="lista"> con
+    _includes/fila-publicacion.html, o «aún sin entradas» (D10)
+
+  Las publicaciones salen de _includes/publicaciones.html: sin draft ni
+  listar: false, por fecha descendente. Sin tarjetas, sin centrar.
+
+  Front matter de la página
+    title         obligatorio  el <h1>
+    coleccion     opcional     mates | notas | escritos. Sin ella entran
+                               todas y cada fila lleva su sección.
+    grupos        opcional     lista de {titulo, subseccion}: una lista por
+                               subsección, en ese orden (Mates)
+    por_anio      opcional     true: una lista por año (Archivo)
+    lista_titulo  opcional     rótulo de la lista única
+    lista_limite  opcional     cuántas van bajo lista_titulo; el resto,
+                               bajo resto_titulo
+    resto_titulo  opcional     rótulo de lo que no cae en ningún grupo o
+                               pasa del límite. Solo se pinta si hay algo.
+    lista         opcional     false: la página escribe sus propias listas
+                               (Etiquetas)
+{%- endcomment -%}
+{%- include voz.html -%}
+{%- case voz -%}
+  {%- when "voz-mates" -%}{%- assign _sec_titulo = "titulo-mates" -%}{%- assign _sec_tono = "indice-lectura" -%}
+  {%- when "voz-escritos" -%}{%- assign _sec_titulo = "titulo-escritos" -%}{%- assign _sec_tono = "indice-lectura" -%}
+  {%- else -%}{%- assign _sec_titulo = "titulo-tecnico" -%}{%- assign _sec_tono = "indice-tecnica" -%}
+{%- endcase %}
+<div class="indice-seccion {{ _sec_tono }}">
+  <h1 class="{{ _sec_titulo }}">{{ page.title }}</h1>
+  {{ content }}
+  {%- unless page.lista == false -%}
+  {%- include publicaciones.html -%}
+  {%- if page.coleccion -%}
+    {%- assign _sec_entradas = publicaciones | where: "collection", page.coleccion -%}
+    {%- assign _sec_con_seccion = false -%}
+  {%- else -%}
+    {%- assign _sec_entradas = publicaciones -%}
+    {%- assign _sec_con_seccion = true -%}
+  {%- endif -%}
+  {%- assign _sec_resto = "" | split: "" -%}
+
+  {%- if page.grupos -%}
+    {%- assign _sec_ids = "" | split: "" -%}
+    {%- for _sec_g in page.grupos -%}
+      {%- assign _sec_ids = _sec_ids | push: _sec_g.subseccion -%}
+      {%- assign _sec_items = _sec_entradas | where: "subsection", _sec_g.subseccion %}
+  <h2 class="lista-titulo">{{ _sec_g.titulo }}</h2>
+      {%- if _sec_items.size > 0 %}
+  <ul class="lista">
+        {%- for _sec_p in _sec_items %}
+    {% include fila-publicacion.html post=_sec_p seccion=_sec_con_seccion %}
+        {%- endfor %}
+  </ul>
+      {%- else %}
+  <p class="lista-vacia">aún sin entradas</p>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- for _sec_p in _sec_entradas -%}
+      {%- unless _sec_ids contains _sec_p.subsection -%}{%- assign _sec_resto = _sec_resto | push: _sec_p -%}{%- endunless -%}
+    {%- endfor -%}
+
+  {%- elsif page.por_anio -%}
+    {%- assign _sec_anios = _sec_entradas | group_by_exp: "_sec_p", "_sec_p.date | date: '%Y'" -%}
+    {%- for _sec_a in _sec_anios %}
+  <h2 class="lista-titulo">{{ _sec_a.name }}</h2>
+  <ul class="lista">
+      {%- for _sec_p in _sec_a.items %}
+    {% include fila-publicacion.html post=_sec_p seccion=_sec_con_seccion %}
+      {%- endfor %}
+  </ul>
+    {%- endfor -%}
+    {%- if _sec_entradas.size == 0 %}
+  <p class="lista-vacia">aún sin entradas</p>
+    {%- endif -%}
+
+  {%- else -%}
+    {%- assign _sec_limite = page.lista_limite | default: _sec_entradas.size -%}
+    {%- if page.lista_titulo %}
+  <h2 class="lista-titulo">{{ page.lista_titulo }}</h2>
+    {%- endif -%}
+    {%- if _sec_entradas.size > 0 %}
+  <ul class="lista">
+      {%- for _sec_p in _sec_entradas limit: _sec_limite %}
+    {% include fila-publicacion.html post=_sec_p seccion=_sec_con_seccion %}
+      {%- endfor %}
+  </ul>
+    {%- else %}
+  <p class="lista-vacia">aún sin entradas</p>
+    {%- endif -%}
+    {%- for _sec_p in _sec_entradas offset: _sec_limite -%}
+      {%- assign _sec_resto = _sec_resto | push: _sec_p -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- if _sec_resto.size > 0 -%}
+    {%- if page.resto_titulo %}
+  <h2 class="lista-titulo">{{ page.resto_titulo }}</h2>
+    {%- endif %}
+  <ul class="lista">
+    {%- for _sec_p in _sec_resto %}
+    {% include fila-publicacion.html post=_sec_p seccion=_sec_con_seccion %}
+    {%- endfor %}
+  </ul>
+  {%- endif -%}
+  {%- endunless %}
+</div>

@@ -1,22 +1,24 @@
 {%- comment -%}
   Tarjeta de un texto, para grillas y listados.
 
-  Conserva la clase .posts-card del sitio, así que hereda el estilo actual.
-  A diferencia del marcado antiguo, solo el título es enlace: el área de clic
-  se estira por CSS. Así el lector de pantalla no lee la tarjeta entera como
-  texto de enlace (CLAUDE.md §6 y §7).
+  Rediseño v2: ya no la usa ninguna página pública (portada e índices
+  usan _includes/fila-publicacion.html dentro de ul.lista); queda para
+  /desarrollo/. Conserva la clase .posts-card, pero sin caja: regla fina
+  arriba, título, fecha en mono, resumen y etiquetas como palabras
+  (_sass/_ajustes-listas.scss). Solo el título es enlace: el área de clic
+  se estira por CSS. Así el lector de pantalla no lee la tarjeta entera
+  como texto de enlace (CLAUDE.md §6 y §7).
 
   Parámetros
     post           obligatorio  elemento de colección
     nivel_titulo   opcional     2 o 3. Por defecto 3.
     etiquetas      opcional     true muestra las etiquetas
     fecha          opcional     false la oculta. Por defecto true.
-    formato_fecha  opcional     strftime. Por defecto "%b %d, %Y".
-                                Las páginas de sección usan "%B %Y".
+    formato_fecha  opcional     strftime. Sin él, la fecha sale en español
+                                con _includes/fecha.html (12 · jul · 2026).
     descripcion    opcional     false la oculta. Por defecto true.
 {%- endcomment -%}
 {%- assign p = include.post -%}
-{%- assign fmt = include.formato_fecha | default: "%b %d, %Y" -%}
 <article class="posts-card">
   {%- if include.nivel_titulo == 2 -%}
   <h2><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h2>
@@ -25,11 +27,15 @@
   {%- endif -%}
 
   {%- unless include.fecha == false -%}
-  <p><small><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: fmt }}</time></small></p>
+  {%- if include.formato_fecha -%}
+  <p class="posts-card-fecha"><time datetime="{{ p.date | date: '%Y-%m-%d' }}">{{ p.date | date: include.formato_fecha }}</time></p>
+  {%- else -%}
+  <p class="posts-card-fecha">{% include fecha.html fecha=p.date %}</p>
+  {%- endif -%}
   {%- endunless -%}
 
   {%- if p.description and include.descripcion != false -%}
-  <p><small>{{ p.description }}</small></p>
+  <p class="posts-card-resumen">{{ p.description }}</p>
   {%- endif -%}
 
   {%- if include.etiquetas and p.tags -%}

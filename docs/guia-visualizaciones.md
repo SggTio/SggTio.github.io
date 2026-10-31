@@ -1,6 +1,7 @@
 # Guía de visualizaciones — Un Santajaro
 
-Fecha: 2026-08-16
+Fecha: 2026-08-16 (tokens, colores y tipografía de §4 y §5 al día con el diseño
+v2 el 2026-10-31)
 Manual operativo. Se consulta cada vez que se hace una figura nueva.
 
 Nace de la ingeniería inversa de dos cosas que ya funcionan en el sitio: los
@@ -177,17 +178,43 @@ Obligatorias para toda figura, de T1 a T5.
 
 ### Tema claro y oscuro
 
-Usa las variables del sitio: `--accent-color`, `--surface`, `--body-color`,
-`--text-quiet`, `--border-color`. En SVG, `stroke="currentColor"` resuelve la
-mayoría de los casos.
+Usa los tokens del sitio (`_sass/_tokens.scss`; mapa completo en
+`docs/diseno-v2/README.md`): `--acento`, `--tinta`, `--tinta-quieta`,
+`--tinta-tenue`, `--superficie`, `--regla` y, si hace falta un acento con
+nombre, `--azulgris`, `--crema`, `--verde`. Los nombres viejos
+(`--accent-color`, `--surface`, `--body-color`, `--text-quiet`,
+`--border-color`) siguen como alias para el CSS heredado; no los uses en
+figuras nuevas. En SVG, `stroke="currentColor"` resuelve la mayoría de los
+casos.
+
+`--acento` depende de la sección: azulgris en Mates, crema en Escritos, Notas
+y Sobre mí, verde en Proyectos (azulgris en el resto). Vive en `<body>`, no en
+`<html>`: léelo del contenedor de la figura, no de `document.documentElement`.
+Los demás tokens de color sí están en `:root` y cambian con el tema. (Los
+scripts de avances leen `--accent-color` de `<html>` a propósito: no lo
+encuentran y usan su respaldo `#e5d6c7`, pensado para su lienzo oscuro. Por
+eso `--accent-color` nunca se define en `:root`.)
+
+**Lienzo oscuro fijo.** El `.viz-stage` de los posts de Mates es oscuro en los
+dos temas (sus scripts dibujan con colores fijos para fondo oscuro). El texto
+sobre ese lienzo no puede usar `--tinta`, que en claro es casi negra: usa
+`--lienzo-tinta`, `--lienzo-tinta-tenue` y `--lienzo-azulgris`, que valen lo
+mismo en los dos temas. Solo ahí. Una figura que dibuje sobre el fondo de la
+página o sobre `figure .lienzo` (superficie, cambia con el tema) usa los tokens
+normales.
+
+**Tipografía.** Rótulos en `var(--font-sans)` (IBM Plex Sans), cifras y ejes en
+`var(--font-mono)` (IBM Plex Mono). Nada de pilas SFMono ni de pesos que el
+sitio no trae: Plex Sans 400/500/600 (cursiva solo 400), Plex Mono 400/500.
 
 **Trampa del canvas.** Un canvas **no hereda CSS**. Si escribes
 `ctx.fillStyle = '#95c9a0'`, esa figura se queda oscura para siempre. Lee el
 color y vuelve a dibujar al cambiar de tema:
 
 ```js
-const css = n => getComputedStyle(document.documentElement)
-                   .getPropertyValue(n).trim();
+// root: el contenedor de la figura. Hereda los tokens de :root y el
+// --acento de su sección, que vive en <body>.
+const css = n => getComputedStyle(root).getPropertyValue(n).trim();
 new MutationObserver(dibujar)
   .observe(document.documentElement, { attributes: true,
                                        attributeFilter: ['data-theme'] });
@@ -246,8 +273,8 @@ Ejecutar: python scripts/figuras/<slug>/<nombre>.py
   const stage = root.querySelector('.viz-stage');
   if (!stage) return;
 
-  const css = n => getComputedStyle(document.documentElement)
-                     .getPropertyValue(n).trim();
+  // Del contenedor, no de <html>: así también llega --acento.
+  const css = n => getComputedStyle(root).getPropertyValue(n).trim();
 
   function dibujar() { /* … */ }
 

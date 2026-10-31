@@ -2,6 +2,7 @@
 title: "Plantilla de nota"
 date: 2026-01-01
 description: "Descripción corta que aparece como subtítulo bajo el título de la nota."
+listar: false
 ---
 
 Una nota es un texto más largo y estructurado. El layout es algo más ancho que el de los escritos y soporta dos tipos de secciones dentro del markdown:

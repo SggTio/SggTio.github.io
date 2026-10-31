@@ -1,0 +1,75 @@
+<!-- @dsCard group="Páginas" height=1180 width=1100 subtitle="Sobre mí: intro en Literata, ficha de personaje en el margen, hojas desplegables con viñeta pixel y mapa de intereses interactivo" -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<div class="section-sobre" style="padding:8px 24px 32px">
+  <header class="masthead"><a class="marca" href="#">Un Santajaro</a><nav><a href="#">Proyectos</a><a href="#">Mates</a><a href="#">Notas</a><a href="#">Escritos</a><a class="activa" href="#">Sobre mí</a></nav></header>
+  <article class="articulo voz-escritos sobre">
+    <h1>Sobre mí</h1>
+    <p class="meta">santiago gil gallego &nbsp;·&nbsp; ciudad de méxico</p>
+
+    <aside class="margen ficha-personaje">
+      <span class="rotulo">Ficha de personaje</span>
+      <hr class="regla-pixel">
+      <span class="rotulo">Clase</span>matemático computacional
+      <span class="rotulo">Nivel</span><span class="grande">DOCTORANDO</span>
+      <span class="rotulo">Atributos</span>
+      <div class="stat"><span>geometría</span><span class="barra"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+      <div class="stat"><span>topología</span><span class="barra"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></div>
+      <div class="stat"><span>software</span><span class="barra"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+      <div class="stat"><span>ajedrez</span><span class="barra"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="stat"><span>panadería</span><span class="barra"><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <span class="rotulo">Inventario</span><span class="inv">C++ · CGAL · Python · PyTorch · LaTeX</span>
+      <span class="rotulo cursor">Ahora</span>leyendo y escribiendo, en ese orden
+    </aside>
+
+    <div class="intro">
+      <div class="retrato" style="background:linear-gradient(135deg,#2a2c2e,#3a3d40);display:grid;place-items:center;font-family:var(--font-mono);font-size:11px;color:var(--tinta-tenue)">foto</div>
+      <p>Soy Santiago y soy matemático. Me gustan sobre todo las ecuaciones diferenciales, la topología algebraica y la geometría diferencial, tanto por sus preguntas teóricas como por sus aplicaciones computacionales. Vivo de construir software y hacer matemáticas. En mi tiempo libre me gusta leer, jugar ajedrez y escribir, en ese orden.</p>
+      <p>Hice una maestría en métodos matemáticos aplicados a imágenes y otra en ciencias de la computación y sistemas. Ahora soy estudiante de doctorado en matemáticas en Ciudad de México.</p>
+    </div>
+
+    <details class="hoja" open>
+      <summary><span class="px px-vineta"></span><span class="px px-abierta"></span><span>Matemáticas que me interesan mucho</span><span class="cuenta">03</span></summary>
+      <div class="cuerpo">
+        <ul class="pixel">
+          <li>Investigo aplicaciones de operadores geométricos, como los laplacianos, en problemas de imágenes médicas: en particular su uso en la segmentación de gliomas y meningiomas.</li>
+          <li>Investigo la geometría riemanniana y sus interacciones con otras estructuras, como los corchetes de Poisson; me interesan la cohomología de Poisson, la cohomología L² y las foliaciones riemannianas singulares.</li>
+          <li>Me interesan los cambios de fase de Allen–Cahn y Cahn–Hilliard, sus conexiones con la geometría, los fluidos y la biofísica del cáncer, los operadores fraccionarios y los problemas de tipo Yamabe.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="hoja">
+      <summary><span class="px px-vineta"></span><span class="px px-abierta"></span><span>Software que he construido</span><span class="cuenta">03</span></summary>
+      <div class="cuerpo"><p>Trabajo entre la ciencia de datos y la ingeniería de aprendizaje automático, con énfasis en computación de alto desempeño y MLOps.</p></div>
+    </details>
+    <details class="hoja">
+      <summary><span class="px px-vineta"></span><span class="px px-abierta"></span><span>Software libre y comunidad</span><span class="cuenta">02</span></summary>
+      <div class="cuerpo"><p>Defiendo el software libre y una IA abierta que podamos estudiar, modificar y auditar.</p></div>
+    </details>
+    <details class="hoja">
+      <summary><span class="px px-vineta"></span><span class="px px-abierta"></span><span>Lecturas y escritos</span><span class="cuenta">02</span></summary>
+      <div class="cuerpo"><p>Buena parte de lo que escribo nace de lo que leo: reseñas, notas y preguntas que quiero compartir.</p></div>
+    </details>
+
+    <div class="mapa">
+      <span class="rotulo-pixel" style="display:block;margin:0 0 8px">Mapa de intereses · pasa el cursor</span>
+      <svg viewBox="0 0 900 340" role="img" aria-label="Mapa de intereses">
+        <g id="aristas"></g><g id="nodos"></g>
+      </svg>
+      <div class="leyenda">cada nodo es un tema del que hay algo escrito en el sitio; los vecinos se iluminan</div>
+    </div>
+  </article>
+</div>
+<script>
+(function(){
+  var N=[["lap","Laplacianos",260,60,1],["img","Imágenes médicas",260,170,1],["seg","Segmentación de gliomas",260,280,0],["rie","Geometría riemanniana",470,60,1],["poi","Estructuras de Poisson",470,170,0],["fol","Foliaciones singulares",470,280,0],["l2","Cohomología L²",640,230,0],["ac","Allen–Cahn / Cahn–Hilliard",700,60,1],["fra","Operadores fraccionarios",800,160,0],["yam","Problemas de Yamabe",720,300,0],["cgal","C++ · CGAL",90,260,0],["num","Análisis numérico",90,120,0]];
+  var E=[["lap","img"],["lap","seg"],["img","seg"],["lap","rie"],["rie","poi"],["poi","l2"],["poi","fol"],["rie","fol"],["ac","fra"],["ac","yam"],["ac","img"],["cgal","num"],["num","lap"],["fra","yam"]];
+  var svg=document.querySelector('.mapa svg'),ga=svg.querySelector('#aristas'),gn=svg.querySelector('#nodos'),P={},ns='http://www.w3.org/2000/svg';
+  N.forEach(function(n){P[n[0]]={x:n[2],y:n[3]};});
+  var aristas=E.map(function(e){var l=document.createElementNS(ns,'line');l.setAttribute('class','arista');l.setAttribute('x1',P[e[0]].x);l.setAttribute('y1',P[e[0]].y);l.setAttribute('x2',P[e[1]].x);l.setAttribute('y2',P[e[1]].y);l.dataset.a=e[0];l.dataset.b=e[1];ga.appendChild(l);return l;});
+  var nodos={};
+  N.forEach(function(n){var g=document.createElementNS(ns,'g');g.setAttribute('class','nodo'+(n[4]?' ancla':''));var w=n[1].length*7.2+20;var r=document.createElementNS(ns,'rect');r.setAttribute('x',n[2]-w/2);r.setAttribute('y',n[3]-14);r.setAttribute('width',w);r.setAttribute('height',28);var t=document.createElementNS(ns,'text');t.setAttribute('x',n[2]);t.setAttribute('y',n[3]+4);t.setAttribute('text-anchor','middle');t.textContent=n[1];g.appendChild(r);g.appendChild(t);gn.appendChild(g);nodos[n[0]]=g;
+    g.addEventListener('mouseenter',function(){aristas.forEach(function(l){var on=l.dataset.a===n[0]||l.dataset.b===n[0];l.classList.toggle('activa',on);if(on){nodos[l.dataset.a].classList.add('activo');nodos[l.dataset.b].classList.add('activo');}});});
+    g.addEventListener('mouseleave',function(){aristas.forEach(function(l){l.classList.remove('activa');});Object.keys(nodos).forEach(function(k){nodos[k].classList.remove('activo');});});
+  });
+})();
+</script>

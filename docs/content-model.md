@@ -4,6 +4,13 @@ Fecha: 2026-08-06
 Fase 2. Documento de diseño: no implementa nada.
 Depende de `docs/site-restructure-audit.md`.
 
+> **Nota del rediseño v2 (2026-10-31).** Santiago decidió (D13) que lo literario
+> **sigue en `/escritos/`**: colección `_escritos`, `section: escritos`, sin
+> `/letras/` ni `section: letras`. Lo que este documento dice de Letras (la tabla
+> de decisiones, §1, §2, §8 y «Lo que este documento NO decide») queda como
+> registro del plan descartado. Los
+> campos que los layouts leen hoy están en §5, «Campos y convenciones vigentes».
+
 ## Decisiones que lo sustentan
 
 | Decisión | Valor | Cuándo |
@@ -448,6 +455,31 @@ draft: false
 
 Un poema declara `genero: poema` y `layout: poema`. Un ensayo en `_notas`
 declara `genero: ensayo`. Todo lo demás hereda.
+
+### Campos y convenciones vigentes (rediseño v2)
+
+Lo que los layouts del rediseño v2 ya leen, además de los defaults:
+
+| Campo | Dónde | Qué hace |
+|---|---|---|
+| `listar: false` | cualquier texto | sigue publicado en su URL, pero no sale en listas, feed, «Últimas», etiquetas ni conteos (los marcadores de posición) |
+| `tags` | Mates, Notas | etiquetas en la línea de meta, enlazadas a `/etiquetas/#slug` |
+| `description` | todos | resumen en las listas; en Notas, entrada bajo la meta |
+| `epigrafe` | Escritos (cuento y poema) | cita antes del texto |
+| `epigrafe_fuente` | Escritos | quién lo dijo, **sin la raya**: el layout la pone |
+| `draft: true` | cualquier texto | fuera de listas, feed, «Últimas», etiquetas y conteos; aviso «Borrador» en local en todos los layouts, que en Mates, Notas y Escritos dice además si falta `published: false`. La página **se genera igual** y entra en `sitemap.xml` |
+| `published: false` | cualquier texto | Jekyll no genera la página: la garantía de que un `TODO(santiago)` no llega a producción. En local, `jekyll serve --unpublished` |
+| `subsection` | Mates | grupo de `/mates/`: `redes-neuronales`, `geometria-computacional`, `charlas`; sin ella, «Otras notas» |
+| `math: true` | cualquier texto | carga MathJax (fórmulas, `ecuacion.html`) |
+| `extra_css` | Mates | hojas propias de la entrada (opcional: la base del lienzo de las `.viz` y de sus mandos la pone el sitio) |
+
+En el cuerpo de un escrito: `***` en su propia línea es el separador «· · ·»
+entre secciones, y `&emsp;` al principio de un verso lo sangra. En un poema
+cada salto de línea es un verso y una línea en blanco separa estrofas.
+
+Plantillas listas para copiar, una por tipo (Mates, nota, ensayo, cuento,
+poema, proyecto), con estos campos y los bloques del cuerpo:
+`docs/plantillas/` (empieza por su `README.md`).
 
 ---
 

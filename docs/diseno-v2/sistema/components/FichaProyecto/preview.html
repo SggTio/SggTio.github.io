@@ -1,0 +1,25 @@
+<!-- @dsCard group="Páginas" height=620 width=1100 subtitle="Voz técnica con el margen como ficha: estado, año, área, stack, código y lectura salen de la prosa" -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<div class="section-proyectos" style="padding:8px 24px 32px">
+  <header class="masthead"><a class="marca" href="#">Un Santajaro</a><nav><a class="activa" href="#">Proyectos</a><a href="#">Mates</a><a href="#">Notas</a><a href="#">Escritos</a><a href="#">Sobre mí</a></nav></header>
+  <article class="articulo voz-tecnica">
+    <h1>Cuatro métodos clásicos contra un tumor que realza en anillo</h1>
+    <p class="resumen">Segmentar el realce tumoral en resonancia con métodos clásicos, sin aprendizaje profundo, para saber exactamente dónde se rompen.</p>
+
+    <aside class="margen ficha"><dl>
+      <dt>Estado</dt><dd class="estado">terminado</dd>
+      <dt>Año</dt><dd>2026</dd>
+      <dt>Área</dt><dd>Ciencias computacionales</dd>
+      <dt>Stack</dt><dd>Python · SimpleITK · Three.js</dd>
+      <dt>Código</dt><dd><a href="#">github.com/SggTio/brats-clasico</a></dd>
+      <dt>Lectura</dt><dd>12 min</dd>
+    </dl></aside>
+
+    <h2>Qué problema había</h2>
+    <p>Los modelos de segmentación profunda aciertan, pero no explican por qué fallan en los bordes del realce. Antes de entrenar nada, quería saber qué logra un umbral, una región que crece, un contorno activo y un watershed sobre las mismas imágenes.</p>
+    <h2>Qué hice</h2>
+    <p>Cuatro pipelines con los mismos preprocesos, evaluados con Dice y distancia de Hausdorff contra la verdad de BraTS 2024 GLI. Cada método tiene un cuaderno reproducible y una visualización 3D del resultado.</p>
+    <h2>Qué salió mal por el camino</h2>
+    <p>El watershed necesita marcadores que el realce en anillo no da; el contorno activo se escapa por el edema. Ambas fallas son geométricas, y eso motiva la tesis.</p>
+  </article>
+</div>

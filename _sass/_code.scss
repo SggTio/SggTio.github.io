@@ -1,58 +1,93 @@
-// Code
+// ==============================================================
+//  Código (componente Codigo del sistema)
 //
-// Inline and block-level code snippets. Includes tweaks to syntax highlighted
-// snippets from Pygments/Rouge and Gist embeds.
+//  Igual en las tres voces: Plex Mono a 14,5px en tinta sobre
+//  codigo-fondo, regla de 1px, radio-1, desplazamiento horizontal en
+//  vez de ajuste de línea. Sin numeración de líneas. En línea: 0,92em
+//  en crema, sin fondo. Los colores de sintaxis están en _syntax.scss.
+//
+//  kramdown + Rouge producen
+//    div.language-x.highlighter-rouge > div.highlight > pre.highlight > code
+//  Los dos envoltorios se neutralizan: el único recuadro es el <pre>.
+// ==============================================================
 
+// Plex Mono solo trae 400 y 500 (D1). Dentro de <strong>, th o un título
+// el código pediría 600/700 y el navegador engordaría la 500 con una
+// negrita falsa; sin síntesis usa la 500 real.
+pre,
 code,
-pre {
-  font-family: var(--code-font);
-}
-
-code {
-  font-size: 85%;
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-synthesis-weight: none;
 }
 
 pre {
-  display: block;
-  margin-top: 0;
-  margin-bottom: var(--spacer-3);
+  margin: 1.2rem 0;
+  padding: 14px var(--espacio-4);
   overflow: auto;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--tinta);
+  background: var(--codigo-fondo);
+  border: 1px solid var(--regla);
+  border-radius: var(--radio-1);
+  tab-size: 4;
 }
 
-.highlight {
-  padding: var(--spacer);
-  margin-bottom: var(--spacer);
-  background-color: var(--code-bg);
-  border-radius: var(--border-radius);
-
-  pre {
-    margin-bottom: 0;
-  }
-
-  // Triple backticks (code fencing) doubles the .highlight elements
-  .highlight {
-    padding: 0;
-  }
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  background: none;
 }
 
-.rouge-table {
-  margin-bottom: 0;
-  font-size: 100%;
-
-  &,
-  td,
-  th {
-    border: 0;
-  }
-
-  .gutter {
-    vertical-align: top;
-    user-select: none;
-    opacity: .25;
-  }
+div.highlighter-rouge,
+div.highlight,
+figure.highlight {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
 }
 
-// Gist via GitHub Pages
-.gist .markdown-body {
-  padding: 15px !important;
+// Código en línea: en cualquier texto, no solo en p y li.
+:not(pre) > code {
+  font-size: .92em;
+  color: var(--crema);
+}
+
+// ---- Los dos posts reales de Mates ----
+// Su post.css (que carga después de styles.css y no se edita) fija
+// `.post pre { background: #0f1216 !important }` y una pila SFMono en
+// `.post code`. Con el tema claro eso dejaba texto oscuro sobre fondo
+// casi negro (1,2:1). El bloque de código es común a las tres voces,
+// así que aquí se devuelve al sistema; `body` sube la especificidad por
+// encima de la de post.css. Solo los bloques de Rouge (pre.highlight):
+// los <pre> que las visualizaciones crean dentro de sus paneles oscuros
+// fijos (.viz-readout) conservan el aspecto de post.css. Las cajas de
+// post.css con el mismo problema (.two-col > .col, tablas, analogías)
+// se corrigen en _heredado.scss.
+body .post pre.highlight {
+  padding: 14px var(--espacio-4);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--tinta);
+  background: var(--codigo-fondo) !important;
+  border: 1px solid var(--regla);
+  border-radius: var(--radio-1);
+}
+
+body .post code {
+  font-family: var(--font-mono);
+}
+
+body .post pre.highlight code {
+  font-size: inherit;
+}
+
+// Dentro de una visualización el panel es oscuro en los dos temas: el
+// texto de un <pre> hereda el del panel, no la tinta del tema.
+.viz pre {
+  color: inherit;
 }

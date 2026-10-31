@@ -1,0 +1,96 @@
+// ==============================================================
+//  Utilidades — disponibles en CUALQUIER página:
+//  secciones de una y dos columnas (venían de _custom.scss; las usan los
+//  dos posts reales de Mates, tres fichas de proyecto, la plantilla de
+//  nota y /desarrollo/) y .visualmente-oculto.
+//
+//  El autor las mete en el markdown:
+//    <section class="one-col" markdown="1"> … </section>
+//    <section class="two-col" markdown="1"> … </section>
+//  `markdown="1"` es obligatorio: sin él kramdown no procesa el
+//  markdown anidado dentro del bloque HTML.
+// ==============================================================
+
+// Columna angosta y centrada. Útil para intros, párrafos clave, remates.
+.one-col {
+  max-width: 36rem;
+  margin: var(--espacio-6) auto;
+}
+
+// Dentro de un artículo se centra en la columna de texto, no en
+// texto + margen.
+.articulo > .one-col {
+  margin-right: 0;
+  margin-left: max(0px, calc((min(100%, var(--texto)) - 36rem) / 2));
+}
+
+// Dos columnas en paralelo. Colapsan a una en móvil.
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-6);
+  margin: var(--espacio-6) 0;
+
+  > *:first-child { margin-top: 0; }
+
+  // Sin esto una columna con una fórmula en display o una tabla ancha se
+  // estira hasta su contenido y desborda la página en móvil (pasaba en
+  // master en el post de avances, cuyo post.css redefine la rejilla).
+  > * { min-width: 0; }
+}
+
+@media (max-width: 720px) {
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: var(--espacio-4);
+  }
+}
+
+// Dos columnas escritas sin envoltorio: un encabezado (### o ####) abre
+// cada columna y le siguen sus párrafos, todos hijos directos de la
+// sección (plantilla de nota, tres fichas de proyecto, /desarrollo/). En
+// la rejilla cada hijo caía en su celda y el texto quedaba en zigzag. Con
+// columnas CSS el segundo encabezado salta a la otra columna; un tercero
+// ya no fuerza salto (crearía una tercera columna fuera de la caja). Los
+// posts de Mates envuelven cada columna en div.col y siguen en rejilla.
+// Por debajo de 721px, una columna en el orden del texto, en flujo normal
+// y no en rejilla: en la rejilla el `gap` se sumaba a los márgenes de cada
+// párrafo y encabezado (que no colapsan), y la sección quedaba con otro
+// ritmo que el resto del artículo (párrafo → párrafo 32px en vez de 16px,
+// encabezado despegado de su texto).
+@media (max-width: 720px) {
+  .two-col:has(> :is(h3, h4):first-child) { display: block; }
+}
+
+@media (min-width: 721px) {
+  .two-col:has(> :is(h3, h4):first-child) {
+    display: block;
+    columns: 2;
+    column-gap: var(--espacio-6);
+
+    > :is(h3, h4) { margin-top: 0; }
+
+    > :is(h3, h4):not(:first-child) { break-before: column; }
+
+    > :is(h3, h4):not(:first-child) ~ :is(h3, h4) { break-before: auto; }
+
+    > * { break-inside: avoid; }
+
+    > :last-child { margin-bottom: 0; }
+  }
+}
+
+// Oculto a la vista y presente para los lectores de pantalla (el <h1> de
+// la portada).
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

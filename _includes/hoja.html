@@ -1,0 +1,40 @@
+{%- comment -%}
+  Hoja desplegable de Sobre mí (rediseño v2, D14; componente SobreMi):
+  un <details> nativo. Funciona sin JavaScript, se imprime abierto
+  (beforeprint de head.html y regla de impresión de _v2-sobre.scss) y el
+  buscador del navegador encuentra lo que hay dentro aunque esté cerrado.
+
+    <details class="hoja" id="…" [open]>
+      <summary> viñeta pixel · <h2>título</h2> · cuenta </summary>
+      <div class="cuerpo"> … </div>
+    </details>
+
+  El id va en el <details>: un enlace a /sobre/#id lleva a la hoja, y el
+  script de _layouts/sobre.html la abre si estaba cerrada. El título es un
+  <h2> dentro del summary para que la página conserve su jerarquía de
+  encabezados.
+
+  La cuenta (dos cifras, en Silkscreen) es el número de bloques del cuerpo:
+  párrafos más elementos de lista. Es decorativa (aria-hidden): no se
+  inventa, se cuenta.
+
+  Parámetros
+    id       obligatorio  ancla de la hoja (matematicas, software…)
+    titulo   obligatorio  texto del summary
+    cuerpo   obligatorio  HTML del cuerpo, normalmente de un bloque capture
+    abierta  opcional     true = abierta al cargar (solo la primera)
+    cuenta   opcional     número que se muestra en lugar del calculado
+{%- endcomment -%}
+{%- assign _hoja_li = include.cuerpo | split: "<li" | size | minus: 1 -%}
+{%- assign _hoja_p = include.cuerpo | split: "<p" | size | minus: 1 -%}
+{%- if include.cuenta -%}
+  {%- assign _hoja_n = include.cuenta | plus: 0 -%}
+{%- else -%}
+  {%- assign _hoja_n = _hoja_li | plus: _hoja_p -%}
+{%- endif -%}
+<details class="hoja" id="{{ include.id }}"{% if include.abierta %} open{% endif %}>
+  <summary><span class="px px-vineta" aria-hidden="true"></span><span class="px px-abierta" aria-hidden="true"></span><h2>{{ include.titulo }}</h2>{% if _hoja_n > 0 %}<span class="cuenta" aria-hidden="true">{% if _hoja_n < 10 %}0{% endif %}{{ _hoja_n }}</span>{% endif %}</summary>
+  <div class="cuerpo">
+{{ include.cuerpo | strip }}
+  </div>
+</details>

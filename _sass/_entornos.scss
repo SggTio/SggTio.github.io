@@ -2,45 +2,49 @@
 //  Entornos matemáticos y Capa 2
 //  Ver docs/guia-rigor-divulgacion.md, secciones 1 y 4.
 //
-//  Solo se usan variables ya existentes: ningún color nuevo entra
-//  en la paleta por este archivo.
+//  Rediseño v2: «listas, no tarjetas». Los entornos pierden la caja de
+//  superficie y se quedan con una regla izquierda de 2px en el acento
+//  (la misma marca que «Idea clave»); la Capa 2 es una franja entre dos
+//  reglas finas, sin fondo. Solo tokens: ningún color nuevo.
+//  Usos: _includes/entorno.html, _includes/entornos/*, _includes/capa2.html
+//  (layout proyecto) y /desarrollo/.
 // ==============================================================
 
 .entorno {
-  margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  background: var(--surface);
-  border-left: 3px solid var(--accent-color);
-  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  margin: var(--espacio-5) 0;
+  padding: var(--espacio-1) 0 var(--espacio-1) var(--espacio-4);
+  border-left: 2px solid var(--acento);
 
   > :first-child { margin-top: 0; }
   > :last-child  { margin-bottom: 0; }
 }
 
-// El rótulo va en un párrafo en negrita, no en un encabezado: los entornos
-// no deben entrar en la jerarquía de <h1>-<h6> (CLAUDE.md §7).
+// El rótulo va en un párrafo, no en un encabezado: los entornos no deben
+// entrar en la jerarquía de <h1>-<h6> (CLAUDE.md §7). Rótulo en mono.
 .entorno-etiqueta {
-  font-weight: 600;
-  color: var(--accent-color);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--acento);
 }
 
 // Demostración y observación son Capa 2 por naturaleza: trazo más discreto
 // para que no compitan con el enunciado que las precede.
 .entorno.demostracion,
 .entorno.observacion {
-  background: transparent;
-  border-left-color: var(--surface-border);
+  border-left-color: var(--regla);
 }
 
 .entorno.demostracion {
-  font-size: .95rem;
+  font-size: .95em;
 }
 
 // Decorativo: se oculta al lector de pantalla, que no gana nada oyendo
 // "cuadrado" al final de cada demostración.
 .qed {
   float: right;
-  color: var(--text-muted);
+  color: var(--tinta-tenue);
 }
 
 // ==============================================================
@@ -48,26 +52,24 @@
 // ==============================================================
 
 .capa-2 {
-  margin: 1.5rem 0;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  background: var(--surface);
+  margin: var(--espacio-5) 0;
+  border-top: 1px solid var(--regla);
+  border-bottom: 1px solid var(--regla);
 
   > summary {
-    padding: .7rem 1rem;
+    padding: var(--espacio-3) 0;
     cursor: pointer;
     font-weight: 600;
-    color: var(--accent-color);
+    color: var(--acento);
   }
 
   // Foco visible para navegación por teclado (CLAUDE.md §7).
   > summary:focus-visible {
-    outline: 2px solid var(--accent-color);
+    outline: 2px solid var(--acento);
     outline-offset: 2px;
   }
 
-  > *:not(summary) { padding: 0 1rem; }
-  > *:last-child   { padding-bottom: .8rem; }
+  > *:last-child { padding-bottom: var(--espacio-3); }
 }
 
 @media print {

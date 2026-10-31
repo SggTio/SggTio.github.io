@@ -3,8 +3,12 @@ layout: default
 title: "404: Página no encontrada"
 permalink: 404.html
 ---
-
-<div class="page">
-  <h1 class="page-title">404: Página no encontrada</h1>
+{%- comment -%}
+  Sin sección: acento por defecto (azulgris). Voz de lectura de Escritos
+  para el texto, que es una frase, no una ficha.
+{%- endcomment -%}
+{%- include voz.html seccion="escritos" %}
+<article class="articulo {{ voz }} pagina-404">
+  <h1>404: Página no encontrada</h1>
   <p class="lead">Lo siento, esa URL se perdió en el cosmos y ahora sólo tenemos que contemplar la nada. <a href="{{ site.baseurl }}/">Vuelve al inicio</a> para intentarlo de nuevo.</p>
-</div>
+</article>

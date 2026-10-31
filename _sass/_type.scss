@@ -1,115 +1,89 @@
-// Typography
+// ==============================================================
+//  Tipografía neutral
 //
-// Headings, body text, lists, and other misc typographic elements.
+//  Lo que vale fuera de un artículo con voz (índices, Archivo,
+//  Etiquetas, 404, bloques heredados). Los tamaños, pesos y colores de
+//  H1/H2/H3 dentro de un artículo los fija su voz (.voz-mates,
+//  .voz-escritos, .voz-tecnica en _v2-articulo.scss).
+//
+//  El acento ya no tiñe todos los títulos ni los enlaces: en el
+//  sistema nuevo H1 va en tinta y solo el H2 de un artículo lleva el
+//  acento.
+// ==============================================================
 
 h1, h2, h3, h4, h5, h6 {
-  margin-bottom: .5rem;
+  margin: 0 0 var(--espacio-2);
   font-weight: 600;
   line-height: 1.25;
-  color: var(--heading-color);
+  color: var(--tinta);
 }
 
-h1 {
-  font-size: 2rem;
-}
+h1 { font-size: 2rem; }
 
 h2 {
-  margin-top: 1rem;
+  margin-top: var(--espacio-6);
   font-size: 1.5rem;
 }
 
 h3 {
-  margin-top: 1.5rem;
-  font-size: 1.25rem;
+  margin-top: var(--espacio-5);
+  font-size: 1.2rem;
 }
 
 h4, h5, h6 {
-  margin-top: 1rem;
+  margin-top: var(--espacio-4);
   font-size: 1rem;
 }
 
 p {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 var(--espacio-4);
 }
 
 ul, ol, dl {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 var(--espacio-4);
 }
 
-dt {
-  font-weight: bold;
-}
+dt { font-weight: 600; }
 
-dd {
-  margin-bottom: .5rem;
-}
+dd { margin: 0 0 var(--espacio-2); }
 
-hr {
-  position: relative;
-  margin: var(--spacer-2) 0;
-  border: 0;
-  border-top: 1px solid var(--border-color);
-}
-
-abbr {
-  font-size: 85%;
-  font-weight: bold;
-  color: var(--gray-600);
-  text-transform: uppercase;
-
-  &[title] {
-    cursor: help;
-    border-bottom: 1px dotted var(--border-color);
-  }
-}
-
+// El sistema no especifica citas: regla izquierda fina y tinta quieta,
+// sin caja ni fondo.
 blockquote {
-  padding: .5rem 1rem;
-  margin: .8rem 0;
-  color: var(--gray-500);
-  border-left: .25rem solid var(--border-color);
+  margin: var(--espacio-5) 0;
+  padding: 0 0 0 var(--espacio-4);
+  border-left: 2px solid var(--regla);
+  color: var(--tinta-quieta);
 
-  p:last-child {
-    margin-bottom: 0;
-  }
-
-  @media (min-width: 30em) {
-    padding-right: 5rem;
-    padding-left: 1.25rem;
-  }
+  p:last-child { margin-bottom: 0; }
 }
 
-figure {
-  margin: 0;
-}
-
-
-// Markdown footnotes
-//
-// See the example content post for an example.
-
-// Footnote number within body text
-a[href^="#fn:"],
-// Back to footnote link
-a[href^="#fnref:"] {
-  display: inline-block;
-  margin-left: .1rem;
-  font-weight: bold;
-}
-
-// List of footnotes
-.footnotes {
-  margin-top: 2rem;
-  font-size: 85%;
-}
-
-// Custom type
-//
-// Extend paragraphs with `.lead` for larger introductory text.
-
+// Párrafo de entrada genérico. Cada voz lo afina (en Mates, crema).
 .lead {
-  font-size: 1.25rem;
-  font-weight: 300;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+// ---- Notas al pie de kramdown ----
+// Llamada y retorno en mono, sin subrayado.
+a[href^="#fn:"],
+a[href^="#fnref:"] {
+  margin-left: .1rem;
+  font-family: var(--font-mono);
+  font-size: .8em;
+  border-bottom: 0;
+}
+
+a[href^="#fn:"]:hover,
+a[href^="#fnref:"]:hover {
+  color: var(--acento);
+}
+
+.footnotes {
+  margin-top: var(--espacio-7);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--regla);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--tinta-quieta);
 }

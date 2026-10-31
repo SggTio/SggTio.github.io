@@ -5,12 +5,22 @@
   que prohíbe que un TODO(santiago) llegue al sitio publicado.
 
   Parámetros
-    draft  obligatorio  true muestra el aviso
-    nota   opcional     texto alternativo
+    draft   obligatorio  true muestra el aviso
+    nota    opcional     texto alternativo
+    pagina  opcional     la página del aviso (page), cuando el aviso va en el
+                         layout de esa página. Añade si se publica: con
+                         `published: false`, «No se publica.»; sin él, avisa
+                         de que la página se genera igual (draft solo la saca
+                         de las listas). Sin `pagina` no añade nada.
 {%- endcomment -%}
 {%- if include.draft and jekyll.environment != "production" -%}
 <p class="aviso-borrador" role="note">
   <strong>Borrador.</strong>
   {{ include.nota | default: "Esta ficha está sin terminar y no se publica." }}
+  {%- if include.pagina %}
+    {%- if include.pagina.published == false %} No se publica.
+    {%- else %} Sale de las listas, pero sin «published: false» la página se publica igual.
+    {%- endif %}
+  {%- endif %}
 </p>
 {%- endif -%}

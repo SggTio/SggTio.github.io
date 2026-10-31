@@ -1,0 +1,47 @@
+{%- comment -%}
+  Índice «En esta entrada» de un artículo de Mates (componente
+  ArticuloMates: nota de margen de tipo indice, con rótulo y numeración en
+  Silkscreen y el cursor de bloque de D5 tras el rótulo).
+
+  Se deriva del HTML ya renderizado: cada <h2 …> con id (los ## de
+  Markdown; kramdown siempre les pone id) da una entrada que enlaza a ese
+  id. Se quita la numeración escrita a mano al principio del título
+  («1. Una línea de tiempo…» → «Una línea de tiempo…»), porque el CSS ya
+  numera 01, 02…; un título sin número («Cierre: …») queda igual. Los <h2>
+  escritos en HTML sin id no entran. Solo se pinta si hay dos H2 o más.
+
+  Lleva el único cursor parpadeante de la página (D5: uno por pantalla).
+  El nombre de la región va en aria-label, en minúscula: el rótulo se ve en
+  mayúsculas por CSS y Chrome las pasa al nombre si se usa aria-labelledby.
+  Va en el layout justo después de la línea de meta, antes del cuerpo, para
+  que flote al margen a la altura de la entrada.
+
+  Parámetros
+    contenido  obligatorio  HTML renderizado del artículo (`content` en el layout)
+{%- endcomment -%}
+{%- assign _ie_trozos = include.contenido | split: "<h2" -%}
+{%- assign _ie_n = 0 -%}
+{%- capture _ie_items -%}
+  {%- for _ie_t in _ie_trozos offset: 1 -%}
+    {%- assign _ie_cab = _ie_t | split: ">" | first -%}
+    {%- unless _ie_cab contains 'id="' -%}{%- continue -%}{%- endunless -%}
+    {%- assign _ie_id = _ie_cab | split: 'id="' | last | split: '"' | first -%}
+    {%- assign _ie_txt = _ie_t | split: "</h2>" | first | remove_first: _ie_cab | remove_first: ">" | strip_html | strip -%}
+    {%- assign _ie_primera = _ie_txt | split: " " | first -%}
+    {%- assign _ie_num = _ie_primera | remove: "." -%}
+    {%- assign _ie_valor = _ie_num | plus: 0 | append: "" -%}
+    {%- assign _ie_final = _ie_primera | slice: -1 -%}
+    {%- if _ie_final == "." and _ie_valor == _ie_num -%}
+      {%- assign _ie_txt = _ie_txt | remove_first: _ie_primera | strip -%}
+    {%- endif -%}
+    {%- assign _ie_n = _ie_n | plus: 1 -%}
+    <li><a href="#{{ _ie_id }}">{{ _ie_txt }}</a></li>
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if _ie_n >= 2 -%}
+<aside class="margen indice" aria-label="En esta entrada">
+  <span class="rotulo rotulo-pixel cursor">En esta entrada</span>
+  <hr class="regla-pixel" aria-hidden="true">
+  <ol>{{ _ie_items }}</ol>
+</aside>
+{%- endif -%}

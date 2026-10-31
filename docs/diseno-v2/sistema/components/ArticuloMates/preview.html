@@ -1,0 +1,31 @@
+<!-- @dsCard group="Páginas" height=1040 width=1100 subtitle="Voz de lectura con el margen como aparato: índice, idea clave, analogía, pie de figura al margen y ecuación numerada" -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<div class="section-mates" style="padding:8px 24px 32px">
+  <header class="masthead"><a class="marca" href="#">Un Santajaro</a><nav><a href="#">Proyectos</a><a class="activa" href="#">Mates</a><a href="#">Notas</a><a href="#">Escritos</a><a href="#">Sobre mí</a></nav></header>
+  <article class="articulo voz-mates">
+    <h1>Los cimientos de la inteligencia artificial: de la neurona lógica al MLP</h1>
+    <p class="meta">14 · abr · 2026 &nbsp;·&nbsp; <b>mates</b> &nbsp;·&nbsp; redes neuronales · mcculloch-pitts · perceptrón &nbsp;·&nbsp; 24 min</p>
+
+    <aside class="margen indice"><span class="rotulo cursor">En esta entrada</span><hr class="regla-pixel"><ol><li class="actual"><a href="#">Dos preguntas en 1943</a></li><li><a href="#">Dos caminos paralelos</a></li><li><a href="#">El perceptrón aprende</a></li><li><a href="#">Lo que Minsky vio</a></li><li><a href="#">El MLP y la salida</a></li></ol></aside>
+
+    <p class="lead">Imaginemos que es 1943. Dos matemáticos estadounidenses se sientan a escribir un artículo que cambiará para siempre cómo pensamos sobre la inteligencia, el cálculo y el cerebro.</p>
+
+    <aside class="margen idea"><span class="rotulo">Idea clave</span>Antes de que existiera el aprendizaje, existió la pregunta de si una red de unidades simples podía <em>computar</em>. La respuesta de 1943 fue sí, y sin aprender nada.</aside>
+
+    <p>Los quince años que siguieron fueron extraordinarios. Turing reflexionó sobre máquinas que pueden educarse a sí mismas. Rosenblatt construyó la primera máquina de aprendizaje real, con engranajes zumbando y luces parpadeando. Y aquí estamos, ochenta años después, con sistemas que escriben poesía, diagnostican enfermedades y traducen entre idiomas.</p>
+
+    <h2>1. Dos preguntas en 1943</h2>
+    <p>La neurona de McCulloch y Pitts recibe señales binarias por sus dendritas, las pondera por pesos sinápticos, suma todo, y dispara un 1 si la suma alcanza un umbral; si no, emite un 0:</p>
+    <div class="ecuacion"><em>y</em> = 1 &nbsp;si&nbsp; Σ<sub>i</sub> <em>w<sub>i</sub> x<sub>i</sub></em> ≥ θ ; &nbsp; 0 &nbsp;si no<span class="num">(1) &nbsp;neurona de umbral</span></div>
+
+    <aside class="margen analogia"><span class="rotulo">Analogía</span>Es un portero con una lista: cada invitado vale distintos puntos; si la suma de los que llegan pasa cierto número, abre la puerta. No sabe quiénes son, solo cuenta.</aside>
+
+    <p>Con pesos fijos y umbral apropiado se pueden construir todas las puertas lógicas: <em>and</em> con w₁ = w₂ = 1 y θ = 2; <em>or</em> con θ = 1; <em>not</em> combinando una entrada constante y una conexión inhibitoria.</p>
+    <p>McCulloch y Pitts demostraron algo enorme: redes de estas neuronas son Turing-completas. Pueden computar cualquier cosa computable, con suficientes unidades. Sin aprendizaje, sin plasticidad. Solo estructura.</p>
+
+    <figure class="encolumna"><div class="lienzo" style="height:150px;display:grid;place-items:center;font-family:var(--font-mono);font-size:13px;color:var(--tinta-tenue)">figura en columna · 66ch</div><figcaption><b>Figura 1</b>La neurona de umbral como circuito. El pie va al margen, alineado con la figura.</figcaption></figure>
+
+    <h3>La máquina que se educa</h3>
+    <p>Turing propuso las máquinas A-type y B-type: redes aleatorias de puertas NAND, las segundas con conexiones modificadoras educables. La idea central: <em>punishment &amp; reward</em>, veinticinco años antes del aprendizaje por refuerzo.</p>
+  </article>
+</div>

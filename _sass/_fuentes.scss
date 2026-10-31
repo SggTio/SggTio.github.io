@@ -1,0 +1,122 @@
+// ==============================================================
+//  Fuentes autoalojadas (rediseño v2, decisión D1)
+//
+//  woff2 del subconjunto latino de Fontsource 5.3.0, en /assets/fonts/
+//  junto a la licencia OFL de cada familia. El sitio no pide nada a
+//  Google Fonts.
+//
+//  El subconjunto latino cubre todo el español (á é í ó ú ñ ü ¿ ¡),
+//  « » · — – … y las comillas tipográficas. No cubre flechas
+//  (→ ↔ ↕), subíndices (₀ ₁), ✓ ✗ ni griego suelto (σ β θ Δ Σ η):
+//  esos glifos caen al respaldo de la pila (Georgia, system-ui…).
+//  Flechas, subíndices y ✓ ✗ no están en ningún subconjunto de
+//  Fontsource de ninguna de las cuatro familias (latin-ext tampoco los
+//  trae). El griego sí existe en el subconjunto griego de Literata y de
+//  Plex Sans (no en Plex Mono ni en Silkscreen), pero no se ha añadido.
+//  Si una fase lo quiere en la voz de lectura, basta otro @font-face de
+//  Literata con literata-greek y su unicode-range griego: solo se
+//  descargaría en las páginas que usen esos caracteres.
+//
+//  Las rutas son absolutas porque los parciales no pasan por Liquid y
+//  styles.css se sirve desde la raíz. Si algún día hay baseurl, se
+//  cambian aquí y en los preload de _includes/head.html.
+//
+//  unicode-range es el del subconjunto latino: el navegador solo
+//  descarga la fuente si la página usa algún carácter de ese rango.
+// ==============================================================
+
+$rango-latino: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+// ---- Literata · variable con ejes opsz (7-72) y wght (200-900) ----
+@font-face {
+  font-family: "Literata";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("/assets/fonts/literata.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+@font-face {
+  font-family: "Literata";
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("/assets/fonts/literata-italic.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+// ---- IBM Plex Sans · 400, 500, 600 y cursiva 400 ----
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/plex-sans-400.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/plex-sans-500.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/plex-sans-600.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/plex-sans-400-italic.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+// ---- IBM Plex Mono · 400 y 500 ----
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/plex-mono-400.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/plex-mono-500.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+// ---- Silkscreen · 400 y 700 (solo guiños de píxel) ----
+@font-face {
+  font-family: "Silkscreen";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/silkscreen-400.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}
+
+@font-face {
+  font-family: "Silkscreen";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/silkscreen-700.woff2") format("woff2");
+  unicode-range: $rango-latino;
+}

@@ -1,0 +1,89 @@
+{%- comment -%}
+  Figura (componente Figura del sistema de diseño): una imagen o un vídeo
+  en uno de los tres anchos, con su pie. Va en su propia línea, con una
+  línea en blanco antes y después.
+
+    encolumna  la medida del texto; el pie se va al margen, con «Figura N»
+               como rótulo (cuando el margen no cabe, va debajo)
+    ancho      texto + margen: visualizaciones, gifs y vídeo; pie debajo
+    completo   1056px, rompe la columna a propósito; pie debajo
+
+  Un .mp4 o .webm se trata como gif: bucle silencioso que arranca solo
+  (autoplay muted loop playsinline), con controles para poder pararlo
+  (WCAG 2.2.2), y quieto si el lector pidió menos movimiento.
+
+  Uso
+    {% include figura.html src="/assets/posts/x/neurona.png" alt="Neurona de umbral dibujada como circuito" pie="La neurona como circuito." numero="1" %}
+    {% include figura.html src="/assets/posts/x/frontera.mp4" alt="La frontera del perceptrón girando hasta separar las dos clases" pie="Cuarenta épocas en cuatro segundos." ancho="ancho" %}
+
+  Parámetros
+    src         obligatorio  imagen, o vídeo .mp4/.webm. Una ruta que empieza
+                             por / pasa por relative_url
+    alt         obligatorio  texto alternativo (en un vídeo, su nombre
+                             accesible). Sin alt el build se detiene a
+                             propósito; alt="" solo si el pie ya lo dice todo
+    pie         opcional     Markdown en línea
+    numero      opcional     «Figura N»: en encolumna, rótulo del pie al
+                             margen; en ancho y completo, al principio del pie
+    ancho       opcional     encolumna (por defecto) | ancho | completo
+    decorativa  opcional     true: foto de ambiente, desaturada en el tema
+                             oscuro. Nunca en figuras de datos ni médicas
+    ancho_px    opcional     ancho intrínseco en px (con alto_px, evita el
+    alto_px     opcional     salto de la página al cargar)
+    poster      opcional     imagen fija del vídeo mientras carga
+    controles   opcional     false quita los controles del vídeo (solo para
+                             bucles de 5 s o menos)
+{%- endcomment -%}
+{%- if include.alt == nil -%}
+  {%- comment -%} Detiene el build: «Could not locate the included file 'figura-falta-el-alt.html'». {%- endcomment -%}
+  {%- include figura-falta-el-alt.html -%}
+{%- endif -%}
+{%- assign _fg_ancho = include.ancho | default: "encolumna" | strip | downcase -%}
+{%- unless _fg_ancho == "ancho" or _fg_ancho == "completo" -%}{%- assign _fg_ancho = "encolumna" -%}{%- endunless -%}
+{%- if include.src contains "://" -%}
+  {%- assign _fg_src = include.src -%}
+{%- else -%}
+  {%- assign _fg_src = include.src | relative_url -%}
+{%- endif -%}
+{%- assign _fg_ext = include.src | split: "?" | first | split: "#" | first | split: "." | last | downcase -%}
+{%- if include.pie -%}
+  {%- assign _fg_pie = include.pie | markdownify | strip | remove: "<p>" | remove: "</p>" | strip -%}
+{%- else -%}
+  {%- assign _fg_pie = "" -%}
+{%- endif -%}
+{%- capture _fg_dim -%}
+  {%- if include.ancho_px %} width="{{ include.ancho_px }}"{% endif -%}
+  {%- if include.alto_px %} height="{{ include.alto_px }}"{% endif -%}
+{%- endcapture -%}
+<figure class="{{ _fg_ancho }}">
+  {%- if _fg_ext == "mp4" or _fg_ext == "webm" -%}
+  <video class="bucle" autoplay muted loop playsinline preload="metadata"{% unless include.controles == false %} controls{% endunless %}{% if include.poster %} poster="{{ include.poster | relative_url }}"{% endif %}{{ _fg_dim }} aria-label="{{ include.alt | escape }}"><source src="{{ _fg_src }}" type="video/{{ _fg_ext }}">{{ include.alt | escape }}</video>
+  {%- else -%}
+  <img src="{{ _fg_src }}" alt="{{ include.alt | escape }}"{{ _fg_dim }}{% if include.decorativa %} class="foto-decorativa"{% endif %} loading="lazy" decoding="async">
+  {%- endif -%}
+  {%- if include.numero or _fg_pie != "" -%}
+  <figcaption>
+    {%- if include.numero -%}
+      {%- if _fg_ancho == "encolumna" -%}<b>Figura {{ include.numero }}</b>{%- else -%}Figura {{ include.numero }}{% if _fg_pie != "" %} · {% endif %}{%- endif -%}
+    {%- endif -%}
+    {{- _fg_pie -}}
+  </figcaption>
+  {%- endif -%}
+</figure>
+{%- if _fg_ext == "mp4" or _fg_ext == "webm" -%}
+  {%- unless _figura_script_movimiento %}
+<script>
+  // figura.html: con prefers-reduced-motion los vídeos en bucle no arrancan
+  // solos (siguen ahí, con sus controles).
+  (function () {
+    if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    function parar() {
+      document.querySelectorAll('video.bucle').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
+    }
+    parar();
+    document.addEventListener('DOMContentLoaded', parar);
+  })();
+</script>
+    {%- assign _figura_script_movimiento = true -%}
+  {%- endunless -%}
+{%- endif %}

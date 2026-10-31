@@ -1,25 +1,71 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  Artículo de Mates (componente ArticuloMates del sistema de diseño v2).
+  El nombre `post` se conserva: lo declaran los posts y lo emite la skill
+  science-outreach-blog (CLAUDE.md §3).
 
-<article class="post">
-  <h1 class="post-title">{{ page.title }}</h1>
-  <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">{{ page.date | date_to_string }}</time>
+    h1 → línea de meta en mono (fecha · sección · etiquetas · minutos) →
+    índice «En esta entrada» al margen (si hay ≥2 H2) → cuerpo tal cual.
+
+  El párrafo de entrada (p.lead) lo escribe el autor en el cuerpo; se ve
+  como entrada-mates en crema (_sass/_ajustes-mates.scss).
+
+  El article conserva la clase `post` además de `articulo voz-mates`:
+  · los post.css de los dos posts reales (cargados con `extra_css`, después
+    de styles.css; no se editan) dibujan sus .viz con reglas sin acotar
+    que siguen aplicando con o sin la clase, y las correcciones de tema de
+    la fase de cimientos (_code.scss, _heredado.scss) y de esta fase
+    (_ajustes-mates.scss) se anclan en `body .post …` para ganarles;
+  · sus selectores `.post …` (regla bajo los h2, paneles de entrada y citas,
+    caja de las tablas, chip de código en línea) se anulan desde
+    _ajustes-mates.scss con más especificidad.
+  Sin la clase, esas correcciones dejarían de aplicar y volverían las cajas
+  oscuras con texto del tema (1,1:1 en claro).
+
+  `extra_css` (hojas propias de cada post) y MathJax (`math: true`) los
+  carga head.html; `wide: true` solo deja la clase layout-wide en body.
+  Las etiquetas enlazan a /etiquetas/#<slug>, salvo en textos con
+  `listar: false`, que no salen en esa página (D10).
+{%- endcomment -%}
+{%- include voz.html -%}
+<article class="post articulo {{ voz }}">
+  <h1>{{ page.title }}</h1>
+  <p class="meta">
+    {%- include fecha.html fecha=page.date -%}
+    {%- if page.section %} &nbsp;·&nbsp; <b>{{ page.section | downcase }}</b>{% endif -%}
+    {%- if page.tags and page.tags != empty %} &nbsp;·&nbsp;
+      {%- for _etiqueta in page.tags %}
+        {%- unless forloop.first %} ·{% endunless %}
+        {%- if page.listar == false %} {{ _etiqueta }}
+        {%- else %} <a href="{{ '/etiquetas/' | relative_url }}#{{ _etiqueta | slugify }}">{{ _etiqueta }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif %} &nbsp;·&nbsp; {% include minutos-lectura.html contenido=content -%}
+  </p>
+  {%- include aviso-borrador.html draft=page.draft pagina=page nota="Esta entrada está sin terminar." %}
+  {% include indice-entrada.html contenido=content %}
   {{ content }}
 </article>
-
-{% if site.related_posts != empty %}
-<aside class="related">
-  <h3>Related posts</h3>
-  <ul class="related-posts">
-    {% for post in site.related_posts limit:3 %}
-      <li>
-        <a href="{{ site.baseurl }}{{ post.url }}">
-          {{ post.title }}
-          <small><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date_to_string }}</time></small>
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</aside>
-{% endif %}
+{%- if content contains 'viz-stage' %}
+<script>
+  // Un lienzo que se desplaza en horizontal (las líneas de tiempo por
+  // debajo de 600px, _ajustes-mates.scss) no se mueve solo para mostrar
+  // entero un hito que ya se ve en parte. Al enfocarlo con el teclado se
+  // desplaza lo justo para que quepan el hito y su anillo de foco. El
+  // oyente va en el documento y no en el SVG: un SVG con oyentes de foco
+  // se vuelve enfocable entero en Chromium.
+  document.addEventListener('focusin', function (e) {
+    var t = e.target;
+    var lienzo = t && t.closest ? t.closest('.viz-stage') : null;
+    if (!lienzo || lienzo.scrollWidth <= lienzo.clientWidth) return;
+    var r = t.getBoundingClientRect();
+    var izq = lienzo.getBoundingClientRect().left + lienzo.clientLeft;
+    var der = izq + lienzo.clientWidth;
+    var aire = 8;
+    if (r.left - aire < izq) lienzo.scrollLeft -= izq - r.left + aire;
+    else if (r.right + aire > der) lienzo.scrollLeft += r.right + aire - der;
+  });
+</script>
+{%- endif %}

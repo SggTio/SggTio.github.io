@@ -1,0 +1,469 @@
+// ==============================================================
+//  El artículo: columna de texto + columna de margen, y las tres voces
+//  (bundle.css «el artículo», «voz de lectura · Mates», «voz de
+//  lectura · Escritos», «voz técnica», pliegue; componente NotaMargen).
+//
+//  Marcado:
+//    <article class="articulo voz-mates|voz-escritos|voz-tecnica"> … </article>
+//  La voz va en el MISMO elemento que .articulo: la voz fija --texto y
+//  .articulo calcula --ancho con él. Las notas de margen son
+//    <aside class="margen [indice|idea|analogia|ficha]">…</aside>
+//  justo después del párrafo que las origina.
+// ==============================================================
+
+// --texto y --ancho se registran como longitudes: así sus `ch` se
+// resuelven UNA vez, con la letra del artículo (la de su voz), y los
+// hijos heredan píxeles. Sin registrar, cada hijo resolvía los 66ch con
+// su propia letra: la meta en mono de 13px quedaba en ~450px, la entrada
+// de 21px y los H2 se metían en el hueco del margen, y una nota plegada
+// de 14px quedaba ~100px más estrecha que el texto. Un navegador sin
+// @property vuelve a ese comportamiento, sin romper nada.
+@property --texto {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --ancho {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+.articulo {
+  --texto: var(--medida-tecnica);
+  --ancho: calc(var(--texto) + var(--hueco-margen) + var(--margen));
+  max-width: var(--ancho);
+}
+
+// Contiene sus notas flotantes: una nota al margen más alta que el resto
+// del cuerpo no sale del <main> ni encoge el pie a su lado. Un clearfix y
+// no display: flow-root, que encerraría el margen inferior del último
+// párrafo y separaría más el pie en unas páginas que en otras.
+.articulo::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.articulo > * { max-width: var(--texto); }
+
+// El título abarca texto + margen, como en el sistema de diseño
+// (ArticuloMates, FichaProyecto): un título largo no se parte en tres
+// líneas para quedarse en la columna de texto.
+.articulo > h1 { max-width: none; }
+
+.articulo .margen {
+  float: right;
+  clear: right;
+  width: var(--margen);
+  margin: 0 0 var(--espacio-4) var(--hueco-margen);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--tinta-quieta);
+}
+
+// font-style normal: la analogía de Mates pone la nota en cursiva y Plex
+// Mono no tiene cursiva cargada (el navegador fabricaría una oblicua).
+.articulo .margen .rotulo {
+  display: block;
+  margin-bottom: var(--espacio-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+// Una figura en columna y una ecuación numerada llevan algo al margen en
+// posición absoluta (el pie, el número): sin clear, si una nota flotante
+// de arriba aún ocupaba el margen, los dos textos se pisaban. Con clear la
+// figura baja hasta donde acaba la nota. Plegado no hay flotantes y no
+// cambia nada.
+.articulo figure.encolumna,
+.articulo .ecuacion { clear: right; }
+
+// Anchos de figura dentro del artículo (componente Figura).
+.articulo .ancho {
+  max-width: var(--ancho);
+  clear: both;
+}
+
+.articulo .completo {
+  max-width: none;
+  width: var(--ancho-figura-completa);
+  clear: both;
+}
+
+// ---- Rótulos y metadatos en mono ----
+// El estilo .rotulo de tokens no trae mayúsculas; el sistema las pide
+// siempre en los rótulos.
+.rotulo { text-transform: uppercase; }
+
+.meta {
+  margin: 0 0 var(--espacio-6);
+  color: var(--tinta-tenue);
+
+  b { font-weight: 500; color: var(--acento); }
+
+  a { border: 0; }
+
+  a:hover { color: var(--acento); }
+}
+
+// La línea de meta bajo el título de un artículo (Mates, Notas, Escritos,
+// Sobre mí). Su margen gana al de los párrafos de la voz (`.voz-tecnica p`
+// lo dejaba en 16px). Sus enlaces (las etiquetas) llevan subrayado
+// punteado: en una línea de texto tenue el color solo no los distingue.
+.articulo > .meta {
+  margin-bottom: var(--espacio-6);
+
+  a { border-bottom: 1px dotted var(--tinta-tenue); }
+
+  a:hover { border-bottom-color: var(--acento); }
+}
+
+// ==============================================================
+//  Voz de lectura · Mates (el margen como aparato)
+// ==============================================================
+.voz-mates {
+  --texto: var(--medida-mates);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.65;
+  font-variation-settings: "opsz" 18;
+
+  h1 {
+    margin: 0 0 10px;
+    font-size: 40px;
+    line-height: 1.12;
+    font-weight: 500;
+    letter-spacing: -.01em;
+    font-variation-settings: "opsz" 40;
+  }
+
+  .lead {
+    margin: 0 0 1.4rem;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--crema);
+    font-variation-settings: "opsz" 22;
+  }
+
+  h2 {
+    margin: 2.2rem 0 .8rem;
+    font-size: 27px;
+    line-height: 1.2;
+    font-weight: 500;
+    font-variation-settings: "opsz" 28;
+    color: var(--acento);
+  }
+
+  // Cursiva: la jerarquía viene del estilo, no solo del tamaño.
+  h3 {
+    margin: 1.6rem 0 .5rem;
+    font-size: 21px;
+    line-height: 1.3;
+    font-weight: 500;
+    font-style: italic;
+    font-variation-settings: "opsz" 20;
+  }
+
+  p { margin: 0 0 1.1rem; }
+
+  .margen.indice {
+    border-top: 1px solid var(--regla);
+    padding-top: var(--espacio-2);
+  }
+
+  .margen.indice ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: item;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .margen.indice li::before {
+    content: counter(item, decimal-leading-zero) "  ";
+    counter-increment: item;
+    font-family: var(--font-mono);
+    color: var(--tinta-tenue);
+  }
+
+  .margen.indice a { border: 0; }
+
+  .margen.indice a:hover { color: var(--acento); }
+
+  // «Idea clave»: el único bloque con regla de color.
+  .margen.idea {
+    padding-left: var(--espacio-3);
+    border-left: 2px solid var(--acento);
+  }
+
+  .margen.analogia {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.55;
+    font-variation-settings: "opsz" 14;
+    color: var(--tinta);
+  }
+
+  // Ecuación en display: centrada, con número y etiqueta al margen.
+  .ecuacion {
+    position: relative;
+    margin: 1.2rem 0;
+    text-align: center;
+  }
+
+  .ecuacion .num {
+    position: absolute;
+    top: 0;
+    left: calc(100% + var(--hueco-margen));
+    width: var(--margen);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-style: normal;
+    text-align: left;
+    color: var(--tinta-tenue);
+  }
+}
+
+// ==============================================================
+//  Voz de lectura · Escritos y Sobre mí (el margen como susurro)
+// ==============================================================
+.voz-escritos {
+  --texto: var(--medida-escritos);
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.75;
+  font-variation-settings: "opsz" 18;
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 38px;
+    line-height: 1.15;
+    font-weight: 400;
+    font-style: italic;
+    font-variation-settings: "opsz" 40;
+  }
+
+  .epigrafe {
+    max-width: 44ch;
+    margin: 0 0 2.4rem;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--tinta-quieta);
+  }
+
+  .epigrafe small {
+    display: block;
+    margin-top: var(--espacio-1);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-style: normal;
+    color: var(--tinta-tenue);
+  }
+
+  // Un salto de línea del texto es un verso.
+  .poema {
+    margin: 0 0 2rem;
+    white-space: pre-line;
+  }
+
+  .cuento p {
+    margin: 0;
+    text-indent: 1.6em;
+  }
+
+  .cuento p:first-of-type { text-indent: 0; }
+
+  // «· · ·» entre secciones de un cuento.
+  .separador {
+    margin: 2rem 0;
+    text-align: center;
+    letter-spacing: 1em;
+    color: var(--tinta-tenue);
+  }
+
+  // Susurro: sin tipos ni rótulos. Desviación de contraste: tinta-quieta
+  // a --susurro (0.8) en reposo y a --susurro-activo (1) con el cursor
+  // sobre el artículo; los dos pasan 4,5:1 (ver _tokens.scss).
+  .margen {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.6;
+    font-variation-settings: "opsz" 12;
+    color: var(--tinta-quieta);
+    opacity: var(--susurro);
+    transition: opacity .25s;
+  }
+
+  &:hover .margen,
+  &:focus-within .margen { opacity: var(--susurro-activo); }
+
+  .margen .rotulo { display: none; }
+}
+
+// ==============================================================
+//  Voz técnica · Proyectos y Notas (el margen como ficha)
+// ==============================================================
+.voz-tecnica {
+  --texto: var(--medida-tecnica);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+
+  h1 {
+    margin: 0 0 6px;
+    font-size: 36px;
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -.015em;
+  }
+
+  .resumen {
+    max-width: 52ch;
+    margin: 0 0 var(--espacio-6);
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+  }
+
+  h2 {
+    margin: 2rem 0 .6rem;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--acento);
+  }
+
+  p { margin: 0 0 1rem; }
+
+  // Ficha: una por página, tras el resumen. Regla superior en el acento.
+  .margen.ficha {
+    padding-top: 10px;
+    border-top: 1px solid var(--acento);
+  }
+
+  .ficha dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--espacio-1) 14px;
+    margin: 0;
+  }
+
+  .ficha dt {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.9;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--tinta-tenue);
+  }
+
+  .ficha dd { margin: 0; }
+
+  .ficha .estado {
+    font-family: var(--font-mono);
+    color: var(--acento);
+  }
+}
+
+// Una nota de margen con varios párrafos (margen.html los conserva cuando
+// hay más de uno): sin el margen de los párrafos de la voz ni la sangría
+// de un cuento. Va después de las voces para ganarles a igual peso.
+.articulo .margen p {
+  margin: 0 0 var(--espacio-2);
+  text-indent: 0;
+}
+
+.articulo .margen p:last-child { margin-bottom: 0; }
+
+// ==============================================================
+//  Pliegue: cuando la columna de margen no cabe, cada nota vuelve al
+//  texto, tras su párrafo, como bloque sobre superficie (en Escritos
+//  sin fondo). El contenido nunca se oculta.
+//
+//  Desviación: bundle.css pliega a 960px en todas las voces, pero
+//  --ancho (texto + hueco + margen) depende de la medida en ch de cada
+//  voz, y con los dos gutters del contenedor (2 × 32px) y una barra de
+//  desplazamiento clásica (15–17px en Windows) no cabe hasta bastante más
+//  arriba (medidas con las fuentes del sitio):
+//    Escritos  58ch Literata 19px  ≈  959px +81 → pliega ≤1040px
+//    Mates     66ch Literata 18px  ≈ 1009px +81 → pliega ≤1090px
+//    Técnica   72ch Plex Sans 17px ≈ 1054px +81 → pliega ≤1140px
+//  Entre 961px y esos anchos el pie de .encolumna y el número de
+//  .ecuacion (posición absoluta a la derecha del texto) desbordaban la
+//  página, y .completo (1056px) también. Los selectores van con
+//  :where() para no subir la especificidad respecto a la de un solo
+//  pliegue.
+// ==============================================================
+@mixin pliegue-margen {
+  max-width: var(--texto);
+
+  .margen {
+    float: none;
+    width: auto;
+    margin: 0 0 var(--espacio-4);
+    padding: 10px 14px;
+    background: var(--superficie);
+    border-radius: var(--radio-1);
+  }
+
+  figure.encolumna figcaption {
+    position: static;
+    width: auto;
+    margin-top: var(--espacio-2);
+  }
+}
+
+@media (max-width: 1040px) {
+  .articulo:where(.voz-escritos) { @include pliegue-margen; }
+
+  .voz-escritos .margen {
+    padding: 0;
+    background: none;
+    opacity: var(--susurro-activo);
+  }
+}
+
+@media (max-width: 1090px) {
+  .articulo:where(.voz-mates) { @include pliegue-margen; }
+
+  .voz-mates .ecuacion .num {
+    position: static;
+    display: block;
+    width: auto;
+    text-align: right;
+  }
+}
+
+@media (max-width: 1140px) {
+  // Voz técnica y cualquier .articulo sin voz (su --texto es el técnico).
+  .articulo:where(:not(.voz-mates, .voz-escritos)) { @include pliegue-margen; }
+
+  // .completo mide 1056px y necesita 1056 + 64 + barra ≈ 1137px de ventana.
+  // Por debajo, en todas las voces, ocupa el ancho del artículo, como
+  // .ancho (y, plegado, el del texto).
+  .articulo .completo {
+    width: auto;
+    max-width: var(--ancho);
+  }
+}
+
+// En teléfonos los títulos bajan un escalón para no partir cada palabra.
+@media (max-width: 480px) {
+  .voz-mates h1 { font-size: 32px; font-variation-settings: "opsz" 32; }
+  .voz-escritos h1 { font-size: 31px; font-variation-settings: "opsz" 32; }
+  .voz-tecnica h1 { font-size: 29px; }
+}

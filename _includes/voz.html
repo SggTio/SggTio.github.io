@@ -1,0 +1,28 @@
+{%- comment -%}
+  Voz tipográfica de un artículo (rediseño v2). No pinta nada: deja en el
+  ámbito la variable `voz` con la clase que va en el article, junto a
+  .articulo:  <article class="articulo {{ voz }}">.
+
+  Regla (componentes del sistema de diseño, D12 y D13):
+    mates                       → voz-mates     (lectura, Literata 18px, 66ch)
+    escritos, sobre             → voz-escritos  (lectura, Literata 19px, 58ch)
+    notas con genero "ensayo"   → voz-escritos  (D12: el ensayo se lee)
+    proyectos, notas, el resto  → voz-tecnica   (Plex Sans 17px, 72ch)
+  El acento NO depende de la voz: lo fija la clase de sección de body.
+
+  Parámetros
+    seccion  opcional  por defecto page.section
+    genero   opcional  por defecto page.genero (solo cuenta en notas)
+{%- endcomment -%}
+{%- assign _voz_seccion = include.seccion | default: page.section | default: "" | downcase -%}
+{%- assign _voz_genero = include.genero | default: page.genero | default: "" | downcase -%}
+{%- case _voz_seccion -%}
+  {%- when "mates" -%}
+    {%- assign voz = "voz-mates" -%}
+  {%- when "escritos", "sobre" -%}
+    {%- assign voz = "voz-escritos" -%}
+  {%- when "notas" -%}
+    {%- if _voz_genero == "ensayo" -%}{%- assign voz = "voz-escritos" -%}{%- else -%}{%- assign voz = "voz-tecnica" -%}{%- endif -%}
+  {%- else -%}
+    {%- assign voz = "voz-tecnica" -%}
+{%- endcase -%}

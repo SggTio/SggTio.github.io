@@ -22,6 +22,15 @@
     {% endif %}
   </title>
 
+  {%- comment -%}
+    Fuentes críticas del rediseño v2: Literata (la marca de la cabecera y la
+    voz de lectura) y Plex Mono 400 (fechas, metadatos y pie, en todas las
+    páginas). Mismas URL que los @font-face de _sass/_fuentes.scss: si no
+    coinciden, el navegador las descarga dos veces. crossorigin es
+    obligatorio en las fuentes aunque sean del mismo origen.
+  {%- endcomment %}
+  <link rel="preload" href="{{ '/assets/fonts/literata.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/assets/fonts/plex-mono-400.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ 'styles.css' | relative_url }}">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ '/assets/apple-touch-icon-precomposed.png' | relative_url }}">
   <link rel="shortcut icon" href="{{ '/assets/favicon.ico' | relative_url }}">

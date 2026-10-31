@@ -1,19 +1,26 @@
 {%- comment -%}
-  Insignia de estado de un proyecto o línea de investigación.
+  Estado de un proyecto o línea de investigación, como palabra.
+
+  Rediseño v2: ya no es una píldora con borde. Es una palabra en minúscula
+  («activo», «en desarrollo») que el CSS pone en mono: en mayúsculas en las
+  listas y en /desarrollo/ (.insignia, _v2-listas.scss), tal cual en la ficha
+  del proyecto (.ficha, _ajustes-proyectos.scss).
 
   El estado se comunica con TEXTO, no solo con color: quien no distinga
-  los tonos sigue leyendo "En desarrollo" (CLAUDE.md §7).
+  los tonos sigue leyendo «en desarrollo» (CLAUDE.md §7).
 
   Parámetros
     estado  obligatorio  idea | en-desarrollo | activo | terminado | archivado
+    clase   opcional     clases extra para el span (p. ej. "estado" en la
+                         fila del índice y en la ficha)
 {%- endcomment -%}
 {%- assign e = include.estado | default: "en-desarrollo" -%}
 {%- case e -%}
-  {%- when "idea" -%}          {%- assign rotulo = "Idea" -%}
-  {%- when "en-desarrollo" -%} {%- assign rotulo = "En desarrollo" -%}
-  {%- when "activo" -%}        {%- assign rotulo = "Activo" -%}
-  {%- when "terminado" -%}     {%- assign rotulo = "Terminado" -%}
-  {%- when "archivado" -%}     {%- assign rotulo = "Archivado" -%}
-  {%- else -%}                 {%- assign rotulo = e -%}
+  {%- when "idea" -%}          {%- assign rotulo = "idea" -%}
+  {%- when "en-desarrollo" -%} {%- assign rotulo = "en desarrollo" -%}
+  {%- when "activo" -%}        {%- assign rotulo = "activo" -%}
+  {%- when "terminado" -%}     {%- assign rotulo = "terminado" -%}
+  {%- when "archivado" -%}     {%- assign rotulo = "archivado" -%}
+  {%- else -%}                 {%- assign rotulo = e | replace: "-", " " -%}
 {%- endcase -%}
-<span class="insignia insignia-{{ e }}">{{ rotulo }}</span>
+<span class="insignia insignia-{{ e }}{% if include.clase %} {{ include.clase }}{% endif %}">{{ rotulo }}</span>

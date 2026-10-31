@@ -3,38 +3,45 @@
   {% include head.html %}
 
   <body class="section-{{ page.section | downcase | default: 'default' }}{% if page.layout %} layout-{{ page.layout }}{% endif %}{% if page.wide %} layout-wide{% endif %}">
-    <div class="container content">
+    {%- comment -%}
+      Esqueleto v2 (componente Navegacion). La clase de sección de body fija
+      --acento; el enlace de la sección actual lleva .activa. aria-current es
+      "page" en la portada de la sección y "true" dentro de ella (un post de
+      Mates está en Mates, pero no es la página /mates/).
+    {%- endcomment %}
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <div class="contenedor">
       <header class="masthead">
-        <h3 class="masthead-title">
-          <a href="{{ site.baseurl }}/" title="Inicio">{{ site.title }}</a>
-          <nav class="nav">
-            {% for nav in site.nav %}
-              {% assign is_active = false %}
-              {% if page.section and nav.section and page.section == nav.section %}{% assign is_active = true %}{% endif %}
-              <small><a href="{{ nav.url | relative_url }}"{% if is_active %} class="active"{% endif %}>{{ nav.title }}</a></small>
-            {% endfor %}
-          </nav>
-        </h3>
+        <a class="marca nombre-sitio" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <nav aria-label="Principal">
+          {%- for nav in site.nav %}
+            {%- assign is_active = false %}
+            {%- if page.section and nav.section and page.section == nav.section %}{% assign is_active = true %}{% endif %}
+            {%- if is_active %}
+              {%- if page.url == nav.url %}{% assign actual = "page" %}{% else %}{% assign actual = "true" %}{% endif %}
+          <a href="{{ nav.url | relative_url }}" class="activa" aria-current="{{ actual }}">{{ nav.title }}</a>
+            {%- else %}
+          <a href="{{ nav.url | relative_url }}">{{ nav.title }}</a>
+            {%- endif %}
+          {%- endfor %}
+        </nav>
       </header>
 
-      <main>
+      <main id="contenido">
         {{ content }}
       </main>
 
-      <footer class="footer">
-        <nav class="nav-pie" aria-label="Enlaces secundarios">
+      <footer class="pie">
+        <nav class="pie-enlaces" aria-label="Enlaces secundarios">
           <a href="{{ '/archivo/' | relative_url }}">Archivo</a>
+          <span class="pie-sep" aria-hidden="true">·</span>
           <a href="{{ '/etiquetas/' | relative_url }}">Etiquetas</a>
+          <span class="pie-sep" aria-hidden="true">·</span>
           <a href="{{ '/atom.xml' | relative_url }}">Feed</a>
-          {% include alternador-tema.html %}
         </nav>
-        <small>
-          &copy;
-          <time datetime="{{ site.time | date_to_xmlschema }}">
-            {{ site.time | date: '%Y' }}
-          </time>
-          . All rights reserved.
-        </small>
+        {% include alternador-tema.html %}
+        <span class="pie-firma">&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</span>
       </footer>
     </div>
 

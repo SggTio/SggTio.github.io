@@ -1,21 +1,45 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  Nota: voz técnica (Plex Sans, 72ch) por defecto; un ensayo (genero:
+  ensayo) se lee en la voz de lectura de Escritos (D12). La voz la decide
+  _includes/voz.html; el acento (crema) lo pone body.section-notas.
 
-<article class="nota">
-  <header class="nota-header">
-    <h1 class="nota-title">{{ page.title }}</h1>
-    {% if page.date %}
-    <time datetime="{{ page.date | date_to_xmlschema }}" class="nota-date">
-      {{ page.date | date: "%Y-%m-%d" }}
-    </time>
-    {% endif %}
-    {% if page.description %}
-    <p class="nota-lead">{{ page.description }}</p>
-    {% endif %}
-  </header>
+  Front matter que lee
+    title        obligatorio  el H1
+    date         obligatorio  la fecha de la línea de metadatos
+    genero       opcional     por defecto «nota» (default de _notas); «ensayo» cambia la voz
+    tags         opcional     etiquetas, enlazadas a /etiquetas/ salvo con listar: false (D10)
+    description  opcional     el resumen bajo los metadatos
+    draft        opcional     true: aviso «Borrador» bajo los metadatos, solo en local
+                              (y dice si falta published: false)
 
-  <div class="nota-content">
-    {{ content }}
-  </div>
+  Metadatos, como en Mates: fecha · género · etiquetas · tiempo de lectura
+  (_includes/minutos-lectura.html: palabras / 200, mínimo 1, fórmula del
+  brief). En el cuerpo: secciones one-col y two-col, listas con viñeta
+  píxel (solo en la voz técnica), notas al margen (aside.margen) tras su
+  párrafo y, en un ensayo, *** como «· · ·».
+{%- endcomment -%}
+{%- include voz.html %}
+<article class="articulo {{ voz }}">
+  <h1>{{ page.title }}</h1>
+  <p class="meta">
+    {%- if page.date %}{% include fecha.html fecha=page.date %} &nbsp;·&nbsp; {% endif -%}
+    <b>{{ page.genero | default: "nota" }}</b>
+    {%- if page.tags and page.tags != empty %} &nbsp;·&nbsp;
+      {%- for t in page.tags %}
+        {%- unless forloop.first %} ·{% endunless %}
+        {%- if page.listar == false %} {{ t }}
+        {%- else %} <a href="{{ '/etiquetas/' | relative_url }}#{{ t | slugify }}">{{ t }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif %} &nbsp;·&nbsp; {% include minutos-lectura.html contenido=content -%}
+  </p>
+  {%- include aviso-borrador.html draft=page.draft pagina=page nota="Este texto está sin terminar." %}
+  {%- if page.description %}
+  <p class="resumen">{{ page.description }}</p>
+  {%- endif %}
+
+  {{ content }}
 </article>

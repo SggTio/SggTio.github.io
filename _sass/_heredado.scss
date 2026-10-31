@@ -1,0 +1,78 @@
+// ==============================================================
+//  Heredado: marcado viejo que todavía existe
+//
+//  Lo que queda de los antiguos _custom.scss y _posts.scss porque aún lo
+//  emite algún marcado vivo que el rediseño no reescribe. Solo se ha
+//  reapuntado a los tokens v2 y se han quitado sombras y rellenos de
+//  acento. NO se escribe aquí: los ajustes nuevos van en _ajustes-*.scss.
+//
+//  Limpieza de la fase de verificación (2026-10-31): se retiraron los
+//  bloques que ya no usa ningún layout, include, página ni colección
+//  (comprobado con grep, desarrollo.md incluido): .intro-grid,
+//  .intro-block, .posts-list, .posts-heading, .posts-subheading,
+//  .posts-empty, .centered-quote, .homepage-banner, .about-* (y el
+//  ancho de .articulo > .about-page), las plantillas viejas
+//  article.escrito/poema/nota:not(.articulo), .page-title, .post-title,
+//  .post-date, .related, .related-posts y .card.
+// ==============================================================
+
+// ---- Rejilla y tarjetas de textos ----
+// .posts-grid: solo /desarrollo/ (desarrollo.md, no editable).
+// .posts-card: _includes/tarjeta-post.html; su aspecto v2 (sin caja) está
+// en _ajustes-listas.scss.
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: var(--espacio-5);
+  margin-bottom: var(--espacio-6);
+}
+
+.posts-card {
+  padding: var(--espacio-4);
+  background: var(--superficie);
+  border: 1px solid var(--regla);
+  border-radius: var(--radio-1);
+  transition: border-color .2s ease-in-out;
+
+  a {
+    color: inherit;
+    border: 0;
+  }
+
+  h2,
+  h3 {
+    margin: 0 0 .4rem;
+    color: inherit;
+  }
+
+  &:hover { border-color: var(--acento); }
+}
+
+// ---- Cajas de post.css en los dos posts reales de Mates ----
+// post.css (carga después de styles.css y no se edita) pinta
+// .two-col > .col, .analogy-grid .analogy y .post table con
+// --post-bg-card (#1a1d21) en los dos temas, y el texto de las dos
+// primeras hereda la tinta del tema. En claro eso era tinta oscura sobre
+// caja oscura (1,1:1), fórmulas MathJax incluidas (su SVG usa
+// currentColor). Base común: superficie y regla, cabecera de tabla en
+// codigo-fondo. `body .post` gana a los selectores de post.css aunque
+// carguen después. _ajustes-mates.scss las lleva al sistema (sin cajas)
+// con más peso; esto queda como red si un post sale de section-mates.
+// Los paneles .viz (y .viz-stage, .viz-readout, .tl-panel) siguen
+// oscuros en los dos temas a propósito: el JS dibuja sobre ese fondo.
+body .post .two-col > .col,
+body .post .analogy-grid .analogy,
+body .post table {
+  background: var(--superficie);
+  border-color: var(--regla);
+}
+
+body .post .two-col > .col h3 { border-bottom-color: var(--regla); }
+
+// post.css fijaba aquí el texto claro del panel oscuro (--post-text).
+body .post .analogy-grid .analogy p { color: var(--tinta); }
+
+body .post table th { background: var(--codigo-fondo); }
+
+body .post table th,
+body .post table td { border-bottom-color: var(--regla); }

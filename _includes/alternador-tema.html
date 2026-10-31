@@ -2,15 +2,24 @@
   Alternador entre tema oscuro y claro.
 
   El sitio es oscuro por defecto para todo el mundo; esto solo existe para
-  quien prefiera leer en claro. La elección se recuerda en localStorage.
+  quien prefiera leer en claro. La elección se recuerda en localStorage
+  (clave `tema`: "light" o "dark"); el claro es data-theme="light" en
+  <html> y el oscuro es la ausencia del atributo. El script de pre-pintado
+  de head.html lo aplica antes de pintar.
+
+  Aspecto (rediseño v2): una palabra en mono en el pie, sin icono. La
+  palabra dice a qué tema se cambia al pulsar («claro» en oscuro, «oscuro»
+  en claro), y el nombre accesible lo dice entero: «Cambiar a tema claro».
+  Como la etiqueta ya cambia, no lleva aria-pressed: un botón no debe
+  cambiar a la vez de nombre y de estado.
 
   El botón nace oculto y el script lo revela: sin JavaScript no sirve de nada,
   y un control que no hace nada es peor que no tenerlo.
 
   Sin parámetros.
 {%- endcomment -%}
-<button type="button" class="alternador-tema" id="alternador-tema" hidden aria-pressed="false">
-  <span class="alternador-tema-texto">Tema claro</span>
+<button type="button" class="alternador-tema" id="alternador-tema" hidden aria-label="Cambiar a tema claro">
+  <span class="alternador-tema-texto">claro</span>
 </button>
 
 <script>
@@ -23,10 +32,11 @@
 
     function pintar() {
       var claro = raiz.getAttribute("data-theme") === "light";
-      // aria-pressed dice si el tema claro está activo; el texto dice a qué
-      // se cambiaría al pulsar, que es lo que un lector espera de un botón.
-      boton.setAttribute("aria-pressed", claro ? "true" : "false");
-      texto.textContent = claro ? "Tema oscuro" : "Tema claro";
+      // La palabra y el nombre accesible dicen a qué tema se cambiaría al
+      // pulsar, que es lo que un lector espera de un botón.
+      var destino = claro ? "oscuro" : "claro";
+      texto.textContent = destino;
+      boton.setAttribute("aria-label", "Cambiar a tema " + destino);
     }
 
     boton.hidden = false;

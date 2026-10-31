@@ -1,0 +1,19 @@
+{%- comment -%}
+  Ficha de un proyecto en la columna de margen (componente FichaProyecto).
+
+  Va UNA vez por página, como hijo directo de article.articulo.voz-tecnica y
+  justo después del párrafo .resumen: el CSS la flota a la derecha del texto
+  a esa altura (_v2-articulo.scss) y, cuando la columna de margen no cabe,
+  la devuelve al texto en ese mismo punto, sobre superficie. Su contenido
+  nunca se oculta.
+
+  Las filas las genera _includes/meta-proyecto.html, solo con lo que dice
+  el front matter (estado, año, área, tipo, dominio, tecnologías, enlaces):
+  nada inventado, sin fila de repositorio (D7).
+
+  Parámetros
+    proyecto  obligatorio  elemento de _proyectos (normalmente page)
+{%- endcomment -%}
+<aside class="margen ficha" aria-label="Ficha del proyecto">
+  {%- include meta-proyecto.html proyecto=include.proyecto %}
+</aside>

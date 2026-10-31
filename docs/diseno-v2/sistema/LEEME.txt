@@ -1,0 +1,13 @@
+Un Santajaro — sistema de diseño (v2, 2026-10-30)
+Exportado del artefacto Design System de Claude.
+
+  README.md                    libro de marca: principios, color, tipografía, columna de margen, guiños 8 bits, aplicación en Jekyll
+  tokens.json                  los tokens (colores en dos temas, familias y estilos de texto, espaciado, radios, medidas, opacidades)
+  tokens.css                   los mismos tokens compilados a variables CSS y clases de estilo (generado desde tokens.json)
+  components/bundle.css        el CSS del sitio: esqueleto, dos voces, columna de margen, listas, mosaico, Sobre mí, guiños pixel
+  components/<Nombre>/         por componente: preview.html (ejemplo de marcado) y README.md (guía de uso)
+  design-system.json           índice del artefacto; no hace falta para el sitio
+
+Para Jekyll: en styles.css, primero tokens.css, luego components/bundle.css.
+Las vistas previas cargan las fuentes de Google Fonts; en el sitio van autoalojadas
+(Literata, IBM Plex Sans, IBM Plex Mono, Silkscreen) en /assets/fonts/ con sus @font-face.

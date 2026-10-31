@@ -1,0 +1,204 @@
+// ==============================================================
+//  Portada: apertura y mosaico (bundle.css «portada» y «mosaico de
+//  portada»; componente Portada)
+//
+//    <div class="mosaico">
+//      <div class="tile foto"><img …></div>
+//      <div class="tile frases"><p>…</p><p>…</p><p>…</p></div>
+//      <div class="tile ultimas"><span class="rotulo cursor">Últimas</span><ol><li><span class="fecha">…</span><a>…</a></li></ol></div>
+//      <a class="tile seccion mates" href="/mates/"><span class="px px-sigma px-grande"></span><span class="nombre">Mates</span><span class="cuenta">2 entradas</span></a>
+//      …
+//    </div>
+//
+//  Desviaciones: las filas son minmax(--mosaico-fila, auto) y no 200px
+//  fijos (con texto real o letra grande un tile no puede recortar su
+//  contenido); por debajo de 480px «Últimas» pasa a una columna (fecha
+//  encima del título); el anillo de foco de un tile va hacia dentro.
+// ==============================================================
+
+.apertura {
+  padding: var(--espacio-8) 0 var(--espacio-9);
+
+  p {
+    max-width: 30ch;
+    margin: 0 0 var(--espacio-5);
+    font-family: var(--font-serif);
+    font-size: 44px;
+    line-height: 1.2;
+    font-weight: 300;
+    font-style: italic;
+    font-variation-settings: "opsz" 44;
+  }
+
+  p:nth-child(2) { color: var(--azulgris); }
+  p:nth-child(3) { color: var(--crema); }
+
+  .firma {
+    margin-top: var(--espacio-6);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--tinta-tenue);
+  }
+}
+
+.mosaico {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(var(--mosaico-fila), auto);
+  gap: 1px;
+  margin: 0 0 var(--espacio-8);
+  background: var(--regla);
+  outline: 1px solid var(--regla);
+
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--espacio-4);
+    overflow: hidden;
+    background: var(--fondo);
+  }
+
+  .tile a,
+  a.tile { border: 0; }
+
+  // Anillo de foco hacia dentro: con gap de 1px y tiles opacos y
+  // posicionados, los tiles que vienen después tapaban el anillo
+  // exterior por la derecha y por abajo.
+  .tile:focus-visible { outline-offset: -4px; }
+
+  .foto {
+    grid-column: span 7;
+    grid-row: span 2;
+    padding: 0;
+  }
+
+  .foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .frases {
+    grid-column: span 5;
+    justify-content: center;
+    gap: var(--espacio-3);
+  }
+
+  .frases p {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 300;
+    font-style: italic;
+    font-variation-settings: "opsz" 20;
+  }
+
+  .frases p:nth-child(2) { color: var(--azulgris); }
+  .frases p:nth-child(3) { color: var(--crema); }
+
+  .ultimas { grid-column: span 5; }
+
+  .ultimas .rotulo { margin-bottom: var(--espacio-3); }
+
+  .ultimas ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .ultimas li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: var(--espacio-3);
+    padding: 6px 0;
+    border-top: 1px solid var(--regla);
+  }
+
+  .ultimas li:first-child { border-top: 0; }
+
+  .ultimas a:hover { color: var(--acento); }
+
+  .ultimas .fecha {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--tinta-tenue);
+  }
+
+  .seccion {
+    grid-column: span 3;
+    justify-content: space-between;
+  }
+
+  .seccion .px { margin-bottom: auto; }
+
+  .seccion .nombre {
+    margin: var(--espacio-3) 0 var(--espacio-1);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+  .seccion .cuenta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--tinta-tenue);
+  }
+
+  .seccion:hover .nombre { color: var(--acento); }
+
+  .seccion.mates { --acento: var(--azulgris); }
+  .seccion.escritos,
+  .seccion.notas { --acento: var(--crema); }
+  .seccion.proyectos { --acento: var(--verde); }
+
+  .ahora { grid-column: span 4; }
+
+  .ahora p {
+    margin: var(--espacio-2) 0 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+  }
+}
+
+@media (max-width: 960px) {
+  .apertura p { font-size: 32px; }
+
+  .mosaico {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: auto;
+
+    .foto {
+      grid-column: span 6;
+      grid-row: span 1;
+      min-height: 240px;
+    }
+
+    .frases,
+    .ultimas { grid-column: span 6; }
+
+    .seccion {
+      grid-column: span 3;
+      min-height: 120px;
+    }
+
+    .ahora { grid-column: span 6; }
+  }
+}
+
+@media (max-width: 480px) {
+  .mosaico {
+    .ultimas li {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+}

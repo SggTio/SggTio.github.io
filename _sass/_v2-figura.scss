@@ -1,0 +1,120 @@
+// ==============================================================
+//  Figuras (componente Figura; bundle.css «figuras»)
+//
+//    <figure class="encolumna"> medio + <figcaption><b>Figura N</b> …</figcaption>
+//    <figure class="ancho">     visualizaciones, vídeo, gifs (texto + hueco + margen)
+//    <figure class="completo">  ancho-figura-completa (1056px)
+//  Dentro de un .articulo, .ancho y .completo rompen la medida del texto
+//  (reglas en _v2-articulo.scss).
+// ==============================================================
+
+figure { margin: 1.6rem 0; }
+
+figure figcaption {
+  margin-top: var(--espacio-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tinta-tenue);
+}
+
+// El pie de una figura en columna se va al margen, alineado arriba.
+figure.encolumna { position: relative; }
+
+figure.encolumna figcaption {
+  position: absolute;
+  top: 0;
+  left: calc(100% + var(--hueco-margen));
+  width: var(--margen);
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--tinta-quieta);
+}
+
+figure.encolumna figcaption b {
+  display: block;
+  margin-bottom: var(--espacio-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+figure .lienzo {
+  background: var(--superficie);
+  border: 1px solid var(--regla);
+  border-radius: var(--radio-1);
+}
+
+figure video,
+figure iframe {
+  width: 100%;
+  background: var(--superficie);
+  border: 0;
+  border-radius: var(--radio-1);
+}
+
+// 16:9 para lo incrustado y para un vídeo sin medidas. Un vídeo con sus
+// medidas (figura.html con ancho_px y alto_px: los bucles tipo gif)
+// conserva su proporción: el navegador la toma de los atributos width y
+// height antes de cargarlo, y height: auto (_base) evita el alto fijo.
+figure video:not([width][height]),
+figure iframe {
+  aspect-ratio: 16 / 9;
+}
+
+// En ancho y completo la imagen o el vídeo llenan la figura aunque el
+// archivo sea más pequeño: el ancho es una decisión editorial.
+:is(figure.ancho, figure.completo) > :is(img, video) { width: 100%; }
+
+// ---- Desaturación en el tema oscuro: SOLO fotos decorativas ----
+// Desviación: bundle.css desatura toda <img> en oscuro. Aquí solo las
+// fotos de ambiente (banner de portada, retrato de Sobre mí): una figura
+// de datos, una segmentación o un mapa de calor no puede cambiar de color
+// con el tema. Para marcar otra foto decorativa, clase .foto-decorativa
+// en la <img> o en su contenedor.
+:root:not([data-theme="light"]) {
+  .foto-decorativa,
+  .foto-decorativa img,
+  .mosaico .foto img,
+  .retrato {
+    filter: saturate(var(--imagen-oscuro));
+  }
+}
+
+// Al imprimir el tema oscuro toma los colores del claro (_tokens.scss):
+// la foto sale como en claro.
+@media print {
+  :root:not([data-theme="light"]) {
+    .foto-decorativa,
+    .foto-decorativa img,
+    .mosaico .foto img,
+    .retrato {
+      filter: none;
+    }
+  }
+}
+
+// ---- Ecuaciones en display de MathJax ----
+// MathJax fija un min-width en línea a cada ecuación en display; en un
+// teléfono eso ensancha la página entera. Sin él la ecuación conserva su
+// tamaño y se desplaza dentro de su caja (pasaba ya en master).
+mjx-container[display="true"] {
+  min-width: 0 !important;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+// Fuera de un .articulo. Dentro, el pie se pliega con las notas de
+// margen, al ancho de cada voz (ver el pliegue en _v2-articulo.scss).
+@media (max-width: 960px) {
+  figure.encolumna figcaption {
+    position: static;
+    width: auto;
+    margin-top: var(--espacio-2);
+  }
+}

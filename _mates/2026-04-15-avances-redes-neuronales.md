@@ -7,6 +7,14 @@ subsection: redes-neuronales
 math: true
 wide: true
 description: "Segunda entrega de la serie: qué pasó entre 1969 y 2010. Los dos inviernos de la IA, el redescubrimiento de backpropagation, las primeras CNNs y RNNs, y la convergencia de datos, GPUs y algoritmos que preparó el despertar del deep learning."
+tags:
+  - historia de la ia
+  - invierno de la ia
+  - backpropagation
+  - cnn
+  - rnn
+  - big data
+  - gpu
 extra_css:
   - /assets/posts/avances-redes-neuronales/post.css
 ---

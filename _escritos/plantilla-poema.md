@@ -3,6 +3,7 @@ layout: poema
 title: "Plantilla de poema"
 date: 2026-01-01
 epigrafe: "Un epígrafe opcional, para citar a alguien antes del primer verso."
+listar: false
 ---
 
 Esta es la primera estrofa

@@ -1,0 +1,10 @@
+{%- comment -%}
+  Fecha en español para listas y metadatos: 12 · jul · 2026.
+  Parámetros
+    fecha     obligatorio  item.date o page.date
+    sin_time  opcional     true devuelve solo el texto, sin la etiqueta time
+{%- endcomment -%}
+{%- assign _fecha_meses = "ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic" | split: "," -%}
+{%- assign _fecha_i = include.fecha | date: "%-m" | minus: 1 -%}
+{%- capture _fecha_txt -%}{{ include.fecha | date: "%-d" }} · {{ _fecha_meses[_fecha_i] }} · {{ include.fecha | date: "%Y" }}{%- endcapture -%}
+{%- if include.sin_time -%}{{ _fecha_txt }}{%- else -%}<time datetime="{{ include.fecha | date: '%Y-%m-%d' }}">{{ _fecha_txt }}</time>{%- endif -%}

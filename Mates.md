@@ -1,69 +1,25 @@
 ---
-layout: page
+layout: seccion
 title: Mates
 permalink: /mates/
 section: mates
+coleccion: mates
+# Una lista por subsección, en este orden; lo que no tenga subsección
+# conocida va al final, bajo «Otras notas», solo si hay algo.
+grupos:
+  - titulo: Redes Neuronales
+    subseccion: redes-neuronales
+  - titulo: Geometría Computacional
+    subseccion: geometria-computacional
+  - titulo: Charlas
+    subseccion: charlas
+resto_titulo: Otras notas
 ---
 
-<div class="centered-quote">
-  "Escribo por la misma razón que respiro, porque si no lo hiciera moriría"
-  — <em>Isaac Asimov</em>
+<p class="epigrafe">"Escribo por la misma razón que respiro, porque si no lo hiciera moriría"
+<small>— <em>Isaac Asimov</em></small></p>
+
+<div class="entrada">
+<p>Cosas relacionadas con las matemáticas computacionales que me gustan y que aprendo, así como reflexiones sobre la computación.</p>
+<p>Quisiera algún día poder ser el psiquiatra de una máquina.</p>
 </div>
-
-<div class="intro-grid">
-  <div class="intro-block">
-    Cosas relacionadas con las matemáticas computacionales que me gustan y que aprendo, así como reflexiones sobre la computación.
-  </div>
-  <div class="intro-block">
-    Quisiera algún día poder ser el psiquiatra de una máquina.
-  </div>
-</div>
-
-<h2 class="posts-heading">Redes Neuronales</h2>
-
-{% assign nn_posts = site.mates | where: "subsection", "redes-neuronales" | sort: 'date' | reverse %}
-{% if nn_posts.size > 0 %}
-<div class="posts-grid">
-  {% for post in nn_posts %}
-    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
-  {% endfor %}
-</div>
-{% else %}
-<p class="posts-empty"><em>Próximamente...</em></p>
-{% endif %}
-
-<h2 class="posts-heading">Geometría Computacional</h2>
-
-{% assign geo_posts = site.mates | where: "subsection", "geometria-computacional" | sort: 'date' | reverse %}
-{% if geo_posts.size > 0 %}
-<div class="posts-grid">
-  {% for post in geo_posts %}
-    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
-  {% endfor %}
-</div>
-{% else %}
-<p class="posts-empty"><em>Próximamente...</em></p>
-{% endif %}
-
-<h2 class="posts-heading">Charlas</h2>
-
-{% assign talk_posts = site.mates | where: "subsection", "charlas" | sort: 'date' | reverse %}
-{% if talk_posts.size > 0 %}
-<div class="posts-grid">
-  {% for post in talk_posts %}
-    {% include tarjeta-post.html post=post formato_fecha="%B %Y" %}
-  {% endfor %}
-</div>
-{% else %}
-<p class="posts-empty"><em>Proximamente...</em></p>
-{% endif %}
-
-<h3 class="posts-subheading">Otras notas</h3>
-
-{% assign other_posts = site.mates | where_exp: "item", "item.subsection != 'geometria-computacional'" | where_exp: "item", "item.subsection != 'redes-neuronales'" | sort: 'date' | reverse %}
-{% assign other_posts = other_posts | where_exp: "item", "item.subsection != 'charlas'" %}
-<ul class="posts-list">
-  {% for post in other_posts %}
-    <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>({{ post.date | date: "%Y-%m-%d" }})</small></li>
-  {% endfor %}
-</ul>

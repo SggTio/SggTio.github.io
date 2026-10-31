@@ -1,0 +1,191 @@
+// ==============================================================
+//  Tokens del sistema de diseño v2 (fuente: tokens.css del sistema
+//  «Un Santajaro»). Todo valor de color, espacio, medida o familia
+//  sale de aquí; los parciales no escriben hex sueltos.
+//
+//  El sitio es OSCURO por defecto, para todo el mundo. El tema claro
+//  es opt-in: solo aparece si el lector lo pide con el alternador,
+//  que escribe data-theme="light" en <html> y lo recuerda en
+//  localStorage (clave `tema`). `prefers-color-scheme` no interviene:
+//  es una decisión de identidad, no un descuido. Sin JavaScript, oscuro.
+//
+//  Traducción de los selectores del diseño (que usa claro/oscuro):
+//    [data-theme="oscuro"]  →  :root:not([data-theme="light"])
+//    [data-theme="claro"]   →  :root[data-theme="light"]
+//  Los lienzos de los posts observan el atributo data-theme y no su
+//  valor, así que el nombre del atributo no puede cambiar.
+//
+//  Los colores son los de la paleta de siempre (fondo hsl 200 3% 12%,
+//  superficie, tinta y los tres acentos). Desviación respecto de
+//  tokens.css: --susurro y --susurro-activo (ver más abajo).
+//
+//  OJO: --acento y --accent-color NO se definen aquí; viven en
+//  body.section-* (_v2-esqueleto.scss). El JS de las visualizaciones
+//  de avances lee --accent-color de <html> y depende de no encontrarlo.
+// ==============================================================
+
+// ---- Tema oscuro: el de siempre ----
+:root {
+  --fondo: #1e1f20;
+  --superficie: #1c1c1c;
+  --tinta: #d9d9d9;
+  --tinta-quieta: #a9adb2;
+  --tinta-tenue: #8a8f95;
+  --regla: #ffffff24;
+  --azulgris: #8d99ab;
+  --crema: #e5d6c7;
+  --verde: #95c9a0;
+  --codigo-fondo: #161718;
+  --codigo-comentario: var(--tinta-tenue);
+  --codigo-palabra: var(--azulgris);
+  --codigo-cadena: var(--verde);
+}
+
+// ---- Tema claro: opt-in. Acentos oscurecidos para AA sobre blanco ----
+@mixin tokens-claros {
+  --fondo: #ffffff;
+  --superficie: #f1f3f5;
+  --tinta: #212529;
+  --tinta-quieta: #495057;
+  --tinta-tenue: #5c636a;
+  --regla: #dee2e6;
+  --azulgris: #627084;
+  --crema: #8d6741;
+  --verde: #447b4b;
+  --codigo-fondo: #f8f9fa;
+  --codigo-comentario: var(--tinta-tenue);
+  --codigo-palabra: var(--azulgris);
+  --codigo-cadena: var(--verde);
+}
+
+:root[data-theme="light"] { @include tokens-claros; }
+
+// ---- Impresión: siempre con los colores del tema claro ----
+// Los navegadores no imprimen fondos por defecto: en oscuro el fondo se
+// perdía y el texto salía en tinta clara sobre papel blanco (≈1,4:1;
+// master hacía lo mismo). Al imprimir, el tema oscuro toma los valores
+// del claro. Los --lienzo-* no cambian: el lienzo de las visualizaciones
+// se imprime con su fondo (_ajustes-mates.scss).
+@media print {
+  :root:not([data-theme="light"]) { @include tokens-claros; }
+}
+
+// ---- Lienzo de las visualizaciones: oscuro en los DOS temas ----
+// Los scripts de assets/posts dibujan con colores fijos para fondo oscuro
+// y no se tocan; su lienzo (.viz-stage) no cambia con el tema. Su fondo
+// (--lienzo-fondo, el que dan por hecho los scripts) y el texto que el
+// sitio recolorea sobre él usan estos valores, fijos: no se redefinen en
+// el tema claro ni al imprimir.
+:root {
+  --lienzo-fondo: #0f1216;
+  --lienzo-tinta: #d9d9d9;
+  --lienzo-tinta-tenue: #8a8f95;
+  --lienzo-azulgris: #8d99ab;
+}
+
+// ---- Escalas: no dependen del tema ----
+:root {
+  --pixel: 2px;
+
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 12px;
+  --espacio-4: 16px;
+  --espacio-5: 24px;
+  --espacio-6: 32px;
+  --espacio-7: 48px;
+  --espacio-8: 64px;
+  --espacio-9: 96px;
+
+  --radio-0: 0px;
+  --radio-1: 2px;
+  --radio-2: 4px;
+
+  --contenedor: 1120px;
+  --medida-mates: 66ch;
+  --medida-escritos: 58ch;
+  --medida-tecnica: 72ch;
+  --margen: 17rem;
+  --hueco-margen: 3rem;
+  --ancho-figura-completa: 1056px;
+  --pliegue-margen: 960px;
+  --mosaico-columna: 80px;
+  --mosaico-fila: 200px;
+
+  // Desviación: tokens.css trae 0.62 / 0.9 sobre tinta-tenue, que da
+  // 2,8:1 y 4,4:1 (no pasa AA en ningún estado). El susurro de Escritos
+  // usa tinta-quieta a 0.8 en reposo (5,2:1 oscuro · 4,8:1 claro) y 1 al
+  // pasar el cursor (7,3:1 · 8,2:1). Sigue siendo un susurro y se lee.
+  --susurro: 0.8;
+  --susurro-activo: 1;
+
+  --imagen-oscuro: 0.85;
+  --parpadeo: 1.1s;
+
+  --font-serif: "Literata", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+  --font-pixel: "Silkscreen", "IBM Plex Mono", monospace;
+}
+
+// ==============================================================
+//  Estilos tipográficos del sistema (clases de tokens.css, literales).
+//  Son clases utilitarias: dan familia, tamaño, interlineado, peso y
+//  eje óptico, nunca color ni margen (salvo .meta, que el esqueleto
+//  completa en _v2-articulo.scss).
+// ==============================================================
+.frase-apertura { font-family: var(--font-serif); font-size: 44px; line-height: 1.2; font-weight: 300; font-style: italic; font-variation-settings: 'opsz' 44; }
+
+.nombre-sitio { font-family: var(--font-serif); font-size: 19px; line-height: 1; font-weight: 500; font-variation-settings: 'opsz' 18; }
+
+.titulo-mates { font-family: var(--font-serif); font-size: 40px; line-height: 1.12; font-weight: 500; letter-spacing: -0.01em; font-variation-settings: 'opsz' 40; }
+
+.entrada-mates { font-family: var(--font-serif); font-size: 21px; line-height: 1.5; font-weight: 400; font-variation-settings: 'opsz' 22; }
+
+.cuerpo-mates { font-family: var(--font-serif); font-size: 18px; line-height: 1.65; font-weight: 400; font-variation-settings: 'opsz' 18; }
+
+.subtitulo-mates { font-family: var(--font-serif); font-size: 27px; line-height: 1.2; font-weight: 500; font-variation-settings: 'opsz' 28; }
+
+.apartado-mates { font-family: var(--font-serif); font-size: 21px; line-height: 1.3; font-weight: 500; font-style: italic; font-variation-settings: 'opsz' 20; }
+
+.analogia { font-family: var(--font-serif); font-size: 15px; line-height: 1.55; font-weight: 400; font-style: italic; font-variation-settings: 'opsz' 14; }
+
+.titulo-escritos { font-family: var(--font-serif); font-size: 38px; line-height: 1.15; font-weight: 400; font-style: italic; font-variation-settings: 'opsz' 40; }
+
+.cuerpo-escritos { font-family: var(--font-serif); font-size: 19px; line-height: 1.75; font-weight: 400; font-variation-settings: 'opsz' 18; }
+
+.epigrafe { font-family: var(--font-serif); font-size: 17px; line-height: 1.6; font-weight: 400; font-style: italic; font-variation-settings: 'opsz' 16; }
+
+.susurro { font-family: var(--font-serif); font-size: 14px; line-height: 1.6; font-weight: 400; font-style: italic; font-variation-settings: 'opsz' 12; }
+
+.titulo-tecnico { font-family: var(--font-sans); font-size: 36px; line-height: 1.12; font-weight: 600; letter-spacing: -0.015em; }
+
+.resumen-tecnico { font-family: var(--font-sans); font-size: 19px; line-height: 1.5; font-weight: 400; }
+
+.cuerpo-tecnico { font-family: var(--font-sans); font-size: 17px; line-height: 1.6; font-weight: 400; }
+
+.subtitulo-tecnico { font-family: var(--font-sans); font-size: 24px; line-height: 1.2; font-weight: 600; }
+
+.titulo-lista { font-family: var(--font-sans); font-size: 18px; line-height: 1.3; font-weight: 500; }
+
+.linea-resumen { font-family: var(--font-sans); font-size: 15px; line-height: 1.5; font-weight: 400; }
+
+.navegacion { font-family: var(--font-sans); font-size: 15px; line-height: 1; font-weight: 400; }
+
+.margen-sans { font-family: var(--font-sans); font-size: 14px; line-height: 1.5; font-weight: 400; }
+
+.meta { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; font-weight: 400; }
+
+.rotulo { font-family: var(--font-mono); font-size: 11px; line-height: 1; font-weight: 500; letter-spacing: 0.1em; }
+
+.numero { font-family: var(--font-mono); font-size: 13px; line-height: 1.7; font-weight: 400; }
+
+.pie-figura { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; font-weight: 400; }
+
+.codigo { font-family: var(--font-mono); font-size: 14.5px; line-height: 1.55; font-weight: 400; }
+
+.rotulo-pixel { font-family: var(--font-pixel); font-size: 11px; line-height: 1; font-weight: 400; letter-spacing: 0.06em; }
+
+.numero-pixel { font-family: var(--font-pixel); font-size: 11px; line-height: 1.7; font-weight: 400; }
+
+.marcador-pixel { font-family: var(--font-pixel); font-size: 16px; line-height: 1; font-weight: 700; }

@@ -1,0 +1,153 @@
+{%- comment -%}
+  Mapa de intereses de Sobre mí (rediseño v2, D14; componente SobreMi).
+  Se genera en el servidor, a partir de _data/intereses.yml (temas,
+  posiciones y aristas; cada arista lleva en el YAML la frase de about.md
+  que la justifica).
+
+    <section class="mapa">
+      <h2 class="rotulo-pixel">Mapa de intereses</h2>
+      <svg>  aristas (decorativas) · un <a> por tema con su rectángulo  </svg>
+      <p class="leyenda">…</p>
+      <ul class="pixel mapa-lista"> el mismo mapa en texto </ul>
+    </section>
+
+  Accesibilidad:
+  · Cada tema es un enlace <a>, así que se alcanza con el teclado; el
+    script ilumina sus vecinos al pasar el cursor Y al enfocarlo. Sin
+    JavaScript queda como diagrama estático (el tema bajo el cursor sigue
+    iluminándose por CSS).
+  · El SVG no lleva role="img" (convertiría los enlaces en
+    presentacionales). Cada enlace se describe (aria-describedby) con sus
+    vecinos, tomados de la lista en texto.
+  · La lista es la alternativa textual: en pantallas estrechas sustituye al
+    dibujo (que a ese ancho no se lee), y en las anchas está oculta pero
+    sigue describiendo los enlaces del SVG.
+  · Sin animaciones (README del componente: «no animar el mapa»).
+
+  Parámetros
+    mapa  opcional  por defecto site.data.intereses
+{%- endcomment -%}
+{%- assign _m = include.mapa | default: site.data.intereses -%}
+{%- if _m.temas and _m.temas.size > 0 -%}
+{%- assign _m_hoja = _m.hoja | default: "matematicas" -%}
+{%- assign _m_con_vecinos = "|" -%}
+{%- for _e in _m.aristas -%}
+  {%- assign _a = _m.temas | where: "id", _e[0] | first -%}
+  {%- assign _b = _m.temas | where: "id", _e[1] | first -%}
+  {%- if _a and _b -%}{%- assign _m_con_vecinos = _m_con_vecinos | append: _e[0] | append: "|" | append: _e[1] | append: "|" -%}{%- endif -%}
+{%- endfor -%}
+<section class="mapa" aria-labelledby="mapa-titulo">
+  <h2 class="rotulo-pixel" id="mapa-titulo">{{ _m.titulo | default: "Mapa de intereses" }}</h2>
+  <svg viewBox="0 0 {{ _m.ancho }} {{ _m.alto }}" width="{{ _m.ancho }}" height="{{ _m.alto }}" aria-labelledby="mapa-titulo"{% if _m.leyenda %} aria-describedby="mapa-leyenda"{% endif %}>
+    <g class="aristas" aria-hidden="true">
+    {%- for _e in _m.aristas %}
+      {%- assign _a = _m.temas | where: "id", _e[0] | first -%}
+      {%- assign _b = _m.temas | where: "id", _e[1] | first -%}
+      {%- if _a and _b %}
+      <line class="arista" data-a="{{ _a.id }}" data-b="{{ _b.id }}" x1="{{ _a.x }}" y1="{{ _a.y }}" x2="{{ _b.x }}" y2="{{ _b.y }}"/>
+      {%- endif %}
+    {%- endfor %}
+    </g>
+    <g class="nodos">
+    {%- for _t in _m.temas %}
+      {%- if _t.ancho -%}
+        {%- assign _w = _t.ancho | plus: 0 -%}
+      {%- else -%}
+        {%- assign _w = _t.nombre.size | times: 7.2 | plus: 20 | round -%}
+      {%- endif -%}
+      {%- assign _x = _w | divided_by: 2.0 | minus: _t.x | times: -1 -%}
+      {%- if _t.url -%}
+        {%- assign _href = _t.url | relative_url -%}
+      {%- else -%}
+        {%- assign _href = "#" | append: _m_hoja -%}
+      {%- endif %}
+      <a href="{{ _href }}" class="nodo-enlace" data-id="{{ _t.id }}"{% assign _clave = "|" | append: _t.id | append: "|" %}{% if _m_con_vecinos contains _clave %} aria-describedby="mapa-vecinos-{{ _t.id }}"{% endif %}>
+        <g class="nodo{% if _t.ancla %} ancla{% endif %}">
+          <rect x="{{ _x }}" y="{{ _t.y | minus: 14 }}" width="{{ _w }}" height="28"/>
+          <text x="{{ _t.x }}" y="{{ _t.y | plus: 4 }}" text-anchor="middle">{{ _t.nombre }}</text>
+        </g>
+      </a>
+    {%- endfor %}
+    </g>
+  </svg>
+  {%- if _m.leyenda %}
+  <p class="leyenda" id="mapa-leyenda">{{ _m.leyenda }}</p>
+  {%- endif %}
+  <ul class="pixel mapa-lista">
+  {%- for _t in _m.temas %}
+    {%- assign _vecinos = "" -%}
+    {%- assign _sep = "" -%}
+    {%- for _e in _m.aristas -%}
+      {%- assign _otro = nil -%}
+      {%- if _e[0] == _t.id -%}{%- assign _otro = _m.temas | where: "id", _e[1] | first -%}{%- endif -%}
+      {%- if _e[1] == _t.id -%}{%- assign _otro = _m.temas | where: "id", _e[0] | first -%}{%- endif -%}
+      {%- if _otro -%}
+        {%- assign _vecinos = _vecinos | append: _sep | append: _otro.nombre -%}
+        {%- assign _sep = ", " -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if _t.url -%}
+      {%- assign _href = _t.url | relative_url -%}
+    {%- else -%}
+      {%- assign _href = "#" | append: _m_hoja -%}
+    {%- endif %}
+    <li><a href="{{ _href }}">{{ _t.nombre }}</a>{% if _vecinos != "" %} — <span class="vecinos" id="mapa-vecinos-{{ _t.id }}">vecinos: {{ _vecinos }}</span>{% endif %}</li>
+  {%- endfor %}
+  </ul>
+  <script>
+    // Ilumina las aristas y los vecinos del tema bajo el cursor o con el
+    // foco del teclado. Sin transiciones. Si el ratón sale de un tema
+    // mientras otro tiene el foco, vuelve a iluminarse el enfocado.
+    // Los oyentes van en la <section>, no en el <svg>: Chromium vuelve
+    // enfocable con el tabulador un elemento SVG que escucha focusin o
+    // focusout, y el dibujo entero se llevaba una parada de foco.
+    (function () {
+      var mapa = document.querySelector('.mapa');
+      var svg = mapa && mapa.querySelector('svg');
+      if (!svg || !svg.classList) return;
+      var aristas = svg.querySelectorAll('.arista');
+      function nodo(id) { return svg.querySelector('[data-id="' + id + '"] .nodo'); }
+      function limpiar() {
+        svg.querySelectorAll('.activa, .activo').forEach(function (el) {
+          el.classList.remove('activa', 'activo');
+        });
+      }
+      function iluminar(id) {
+        limpiar();
+        var propio = nodo(id);
+        if (propio) propio.classList.add('activo');
+        aristas.forEach(function (l) {
+          var a = l.getAttribute('data-a'), b = l.getAttribute('data-b');
+          if (a !== id && b !== id) return;
+          l.classList.add('activa');
+          var otro = nodo(a === id ? b : a);
+          if (otro) otro.classList.add('activo');
+        });
+      }
+      function enlace(el) {
+        var a = el && el.closest ? el.closest('[data-id]') : null;
+        return a && svg.contains(a) ? a : null;
+      }
+      function enfocado() {
+        var a = enlace(document.activeElement);
+        if (a) iluminar(a.getAttribute('data-id')); else limpiar();
+      }
+      mapa.addEventListener('mouseover', function (e) {
+        var a = enlace(e.target);
+        if (a) iluminar(a.getAttribute('data-id'));
+      });
+      mapa.addEventListener('mouseout', function (e) {
+        var a = enlace(e.target);
+        if (a && !a.contains(e.relatedTarget)) enfocado();
+      });
+      mapa.addEventListener('focusin', function (e) {
+        var a = enlace(e.target);
+        if (a) iluminar(a.getAttribute('data-id'));
+      });
+      mapa.addEventListener('focusout', function (e) {
+        if (!enlace(e.relatedTarget)) limpiar();
+      });
+    })();
+  </script>
+</section>
+{%- endif %}

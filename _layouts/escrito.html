@@ -1,18 +1,42 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  Escrito en prosa (cuento): componente Poema del sistema v2, voz de
+  lectura con la columna de margen como susurro. Sin tiempo de lectura ni
+  guiños píxel.
 
-<article class="escrito">
-  <header class="escrito-header">
-    <h1 class="escrito-title">{{ page.title }}</h1>
-    {% if page.date %}
-    <time datetime="{{ page.date | date_to_xmlschema }}" class="escrito-date">
-      {{ page.date | date: "%Y-%m-%d" }}
-    </time>
-    {% endif %}
-  </header>
+  Front matter que lee
+    title             obligatorio  el H1 (cursiva, peso 400)
+    date              obligatorio  la fecha de la línea de metadatos
+    genero            opcional     por defecto «cuento» (default de _escritos)
+    epigrafe          opcional     cita antes del texto
+    epigrafe_fuente   opcional     quién lo dijo, sin la raya: la pone el layout
+    description       opcional     solo para listados; aquí no se pinta
+    draft             opcional     true: aviso «Borrador» bajo los metadatos, solo en
+                                   local (y dice si falta published: false)
 
-  <div class="escrito-content">
+  En el cuerpo (Markdown)
+    ***               separador entre secciones: se ve como «· · ·»
+    aside.margen      nota al margen tras su párrafo, en susurro, sin rótulo
+
+  El cuerpo va en div.cuento con display: contents (_ajustes-escritos):
+  sus párrafos, separadores y notas se maquetan como hijos del artículo,
+  así la nota de margen flota en la columna de margen y no dentro de la
+  de texto.
+{%- endcomment -%}
+{%- include voz.html %}
+<article class="articulo {{ voz }}">
+  <h1>{{ page.title }}</h1>
+  {%- if page.date %}
+  <p class="meta">{% include fecha.html fecha=page.date %} &nbsp;·&nbsp; {{ page.genero | default: "cuento" }}</p>
+  {%- endif %}
+  {%- include aviso-borrador.html draft=page.draft pagina=page nota="Este texto está sin terminar." %}
+  {%- if page.epigrafe %}
+  <p class="epigrafe">{{ page.epigrafe }}{% if page.epigrafe_fuente %}<small>— {{ page.epigrafe_fuente }}</small>{% endif %}</p>
+  {%- endif %}
+
+  <div class="cuento">
     {{ content }}
   </div>
 </article>

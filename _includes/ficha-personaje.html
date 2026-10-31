@@ -1,0 +1,81 @@
+{%- comment -%}
+  Ficha de personaje: el bloque de margen de Sobre mí (rediseño v2, D14;
+  componente FichaPersonaje). Una hoja de personaje de videojuego, pero
+  cada dato es verdadero y está en el repositorio (CLAUDE.md §2). Sin
+  atributos ni barras (D4: CLAUDE.md §6 prohíbe las barras de habilidad).
+
+    <aside class="margen ficha-personaje">
+      FICHA DE PERSONAJE · regla de píxeles
+      CLASE · NIVEL (en Silkscreen) · INVENTARIO (mono, separado por «·»)
+      [ <div class="ficha-ahora"> AHORA (acento verde) … </div> ]
+    </aside>
+
+  «Ahora» va debajo, con acento verde, SOLO si _data/ahora.yml tiene algún
+  bloque con elementos (hoy ese archivo solo trae comentarios, así que no
+  se pinta). Su rótulo lleva el cursor (D5); es el único de la página.
+  Va DENTRO del mismo <aside> y no en otro: un segundo flotado a la
+  derecha empujaría hacia abajo el retrato de la intro (un flotado no
+  puede quedar más arriba que otro anterior en el código).
+
+  Una fila sin valor no se pinta: no hay huecos ni TODO en producción.
+  Los nombres accesibles van en aria-label, en minúscula: los rótulos se
+  ven en mayúsculas por CSS y Chrome las pasa al nombre.
+
+  Parámetros
+    ficha  opcional  por defecto page.ficha, con las claves
+                       clase       texto
+                       nivel       texto (se muestra en mayúsculas pixel)
+                       inventario  lista de herramientas
+{%- endcomment -%}
+{%- assign _ficha = include.ficha | default: page.ficha -%}
+{%- assign _ficha_hay = false -%}
+{%- if _ficha.clase or _ficha.nivel -%}{%- assign _ficha_hay = true -%}{%- endif -%}
+{%- if _ficha.inventario and _ficha.inventario.size > 0 -%}{%- assign _ficha_hay = true -%}{%- endif -%}
+{%- comment -%} «Ahora»: esquema documentado en _data/ahora.yml (actualizado + bloques[titulo, items]). {%- endcomment -%}
+{%- assign _ahora = site.data.ahora -%}
+{%- assign _ahora_hay = false -%}
+{%- for _b in _ahora.bloques -%}
+  {%- if _b.items and _b.items.size > 0 -%}{%- assign _ahora_hay = true -%}{%- endif -%}
+{%- endfor -%}
+{%- if _ficha_hay or _ahora_hay -%}
+<aside class="margen ficha-personaje" aria-label="Ficha de personaje">
+  {%- if _ficha_hay %}
+  <span class="rotulo">Ficha de personaje</span>
+  <hr class="regla-pixel">
+  <dl>
+    {%- if _ficha.clase %}
+    <dt class="rotulo">Clase</dt>
+    <dd>{{ _ficha.clase }}</dd>
+    {%- endif %}
+    {%- if _ficha.nivel %}
+    <dt class="rotulo">Nivel</dt>
+    <dd><span class="grande">{{ _ficha.nivel }}</span></dd>
+    {%- endif %}
+    {%- if _ficha.inventario and _ficha.inventario.size > 0 %}
+    <dt class="rotulo">Inventario</dt>
+    <dd><span class="inv">{{ _ficha.inventario | join: " · " }}</span></dd>
+    {%- endif %}
+  </dl>
+  {%- endif %}
+  {%- if _ahora_hay %}
+  <div class="ficha-ahora" role="group" aria-label="Ahora">
+    <span class="rotulo cursor">Ahora</span>
+    <hr class="regla-pixel">
+    <dl>
+      {%- for _b in _ahora.bloques %}
+        {%- if _b.items and _b.items.size > 0 %}
+      <dt class="rotulo">{{ _b.titulo }}</dt>
+          {%- for _item in _b.items %}
+      <dd>{{ _item }}</dd>
+          {%- endfor %}
+        {%- endif %}
+      {%- endfor %}
+      {%- if _ahora.actualizado %}
+      <dt class="rotulo">Actualizado</dt>
+      <dd><span class="inv">{% include fecha.html fecha=_ahora.actualizado %}</span></dd>
+      {%- endif %}
+    </dl>
+  </div>
+  {%- endif %}
+</aside>
+{%- endif %}

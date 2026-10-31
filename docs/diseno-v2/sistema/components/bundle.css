@@ -1,0 +1,239 @@
+/* Un Santajaro — esqueleto compartido de las dos voces.
+   Todos los valores vienen de tokens.css (var(--…) y las clases de estilo).
+   Este archivo es la base del styles.css del sitio Jekyll. */
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--fondo); color: var(--tinta); }
+body { margin: 0; background: var(--fondo); color: var(--tinta); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--regla); transition: border-color .15s; }
+a:hover { border-bottom-color: var(--acento); }
+::selection { background: var(--acento); color: var(--fondo); }
+img, video { max-width: 100%; height: auto; display: block; border-radius: var(--radio-1); }
+[data-theme="oscuro"] img { filter: saturate(var(--imagen-oscuro)); }
+hr { border: 0; border-top: 1px solid var(--regla); margin: var(--espacio-8) 0; }
+
+/* ---------- acento por sección ---------- */
+body { --acento: var(--azulgris); }
+.section-mates, .seccion-mates { --acento: var(--azulgris); }
+.section-escritos, .section-notas, .section-sobre, .seccion-escritos { --acento: var(--crema); }
+.section-proyectos, .seccion-proyectos { --acento: var(--verde); }
+
+/* ---------- contenedor y navegación ---------- */
+.contenedor { max-width: var(--contenedor); margin: 0 auto; padding: 0 var(--espacio-6); }
+.masthead { display: flex; align-items: baseline; gap: var(--espacio-5); padding: 22px 0 18px; border-bottom: 1px solid var(--regla); margin-bottom: var(--espacio-7); }
+.masthead .marca { font-family: var(--font-serif); font-size: 19px; font-weight: 500; font-variation-settings: "opsz" 18; border: 0; }
+.masthead nav { display: flex; gap: 22px; margin-left: auto; font-family: var(--font-sans); font-size: 15px; line-height: 1; }
+.masthead nav a { color: var(--tinta-quieta); border: 0; padding-bottom: 6px; }
+.masthead nav a:hover { color: var(--tinta); }
+.masthead nav a.activa { color: var(--tinta); box-shadow: inset 0 -2px 0 var(--acento); }
+.pie { margin-top: var(--espacio-9); padding: var(--espacio-5) 0; border-top: 1px solid var(--regla); font-family: var(--font-mono); font-size: 13px; color: var(--tinta-tenue); display: flex; gap: var(--espacio-5); }
+.pie a { border: 0; }
+
+/* ---------- el artículo: columna de texto + columna de margen ---------- */
+.articulo { --texto: var(--medida-tecnica); --ancho: calc(var(--texto) + var(--hueco-margen) + var(--margen)); max-width: var(--ancho); }
+.articulo > * { max-width: var(--texto); }
+.articulo .margen { float: right; clear: right; width: var(--margen); margin: 0 0 var(--espacio-4) var(--hueco-margen); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; color: var(--tinta-quieta); }
+.articulo .margen .rotulo { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--acento); margin-bottom: var(--espacio-1); line-height: 1; }
+.articulo .ancho { max-width: var(--ancho); clear: both; }
+.articulo .completo { max-width: none; width: var(--ancho-figura-completa); clear: both; }
+.meta { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--tinta-tenue); margin: 0 0 var(--espacio-6); }
+.meta b { font-weight: 500; color: var(--acento); }
+.meta a { border: 0; }
+.meta a:hover { color: var(--acento); }
+
+/* ---------- voz de lectura · Mates (margen como aparato) ---------- */
+.voz-mates { font-family: var(--font-serif); font-size: 18px; line-height: 1.65; font-variation-settings: "opsz" 18; --texto: var(--medida-mates); }
+.voz-mates h1 { font-size: 40px; line-height: 1.12; font-weight: 500; letter-spacing: -.01em; font-variation-settings: "opsz" 40; margin: 0 0 10px; }
+.voz-mates .lead { font-size: 21px; line-height: 1.5; color: var(--crema); font-variation-settings: "opsz" 22; margin: 0 0 1.4rem; }
+.voz-mates h2 { font-size: 27px; line-height: 1.2; font-weight: 500; font-variation-settings: "opsz" 28; color: var(--acento); margin: 2.2rem 0 .8rem; }
+.voz-mates h3 { font-size: 21px; line-height: 1.3; font-weight: 500; font-style: italic; font-variation-settings: "opsz" 20; margin: 1.6rem 0 .5rem; }
+.voz-mates p { margin: 0 0 1.1rem; }
+.voz-mates .margen.indice { border-top: 1px solid var(--regla); padding-top: var(--espacio-2); }
+.voz-mates .margen.indice ol { margin: 0; padding: 0; list-style: none; counter-reset: item; font-size: 13px; line-height: 1.7; }
+.voz-mates .margen.indice li::before { content: counter(item, decimal-leading-zero) "  "; counter-increment: item; font-family: var(--font-mono); color: var(--tinta-tenue); }
+.voz-mates .margen.indice a { border: 0; }
+.voz-mates .margen.idea { border-left: 2px solid var(--acento); padding-left: var(--espacio-3); }
+.voz-mates .margen.analogia { font-family: var(--font-serif); font-style: italic; font-size: 15px; line-height: 1.55; font-variation-settings: "opsz" 14; color: var(--tinta); }
+.voz-mates .ecuacion { text-align: center; margin: 1.2rem 0; position: relative; }
+.voz-mates .ecuacion .num { position: absolute; left: calc(100% + var(--hueco-margen)); top: 0; width: var(--margen); text-align: left; font-family: var(--font-mono); font-size: 13px; font-style: normal; color: var(--tinta-tenue); }
+
+/* ---------- voz de lectura · Escritos (margen como susurro) ---------- */
+.voz-escritos { font-family: var(--font-serif); font-size: 19px; line-height: 1.75; font-variation-settings: "opsz" 18; --texto: var(--medida-escritos); }
+.voz-escritos h1 { font-size: 38px; line-height: 1.15; font-weight: 400; font-style: italic; font-variation-settings: "opsz" 40; margin: 0 0 6px; }
+.voz-escritos .epigrafe { font-style: italic; font-size: 17px; line-height: 1.6; color: var(--tinta-quieta); max-width: 44ch; margin: 0 0 2.4rem; }
+.voz-escritos .epigrafe small { display: block; font-family: var(--font-mono); font-style: normal; font-size: 12px; color: var(--tinta-tenue); margin-top: var(--espacio-1); }
+.voz-escritos .poema { white-space: pre-line; margin: 0 0 2rem; }
+.voz-escritos .cuento p { margin: 0; text-indent: 1.6em; }
+.voz-escritos .cuento p:first-of-type { text-indent: 0; }
+.voz-escritos .separador { text-align: center; color: var(--tinta-tenue); letter-spacing: 1em; margin: 2rem 0; }
+.voz-escritos .margen { font-family: var(--font-serif); font-style: italic; font-size: 14px; line-height: 1.6; font-variation-settings: "opsz" 12; color: var(--tinta-tenue); opacity: var(--susurro); transition: opacity .25s; }
+.voz-escritos:hover .margen { opacity: var(--susurro-activo); }
+.voz-escritos .margen .rotulo { display: none; }
+
+/* ---------- voz técnica · Proyectos y Notas (margen como ficha) ---------- */
+.voz-tecnica { font-family: var(--font-sans); font-size: 17px; line-height: 1.6; --texto: var(--medida-tecnica); }
+.voz-tecnica h1 { font-size: 36px; line-height: 1.12; font-weight: 600; letter-spacing: -.015em; margin: 0 0 6px; }
+.voz-tecnica .resumen { font-size: 19px; line-height: 1.5; color: var(--tinta-quieta); max-width: 52ch; margin: 0 0 var(--espacio-6); }
+.voz-tecnica h2 { font-size: 24px; line-height: 1.2; font-weight: 600; color: var(--acento); margin: 2rem 0 .6rem; }
+.voz-tecnica p { margin: 0 0 1rem; }
+.voz-tecnica .margen.ficha { border-top: 1px solid var(--acento); padding-top: 10px; }
+.voz-tecnica .ficha dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: var(--espacio-1) 14px; }
+.voz-tecnica .ficha dt { font-family: var(--font-mono); font-size: 11px; line-height: 1.9; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-tenue); }
+.voz-tecnica .ficha dd { margin: 0; }
+.voz-tecnica .ficha .estado { font-family: var(--font-mono); color: var(--acento); }
+
+/* ---------- listas tipográficas (nunca tarjetas) ---------- */
+.lista { list-style: none; margin: 0; padding: 0; max-width: var(--medida-tecnica); font-family: var(--font-sans); }
+.lista li { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0 var(--espacio-4); padding: 14px 0; border-top: 1px solid var(--regla); align-items: baseline; }
+.lista li:last-child { border-bottom: 1px solid var(--regla); }
+.lista .fecha, .lista .num { font-family: var(--font-mono); font-size: 13px; color: var(--tinta-tenue); }
+.lista .tit { font-size: 18px; line-height: 1.3; font-weight: 500; }
+.lista .tit a { border: 0; }
+.lista .tit a:hover { color: var(--acento); }
+.lista .seccion { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-left: 10px; }
+.lista .seccion.mates { color: var(--azulgris); } .lista .seccion.escritos, .lista .seccion.notas { color: var(--crema); } .lista .seccion.proyectos { color: var(--verde); }
+.lista .des { font-size: 15px; line-height: 1.5; color: var(--tinta-quieta); margin-top: 2px; }
+.lista .tec { font-family: var(--font-mono); font-size: 12px; color: var(--tinta-tenue); margin-top: 6px; }
+.lista.proyectos li { grid-template-columns: 3.2rem 1fr 5rem; }
+.lista.proyectos .anio { font-family: var(--font-mono); font-size: 13px; color: var(--tinta-tenue); text-align: right; }
+.lista.proyectos .estado { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--verde); margin-left: 10px; }
+.lista-titulo { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-tenue); margin: 0 0 var(--espacio-2); }
+
+/* ---------- portada ---------- */
+.apertura { padding: var(--espacio-8) 0 var(--espacio-9); }
+.apertura p { max-width: 30ch; font-family: var(--font-serif); font-size: 44px; line-height: 1.2; font-weight: 300; font-style: italic; font-variation-settings: "opsz" 44; margin: 0 0 var(--espacio-5); }
+.apertura p:nth-child(2) { color: var(--azulgris); } .apertura p:nth-child(3) { color: var(--crema); }
+.apertura .firma { font-family: var(--font-mono); font-size: 13px; color: var(--tinta-tenue); margin-top: var(--espacio-6); }
+
+/* ---------- figuras ---------- */
+figure { margin: 1.6rem 0; }
+figure figcaption { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: var(--tinta-tenue); margin-top: var(--espacio-2); }
+figure.encolumna { position: relative; }
+figure.encolumna figcaption { position: absolute; left: calc(100% + var(--hueco-margen)); top: 0; width: var(--margen); margin: 0; font-family: var(--font-sans); font-size: 14px; color: var(--tinta-quieta); }
+figure.encolumna figcaption b { display: block; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--acento); margin-bottom: var(--espacio-1); }
+figure .lienzo { border: 1px solid var(--regla); border-radius: var(--radio-1); background: var(--superficie); }
+figure video, figure iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--radio-1); background: var(--superficie); }
+
+/* ---------- código ---------- */
+pre, code { font-family: var(--font-mono); }
+pre { font-size: 14.5px; line-height: 1.55; background: var(--codigo-fondo); border: 1px solid var(--regla); border-radius: var(--radio-1); padding: 14px var(--espacio-4); overflow: auto; color: var(--tinta); margin: 1.2rem 0; }
+p code, li code { font-size: .92em; color: var(--crema); }
+pre .c { color: var(--codigo-comentario); } pre .k { color: var(--codigo-palabra); } pre .s, pre .n { color: var(--codigo-cadena); }
+
+/* ---------- pliegue en móvil: el margen vuelve al texto ---------- */
+@media (max-width: 960px) {
+  .articulo { max-width: var(--texto); }
+  .articulo .margen { float: none; width: auto; margin: 0 0 var(--espacio-4); padding: 10px 14px; background: var(--superficie); border-radius: var(--radio-1); }
+  .voz-escritos .margen { background: none; padding: 0; opacity: var(--susurro-activo); }
+  figure.encolumna figcaption { position: static; width: auto; margin-top: var(--espacio-2); }
+  .voz-mates .ecuacion .num { position: static; display: block; text-align: right; }
+  .articulo .completo { width: auto; }
+  .apertura p { font-size: 32px; }
+  .masthead { flex-wrap: wrap; } .masthead nav { margin-left: 0; width: 100%; gap: 16px; }
+}
+
+/* =================== v2 · guiños 8 bits =================== */
+/* El píxel del sitio es `pixel` (2px). Las formas se dibujan con box-shadow sobre un cuadrado de --px,
+   así heredan el color de la voz (currentColor) y funcionan en los dos temas sin imágenes. */
+.px { --px: var(--pixel); display: inline-block; width: var(--px); height: var(--px); color: var(--acento); }
+.px::before { content: ""; display: block; width: var(--px); height: var(--px); background: currentColor; }
+.px-vineta::before { box-shadow: calc(var(--px)*0) calc(var(--px)*0), calc(var(--px)*0) calc(var(--px)*1), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*0) calc(var(--px)*2), calc(var(--px)*1) calc(var(--px)*2), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*0) calc(var(--px)*3), calc(var(--px)*1) calc(var(--px)*3), calc(var(--px)*0) calc(var(--px)*4); }
+.px-abierta::before { box-shadow: calc(var(--px)*0) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*1), calc(var(--px)*3) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2); }
+.px-sigma::before { box-shadow: calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*2) calc(var(--px)*4), calc(var(--px)*1) calc(var(--px)*5), calc(var(--px)*1) calc(var(--px)*6), calc(var(--px)*2) calc(var(--px)*6), calc(var(--px)*3) calc(var(--px)*6), calc(var(--px)*4) calc(var(--px)*6), calc(var(--px)*5) calc(var(--px)*6), calc(var(--px)*6) calc(var(--px)*6); }
+.px-pluma::before { box-shadow: calc(var(--px)*7) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*1), calc(var(--px)*5) calc(var(--px)*2), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*2) calc(var(--px)*5), calc(var(--px)*1) calc(var(--px)*6), calc(var(--px)*0) calc(var(--px)*7), calc(var(--px)*1) calc(var(--px)*7), calc(var(--px)*0) calc(var(--px)*6); }
+.px-caja::before { box-shadow: calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*7), calc(var(--px)*2) calc(var(--px)*7), calc(var(--px)*3) calc(var(--px)*7), calc(var(--px)*4) calc(var(--px)*7), calc(var(--px)*5) calc(var(--px)*7), calc(var(--px)*6) calc(var(--px)*7), calc(var(--px)*0) calc(var(--px)*1), calc(var(--px)*0) calc(var(--px)*2), calc(var(--px)*0) calc(var(--px)*3), calc(var(--px)*0) calc(var(--px)*4), calc(var(--px)*0) calc(var(--px)*5), calc(var(--px)*0) calc(var(--px)*6), calc(var(--px)*7) calc(var(--px)*1), calc(var(--px)*7) calc(var(--px)*2), calc(var(--px)*7) calc(var(--px)*3), calc(var(--px)*7) calc(var(--px)*4), calc(var(--px)*7) calc(var(--px)*5), calc(var(--px)*7) calc(var(--px)*6), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*4); }
+.px-marca::before { box-shadow: calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*2) calc(var(--px)*3), calc(var(--px)*2) calc(var(--px)*4), calc(var(--px)*2) calc(var(--px)*5), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*1), calc(var(--px)*3) calc(var(--px)*2), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*3) calc(var(--px)*5), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*1), calc(var(--px)*4) calc(var(--px)*2), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*5), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*1), calc(var(--px)*5) calc(var(--px)*2), calc(var(--px)*5) calc(var(--px)*3), calc(var(--px)*5) calc(var(--px)*4), calc(var(--px)*5) calc(var(--px)*5), calc(var(--px)*2) calc(var(--px)*6), calc(var(--px)*5) calc(var(--px)*6); }
+.px-grande { --px: calc(var(--pixel) * 1.5); }
+
+/* rótulos en Silkscreen solo en: índice, ficha de personaje, tiles del mosaico */
+.rotulo-pixel, .voz-mates .margen.indice .rotulo, .ficha-personaje .rotulo, .mosaico .rotulo { font-family: var(--font-pixel); font-size: 11px; line-height: 1; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); }
+.voz-mates .margen.indice li::before, .lista.proyectos .num { font-family: var(--font-pixel); font-size: 11px; }
+.voz-mates .margen.indice li.actual::before { color: var(--acento); }
+.voz-mates .margen.indice li.actual { color: var(--tinta); }
+
+/* regla punteada de píxeles: sustituye a `regla` en el índice, la ficha y los tiles */
+.regla-pixel { height: var(--pixel); background: repeating-linear-gradient(90deg, var(--tinta-tenue) 0 var(--pixel), transparent var(--pixel) calc(var(--pixel) * 3)); opacity: .6; border: 0; margin: 0 0 var(--espacio-2); }
+.voz-mates .margen.indice { border-top: 0; padding-top: 0; }
+
+/* cursor de bloque que parpadea */
+.cursor::after { content: ""; display: inline-block; width: calc(var(--pixel) * 4); height: calc(var(--pixel) * 6); background: var(--acento); margin-left: var(--espacio-2); vertical-align: -1px; animation: parpadeo var(--parpadeo) steps(1) infinite; }
+@keyframes parpadeo { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .cursor::after { animation: none; } }
+
+/* viñetas pixel en listas de Sobre mí y Notas */
+ul.pixel { list-style: none; padding: 0; margin: 0 0 1rem; }
+ul.pixel li { position: relative; padding-left: calc(var(--pixel) * 10); margin-bottom: .5rem; }
+ul.pixel li::before { content: ""; position: absolute; left: 0; top: .55em; width: var(--pixel); height: var(--pixel); background: var(--acento); box-shadow: calc(var(--pixel)*0) calc(var(--pixel)*0), calc(var(--pixel)*0) calc(var(--pixel)*1), calc(var(--pixel)*1) calc(var(--pixel)*1), calc(var(--pixel)*0) calc(var(--pixel)*2), calc(var(--pixel)*1) calc(var(--pixel)*2), calc(var(--pixel)*2) calc(var(--pixel)*2), calc(var(--pixel)*0) calc(var(--pixel)*3), calc(var(--pixel)*1) calc(var(--pixel)*3), calc(var(--pixel)*0) calc(var(--pixel)*4); }
+
+/* =================== v2 · mosaico de portada =================== */
+.mosaico { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: var(--mosaico-fila); gap: 1px; background: var(--regla); outline: 1px solid var(--regla); margin: 0 0 var(--espacio-8); }
+.mosaico .tile { background: var(--fondo); padding: var(--espacio-4); position: relative; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.mosaico .tile a { border: 0; }
+.mosaico .foto { grid-column: span 7; grid-row: span 2; padding: 0; }
+.mosaico .foto img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+.mosaico .frases { grid-column: span 5; justify-content: center; gap: var(--espacio-3); }
+.mosaico .frases p { font-family: var(--font-serif); font-style: italic; font-weight: 300; font-size: 20px; line-height: 1.3; margin: 0; font-variation-settings: "opsz" 20; }
+.mosaico .frases p:nth-child(2) { color: var(--azulgris); } .mosaico .frases p:nth-child(3) { color: var(--crema); }
+.mosaico .ultimas { grid-column: span 5; }
+.mosaico .ultimas .rotulo { margin-bottom: var(--espacio-3); }
+.mosaico .ultimas ol { list-style: none; margin: 0; padding: 0; font-family: var(--font-sans); font-size: 14px; line-height: 1.35; }
+.mosaico .ultimas li { display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--espacio-3); padding: 6px 0; border-top: 1px solid var(--regla); }
+.mosaico .ultimas li:first-child { border-top: 0; }
+.mosaico .ultimas .fecha { font-family: var(--font-mono); font-size: 12px; color: var(--tinta-tenue); }
+.mosaico .seccion { grid-column: span 3; justify-content: space-between; }
+.mosaico .seccion .px { margin-bottom: auto; }
+.mosaico .seccion .nombre { font-family: var(--font-sans); font-size: 17px; font-weight: 500; margin: var(--espacio-3) 0 var(--espacio-1); }
+.mosaico .seccion .cuenta { font-family: var(--font-mono); font-size: 12px; color: var(--tinta-tenue); }
+.mosaico .seccion:hover .nombre { color: var(--acento); }
+.mosaico .seccion.mates { --acento: var(--azulgris); } .mosaico .seccion.escritos, .mosaico .seccion.notas { --acento: var(--crema); } .mosaico .seccion.proyectos { --acento: var(--verde); }
+.mosaico .ahora { grid-column: span 4; }
+.mosaico .ahora p { font-family: var(--font-serif); font-size: 15px; line-height: 1.5; margin: var(--espacio-2) 0 0; color: var(--tinta-quieta); }
+
+/* =================== v2 · Sobre mí =================== */
+.sobre .intro { font-family: var(--font-serif); font-size: 19px; line-height: 1.7; font-variation-settings: "opsz" 18; max-width: var(--medida-escritos); }
+.sobre .retrato { width: 120px; height: 120px; object-fit: cover; border-radius: var(--radio-2); float: left; margin: 6px var(--espacio-5) var(--espacio-3) 0; }
+details.hoja { border-top: 1px solid var(--regla); padding: 14px 0 6px; max-width: var(--medida-escritos); }
+details.hoja:last-of-type { border-bottom: 1px solid var(--regla); }
+details.hoja summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: calc(var(--pixel) * 10) 1fr auto; align-items: baseline; gap: var(--espacio-2); font-family: var(--font-serif); font-size: 21px; font-style: italic; font-weight: 500; font-variation-settings: "opsz" 20; }
+details.hoja summary::-webkit-details-marker { display: none; }
+details.hoja summary .px { align-self: center; }
+details.hoja summary .px-abierta { display: none; }
+details.hoja[open] summary .px-vineta { display: none; } details.hoja[open] summary .px-abierta { display: inline-block; }
+details.hoja summary .cuenta { font-family: var(--font-pixel); font-size: 11px; color: var(--tinta-tenue); }
+details.hoja .cuerpo { padding: var(--espacio-3) 0 var(--espacio-3) calc(var(--pixel) * 10 + var(--espacio-2)); font-family: var(--font-serif); font-size: 18px; line-height: 1.65; }
+details.hoja .cuerpo p { margin: 0 0 1rem; }
+
+/* ficha de personaje (margen de Sobre mí): anula el susurro de la voz de lectura */
+.voz-escritos .margen.ficha-personaje { font-family: var(--font-sans); font-style: normal; opacity: 1; color: var(--tinta-quieta); }
+.voz-escritos .margen.ficha-personaje .rotulo { display: block; }
+.ficha-personaje { font-family: var(--font-sans); font-size: 14px; line-height: 1.5; color: var(--tinta-quieta); }
+.ficha-personaje .rotulo { display: block; margin: var(--espacio-3) 0 var(--espacio-1); }
+.ficha-personaje .rotulo:first-child { margin-top: 0; }
+.ficha-personaje .grande { font-family: var(--font-pixel); font-size: 16px; font-weight: 700; color: var(--acento); line-height: 1; }
+.ficha-personaje .stat { display: grid; grid-template-columns: 7rem 1fr; align-items: center; gap: var(--espacio-2); margin: 3px 0; }
+.ficha-personaje .barra { display: flex; gap: var(--pixel); }
+.ficha-personaje .barra i { width: calc(var(--pixel) * 4); height: calc(var(--pixel) * 4); background: var(--regla); }
+.ficha-personaje .barra i.on { background: var(--acento); }
+.ficha-personaje .inv { font-family: var(--font-mono); font-size: 12px; color: var(--tinta-tenue); }
+
+/* mapa de intereses (SVG interactivo) */
+.mapa { max-width: calc(var(--medida-escritos) + var(--hueco-margen) + var(--margen)); clear: both; margin: var(--espacio-6) 0; }
+.mapa svg { width: 100%; height: auto; font-family: var(--font-sans); font-size: 13px; shape-rendering: crispEdges; }
+.mapa .arista { stroke: var(--regla); stroke-width: 2; }
+.mapa .nodo rect { fill: var(--fondo); stroke: var(--tinta-tenue); stroke-width: 2; }
+.mapa .nodo text { fill: var(--tinta-quieta); }
+.mapa .nodo.ancla rect { stroke: var(--acento); }
+.mapa .nodo.ancla text { fill: var(--tinta); }
+.mapa .nodo.activo rect, .mapa .nodo:hover rect { stroke: var(--acento); fill: var(--superficie); }
+.mapa .nodo.activo text, .mapa .nodo:hover text { fill: var(--tinta); }
+.mapa .arista.activa { stroke: var(--acento); }
+.mapa .leyenda { font-family: var(--font-pixel); font-size: 11px; color: var(--tinta-tenue); margin-top: var(--espacio-2); }
+
+@media (max-width: 960px) {
+  .mosaico { grid-template-columns: repeat(6, 1fr); grid-auto-rows: auto; }
+  .mosaico .foto { grid-column: span 6; grid-row: span 1; min-height: 240px; }
+  .mosaico .frases, .mosaico .ultimas { grid-column: span 6; }
+  .mosaico .seccion { grid-column: span 3; min-height: 120px; }
+  .mosaico .ahora { grid-column: span 6; }
+}

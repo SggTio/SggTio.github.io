@@ -1,21 +1,41 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  Poema: componente Poema del sistema v2, voz de lectura con la columna de
+  margen como susurro. Sin tiempo de lectura ni guiños píxel.
 
-<article class="poema">
-  <header class="poema-header">
-    <h1 class="poema-title">{{ page.title }}</h1>
-    {% if page.epigrafe %}
-    <p class="poema-epigrafe">{{ page.epigrafe }}</p>
-    {% endif %}
-    {% if page.date %}
-    <time datetime="{{ page.date | date_to_xmlschema }}" class="poema-date">
-      {{ page.date | date: "%Y-%m-%d" }}
-    </time>
-    {% endif %}
-  </header>
+  Front matter que lee
+    title             obligatorio  el H1 (cursiva, peso 400)
+    date              obligatorio  la fecha de la línea de metadatos
+    epigrafe          opcional     cita antes del primer verso
+    epigrafe_fuente   opcional     quién lo dijo, sin la raya: la pone el layout
+    draft             opcional     true: aviso «Borrador» bajo los metadatos, solo en
+                                   local (y dice si falta published: false)
 
-  <div class="poema-content">
+  Contrato de escritura (el de siempre): en el Markdown un salto de línea
+  es un verso y una línea en blanco es una estrofa. Kramdown deja un <p>
+  por estrofa con los saltos dentro; la regla `.versos > p` les pone
+  white-space: pre-line. Un verso que no cabe se parte con sangría
+  francesa, para no confundirlo con el verso siguiente. Para sangrar un
+  verso a propósito, empiézalo con &emsp; (pre-line no colapsa ese
+  espacio). Una nota al margen (aside.margen) va tras su estrofa.
+
+  div.versos va con display: contents (_ajustes-escritos): las estrofas
+  y las notas se maquetan como hijos del artículo.
+{%- endcomment -%}
+{%- include voz.html %}
+<article class="articulo {{ voz }}">
+  <h1>{{ page.title }}</h1>
+  {%- if page.date %}
+  <p class="meta">{% include fecha.html fecha=page.date %} &nbsp;·&nbsp; poema</p>
+  {%- endif %}
+  {%- include aviso-borrador.html draft=page.draft pagina=page nota="Este texto está sin terminar." %}
+  {%- if page.epigrafe %}
+  <p class="epigrafe">{{ page.epigrafe }}{% if page.epigrafe_fuente %}<small>— {{ page.epigrafe_fuente }}</small>{% endif %}</p>
+  {%- endif %}
+
+  <div class="versos">
     {{ content }}
   </div>
 </article>

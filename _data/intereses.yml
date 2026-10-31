@@ -1,0 +1,166 @@
+# =============================================================================
+#  Mapa de intereses de /sobre/ (rediseño v2, D14; componente SobreMi)
+#
+#  Lo pinta _includes/mapa-intereses.html como un SVG: un rectángulo por
+#  tema y una línea por relación, más una lista con lo mismo en texto.
+#  Los temas son los de la hoja «Matemáticas que me interesan mucho» de
+#  about.md, con sus palabras.
+#
+#  REGLA (CLAUDE.md §2): solo hay arista si el texto de about.md relaciona
+#  los dos temas. Junto a cada arista va, en comentario, la frase que la
+#  justifica. Si cambia el texto de about.md, se revisan las aristas.
+#  Quedan fuera a propósito (about.md no las sostiene; las decide Santiago):
+#    allen-cahn ↔ imagenes      Allen–Cahn se liga a «la biofísica del
+#                               cáncer», no a las imágenes médicas.
+#    laplacianos ↔ riemanniana  el texto no relaciona los laplacianos con la
+#                               geometría riemanniana.
+#
+#  CAMPOS
+#    titulo        rótulo del mapa
+#    leyenda       frase bajo el dibujo (no dice que cada tema tenga algo
+#                  escrito en el sitio: la mayoría solo está en about.md)
+#    hoja          id de la hoja a la que enlaza un tema sin página propia
+#    ancho, alto   caja del dibujo (viewBox), en unidades del SVG
+#    temas         id      corto, sin espacios ni acentos
+#                  nombre  lo que se lee (el ancho del rectángulo sale de su
+#                          número de letras; «ancho» lo fija a mano)
+#                  x, y    centro del rectángulo
+#                  ancla   true = borde en el acento: el tema con el que
+#                          arranca cada punto de la hoja
+#                  url     opcional: página del sitio dedicada al tema. Sin
+#                          url, el tema enlaza a la hoja (#matematicas),
+#                          donde se cuenta. No se pone url si no hay una
+#                          página claramente de ese tema.
+#    aristas       pares [id, id]; el orden no importa
+# =============================================================================
+
+titulo: "Mapa de intereses"
+leyenda: "Una línea une dos temas que el texto relaciona. Al pasar el cursor o enfocar un tema se iluminan sus vecinos. Cada tema lleva a su página, si la tiene, o a la hoja de matemáticas."
+hoja: matematicas
+ancho: 960
+alto: 340
+
+temas:
+  # «Investigo aplicaciones de operadores geométricos, como los laplacianos,
+  # en problemas de imágenes médicas.» Página: la ficha de la charla
+  # «Laplacianos en biología de tumores».
+  - id: laplacianos
+    nombre: "Laplacianos"
+    x: 80
+    y: 150
+    ancla: true
+    url: /proyectos/charla-laplacianos/
+
+  # «…en problemas de imágenes médicas.» Varios proyectos tocan imágenes
+  # médicas, ninguno es «la» página del tema: sin url.
+  - id: imagenes
+    nombre: "Imágenes médicas"
+    x: 260
+    y: 150
+    ancla: true
+
+  # «En particular, estudio su uso en la segmentación de gliomas y
+  # meningiomas…» Varias páginas segmentan tumores: sin url.
+  - id: segmentacion
+    nombre: "Segmentación de gliomas y meningiomas"
+    x: 170
+    y: 40
+
+  # «Trabajar con matemáticas aplicadas me ha llevado a profundizar en
+  # C/C++, CGAL y análisis numérico.»
+  - id: numerico
+    nombre: "Análisis numérico"
+    x: 80
+    y: 270
+
+  # Misma frase. Página: «Cuadernos de geometría computacional»
+  # (tecnologias: C++, CGAL).
+  - id: cgal
+    nombre: "C++ · CGAL"
+    x: 240
+    y: 270
+    url: /proyectos/geometria-computacional-fundamentos/
+
+  # «Investigo la geometría riemanniana y sus interacciones con otras
+  # estructuras, como los corchetes de Poisson…»
+  - id: riemanniana
+    nombre: "Geometría riemanniana"
+    x: 480
+    y: 40
+    ancla: true
+
+  # «…como los corchetes de Poisson…», «…la cohomología de Poisson…»,
+  # «…como una estructura de Poisson.»
+  - id: poisson
+    nombre: "Estructuras de Poisson"
+    x: 690
+    y: 40
+
+  # «…extender la cohomología L² a variedades.»
+  - id: cohomologia-l2
+    nombre: "Cohomología L²"
+    x: 885
+    y: 40
+
+  # «También quiero estudiar foliaciones riemannianas singulares…»
+  - id: foliaciones
+    nombre: "Foliaciones singulares"
+    x: 585
+    y: 130
+
+  # «…los problemas de cambios de fase que involucran las ecuaciones de
+  # Allen–Cahn, Cahn–Hilliard y modelos relacionados…»
+  - id: allen-cahn
+    nombre: "Allen–Cahn / Cahn–Hilliard"
+    x: 520
+    y: 230
+    ancla: true
+
+  # «…operadores de carácter global, como los operadores fraccionarios…»
+  - id: fraccionarios
+    nombre: "Operadores fraccionarios"
+    x: 800
+    y: 230
+
+  # «…y la relación de todo ello con problemas de tipo Yamabe.»
+  - id: yamabe
+    nombre: "Problemas de tipo Yamabe"
+    x: 660
+    y: 310
+
+aristas:
+  # «Investigo aplicaciones de operadores geométricos, como los laplacianos,
+  # en problemas de imágenes médicas.»
+  - [laplacianos, imagenes]
+  # «En particular, estudio su uso [el de los laplacianos] en la
+  # segmentación de gliomas y meningiomas…»
+  - [laplacianos, segmentacion]
+  # «…en problemas de imágenes médicas. En particular, estudio su uso en la
+  # segmentación de gliomas y meningiomas…»
+  - [imagenes, segmentacion]
+  # «…me interesan mucho las posibilidades computacionales de estos
+  # operadores.» + «Trabajar con matemáticas aplicadas me ha llevado a
+  # profundizar en C/C++, CGAL y análisis numérico.»
+  - [numerico, laplacianos]
+  # «…profundizar en C/C++, CGAL y análisis numérico.»
+  - [cgal, numerico]
+  # «Investigo la geometría riemanniana y sus interacciones con otras
+  # estructuras, como los corchetes de Poisson…»
+  - [riemanniana, poisson]
+  # «En particular, me interesan los problemas que buscan cerrar la brecha
+  # en el cálculo de la cohomología de Poisson y extender la cohomología L²
+  # a variedades.»
+  - [poisson, cohomologia-l2]
+  # «…foliaciones riemannianas singulares cuando la foliación está inducida
+  # por una estructura geométrica, como una estructura de Poisson.»
+  - [poisson, foliaciones]
+  # «También quiero estudiar foliaciones riemannianas singulares…»
+  - [riemanniana, foliaciones]
+  # «…las interacciones entre estos cambios de fase y operadores de carácter
+  # global, como los operadores fraccionarios…»
+  - [allen-cahn, fraccionarios]
+  # «…y la relación de todo ello con problemas de tipo Yamabe.»
+  - [allen-cahn, yamabe]
+  # «…operadores fraccionarios, y la relación de todo ello con problemas de
+  # tipo Yamabe.»
+  - [fraccionarios, yamabe]

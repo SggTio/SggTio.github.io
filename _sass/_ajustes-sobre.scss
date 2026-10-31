@@ -1,0 +1,150 @@
+// Dueño: fase Sobre mí (about.md, layout sobre, ficha de personaje, hojas y mapa). Ajustes acotados a body.section-sobre o .sobre; ver CONTRATO.md.
+// ==============================================================
+//  Sobre mí · ajustes de la fase (D14)
+//
+//  Lo genérico (intro, retrato, details.hoja, ficha, mapa) está en
+//  _v2-sobre.scss y _v2-pixel.scss. Aquí solo lo que pide el marcado real
+//  de about.md y de los includes ficha-personaje, hoja y mapa-intereses:
+//
+//  · la ficha plegada, con una regla debajo (su <dl>, el bloque «Ahora» y
+//    la leyenda del mapa en mono ya están en _v2-sobre.scss);
+//  · «Las matemáticas son para todos.» entre la segunda y la tercera hoja;
+//  · el rótulo del mapa es un <h2> (jerarquía de encabezados) con aspecto
+//    de rótulo pixel;
+//  · el mapa en texto (.mapa-lista) sustituye al SVG cuando la columna de
+//    margen se pliega (≤1040px): el artículo baja a 58ch (~600px) y el
+//    dibujo de 960 unidades quedaría con letra de ~8px;
+//  · foco y estado activo de los nodos también por grosor de borde, no solo
+//    por color;
+//  · los enlaces de cierre;
+//  · el retrato no flota en teléfonos (la columna de texto quedaba en
+//    ~150px).
+// ==============================================================
+
+// ---- Línea de meta: nombre · ciudad ----
+// En un teléfono se parte entre las dos mitades, no dentro de una.
+.sobre > .meta span { white-space: nowrap; }
+
+// ---- Intro y retrato ----
+// El retrato flota a la izquierda dentro de .intro; se limpia solo ese
+// flotado (no el de la ficha, que va a la derecha).
+.sobre .intro::after {
+  content: "";
+  display: block;
+  clear: left;
+}
+
+// 1201×1600: el recorte cuadrado se centra en la cara y la taza.
+.sobre .retrato { object-position: 50% 38%; }
+
+.sobre .intro p { margin: 0 0 1.1rem; }
+
+@media (max-width: 480px) {
+  .sobre .retrato {
+    float: none;
+    margin: 0 0 var(--espacio-4);
+  }
+}
+
+// ---- Ficha de personaje ----
+// El <dl>, el bloque «Ahora» (acento verde) y los rótulos en Silkscreen
+// están en _v2-sobre.scss y _v2-pixel.scss.
+
+// Plegada (≤1040px, voz de lectura) la ficha vuelve al texto sin caja;
+// una regla debajo la separa de la intro. Mide lo que la columna: --texto
+// llega en píxeles desde el artículo (@property en _v2-articulo).
+@media (max-width: 1040px) {
+  .sobre .ficha-personaje {
+    margin-bottom: var(--espacio-6);
+    padding-bottom: var(--espacio-4);
+    border-bottom: 1px solid var(--regla);
+  }
+}
+
+// ---- «Las matemáticas son para todos.» ----
+// Entre dos hojas: la regla de arriba cierra la hoja anterior; la de abajo
+// es el borde superior de la hoja siguiente. El tamaño va en el <strong>,
+// y el <p> mide la columna (--texto en píxeles, desde el artículo).
+.sobre .lema {
+  margin: 0;
+  padding: var(--espacio-6) 0;
+  border-top: 1px solid var(--regla);
+  line-height: 1.35;
+  color: var(--acento);
+
+  strong {
+    font-size: 24px;
+    font-weight: 500;
+    font-variation-settings: "opsz" 24;
+  }
+}
+
+// ---- Hojas ----
+// El summary es el control: anillo de foco por fuera del texto.
+.sobre details.hoja summary:focus-visible { outline-offset: 4px; }
+
+// En un teléfono el cuerpo no se sangra bajo el título: con la sangría
+// y la de ul.pixel, la columna de texto bajaba a ~230px.
+@media (max-width: 480px) {
+  .sobre details.hoja .cuerpo { padding-left: 0; }
+}
+
+// ---- Mapa de intereses ----
+// Sin el hueco de línea base de un SVG en línea bajo el dibujo.
+.sobre .mapa svg { display: block; }
+
+.sobre .mapa > h2 {
+  margin: 0 0 var(--espacio-3);
+  font-weight: 400;
+}
+
+// Foco y vecinos: además del color, el borde engorda.
+.sobre .mapa .nodo.activo rect,
+.sobre .mapa .nodo:hover rect { stroke-width: 3; }
+
+.sobre .mapa a:focus-visible .nodo rect {
+  stroke-width: 4;
+  stroke: var(--acento);
+}
+
+.sobre .mapa .mapa-lista { display: none; }
+
+@media (max-width: 1040px) {
+  .sobre .mapa svg,
+  .sobre .mapa .leyenda { display: none; }
+
+  .sobre .mapa .mapa-lista {
+    display: block;
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+
+    a { color: var(--tinta); }
+  }
+}
+
+// ---- Enlaces de cierre ----
+.sobre .cierre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1) var(--espacio-3);
+  margin: var(--espacio-7) 0 0;
+  padding-top: var(--espacio-5);
+  border-top: 1px solid var(--regla);
+
+  strong { font-weight: 500; }
+
+  span { color: var(--tinta-tenue); }
+}
+
+// ---- Impresión ----
+// Las hojas se imprimen abiertas (head.html y _v2-sobre.scss); el mapa
+// se imprime como lista, que en papel se lee mejor que un SVG sin cursor.
+@media print {
+  .sobre .mapa svg,
+  .sobre .mapa .leyenda { display: none; }
+
+  .sobre .mapa .mapa-lista { display: block; }
+}

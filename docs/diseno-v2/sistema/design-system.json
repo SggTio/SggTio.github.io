@@ -1,0 +1,25 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-28T03:26:41Z"
+  },
+  "title": "Un Santajaro",
+  "namespace": "Santajaro",
+  "libraries": [],
+  "sections": {},
+  "groups": [],
+  "assetGroups": {},
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Santa",
+    "at": "2026-10-28T12:03:53Z",
+    "via": "Cowork",
+    "note": "v2: portada como mosaico, Sobre mí interactivo (ficha de personaje, hojas, mapa), guiños 8 bits en índice, ficha y tiles."
+  }
+}

@@ -1,0 +1,44 @@
+{%- comment -%}
+  Ecuación en display con número y etiqueta al margen (componente
+  ArticuloMates: «(1) neurona de umbral» en mono a la altura de la
+  ecuación; cuando el margen no cabe, debajo y a la derecha). Para la voz
+  de Mates; la página necesita `math: true` en el front matter.
+
+  Compatible con MathJax tex-svg de head.html: el TeX sale entre $$ dentro
+  de un bloque HTML, así kramdown no lo toca y MathJax lo compone en
+  display. Se escapa para HTML (& < >): MathJax lee el texto ya decodificado,
+  así que \\ y & de un aligned funcionan. Los saltos de línea del TeX pasan
+  a espacios (un % de comentario de TeX se comería el resto: no lo uses).
+
+  Uso, en su propia línea y con una línea en blanco antes y después:
+    {% include ecuacion.html tex="y = \sum_i w_i x_i" numero="1" etiqueta="neurona de umbral" %}
+  Un TeX largo o con comillas dobles, con capture:
+    {% capture tex %}h_j = \sigma\left( \sum_i w_{ij} x_i \right){% endcapture %}
+    {% include ecuacion.html tex=tex numero="2" etiqueta="capa oculta" %}
+  Dentro de capture, dos llaves seguidas abren una etiqueta de Liquid:
+  sepáralas con un espacio o envuelve el TeX en raw … endraw.
+
+  Parámetros
+    tex       obligatorio  TeX sin delimitadores
+    numero    opcional     número de la ecuación, sin paréntesis
+    etiqueta  opcional     dos o tres palabras
+    id        opcional     ancla para citarla (href="#id")
+    ancho     opcional     true: ecuación más ancha que la medida; va en una
+                           figura ancho sin pie y el número queda debajo
+{%- endcomment -%}
+{%- capture _ec_nl %}
+{% endcapture -%}
+{%- assign _ec_tex = include.tex | split: _ec_nl | join: " " | strip | xml_escape -%}
+{%- capture _ec_num -%}
+  {%- if include.numero -%}({{ include.numero }}){%- endif -%}
+  {%- if include.numero and include.etiqueta -%}&nbsp; {% endif -%}
+  {{- include.etiqueta -}}
+{%- endcapture -%}
+{%- capture _ec -%}
+<div class="ecuacion"{% if include.id %} id="{{ include.id }}"{% endif %}>$${{ _ec_tex }}$${% if _ec_num != "" %}<span class="num">{{ _ec_num }}</span>{% endif %}</div>
+{%- endcapture -%}
+{%- if include.ancho -%}
+<figure class="ancho">{{ _ec }}</figure>
+{%- else -%}
+{{ _ec }}
+{%- endif %}

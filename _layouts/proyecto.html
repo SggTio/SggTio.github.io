@@ -2,49 +2,46 @@
 layout: default
 ---
 {%- comment -%}
-  Página de un proyecto.
+  Página de un proyecto (componente FichaProyecto, voz técnica).
 
   No es una ficha técnica: es una narración. Se lee de corrido sin conocer el
   tema, y los detalles técnicos van colapsados (modelo de tres capas,
-  CLAUDE.md §3).
+  CLAUDE.md §3). Los datos —estado, año, área, tipo, dominio, tecnologías—
+  van en la ficha del margen, generada solo del front matter.
 
-  Orden: Capa 0 (resumen, problema, motivación) · Capa 1 (qué hice) ·
-  Capa 2 colapsada (matemáticas, implementación) · Capa 1 (resultados,
-  limitaciones, aprendizajes, qué falta) · metadatos al final.
+  Orden: título · autoría (bajo el título, CLAUDE.md §9) · `description`
+  como resumen · ficha al margen · nota de autoría · Capa 0 (resumen,
+  problema, motivación) · Capa 1 (qué se hizo) · Capa 2 colapsada
+  (matemáticas, implementación) · Capa 1 (resultados, limitaciones,
+  aprendizajes, qué falta).
 
-  Toda sección ausente del front matter simplemente no se renderiza.
+  Los encabezados son impersonales y fijos (D7): sirven igual para trabajo
+  propio y compartido. Toda sección ausente del front matter simplemente no
+  se renderiza.
 {%- endcomment -%}
-<article class="proyecto">
-  <header class="proyecto-header">
-    <h1 class="proyecto-titulo">{{ page.title }}</h1>
+{%- include voz.html %}
+<article class="articulo {{ voz }} proyecto">
+  <h1 class="titulo-tecnico">{{ page.title }}</h1>
 
-    {%- if page.autoria %}
-    <p class="proyecto-autoria">{{ page.autoria }}</p>
-    {%- endif %}
-
-    <p class="proyecto-meta">
-      {%- include insignia-estado.html estado=page.estado -%}
-      <span>{{ page.anio }}{% if page.anio_fin %}–{{ page.anio_fin }}{% endif %}</span>
-      {%- if page.dominio %}
-        {%- for d in page.dominio %}
-        <span class="proyecto-dominio">{{ d }}</span>
-        {%- endfor %}
-      {%- endif %}
-    </p>
-
-    {%- if page.nota_autoria %}
-    <p class="proyecto-nota-autoria">{{ page.nota_autoria }}</p>
-    {%- endif %}
-  </header>
+  {%- if page.autoria %}
+  <p class="meta proyecto-autoria">{{ page.autoria }}</p>
+  {%- endif %}
 
   {% include aviso-borrador.html draft=page.draft %}
 
   {%- comment -%}
-    Capa 0 — la idea. `description` es la frase de entrada: sitúa al lector
-    antes de que empiece la narración. `resumen` la amplía cuando hay material.
+    `description` es la frase de entrada: sitúa al lector antes de que
+    empiece la narración. La ficha va justo después, para flotar a su altura.
   {%- endcomment -%}
   {%- if page.description %}
-  <p class="lead proyecto-entrada">{{ page.description }}</p>
+  <p class="resumen resumen-tecnico">{{ page.description }}</p>
+  {%- endif %}
+
+  {% include ficha-proyecto.html proyecto=page %}
+
+  {%- comment -%} Cuando hace falta una frase entera para delimitar quién hizo qué {%- endcomment -%}
+  {%- if page.nota_autoria %}
+  <p class="proyecto-nota-autoria">{{ page.nota_autoria }}</p>
   {%- endif %}
 
   {%- comment -%} Imagen de portada: la marcada `principal`, o la primera {%- endcomment -%}
@@ -59,6 +56,7 @@ layout: default
   </figure>
   {%- endif %}
 
+  {%- comment -%} Capa 0 — la idea. `resumen` amplía la entrada cuando hay material. {%- endcomment -%}
   {%- if page.resumen %}
   <div class="proyecto-resumen">{{ page.resumen | markdownify }}</div>
   {%- endif %}
@@ -119,6 +117,4 @@ layout: default
 
   {%- comment -%} Cuerpo libre, para lo que no encaje en el esquema {%- endcomment -%}
   {{ content }}
-
-  {% include meta-proyecto.html proyecto=page %}
 </article>

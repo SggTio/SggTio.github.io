@@ -1,0 +1,45 @@
+{%- comment -%}
+  Nota de margen (componente NotaMargen del sistema de diseño). Va en el
+  Markdown justo DESPUÉS del párrafo que la origina, en su propia línea y
+  con una línea en blanco antes y después; el CSS la flota al margen a esa
+  altura y, cuando el margen no cabe, la devuelve al texto tras su
+  párrafo. Como máximo una nota por párrafo: dos seguidas se empujan y la
+  segunda pierde a su párrafo.
+
+  El temperamento lo pone la voz del artículo, no el include:
+    voz-mates     aparato: tipo idea («Idea clave», la única con regla de
+                  color: una o dos por artículo), analogia («Analogía») o
+                  indice («En esta entrada»; el layout de Mates ya genera el
+                  suyo con dos H2 o más: no pongas los dos)
+    voz-escritos  susurro: sin tipo; el rótulo, si lo hay, no se ve
+
+  Uso
+    {% capture nota %}Antes del aprendizaje existió la pregunta de si una
+    red de unidades simples podía *computar*.{% endcapture %}
+    {% include margen.html tipo="idea" cuerpo=nota %}
+
+  Parámetros
+    cuerpo  obligatorio  Markdown (con capture). Si es un solo párrafo sale
+                         sin <p>, como en el sistema; si son varios, con sus <p>
+    tipo    opcional     idea | analogia | indice. Sin tipo: susurro
+    titulo  opcional     rótulo. Por defecto «Idea clave», «Analogía» o «En
+                         esta entrada» según el tipo; sin tipo, ninguno
+{%- endcomment -%}
+{%- assign _mg_tipo = include.tipo | default: "" | strip | downcase -%}
+{%- case _mg_tipo -%}
+  {%- when "idea" -%}{%- assign _mg_rotulo = "Idea clave" -%}
+  {%- when "analogia" -%}{%- assign _mg_rotulo = "Analogía" -%}
+  {%- when "indice" -%}{%- assign _mg_rotulo = "En esta entrada" -%}
+  {%- else -%}{%- assign _mg_rotulo = "" -%}
+{%- endcase -%}
+{%- if include.titulo -%}{%- assign _mg_rotulo = include.titulo -%}{%- endif -%}
+{%- assign _mg_html = include.cuerpo | markdownify | strip -%}
+{%- assign _mg_n = _mg_html | split: "<p>" | size -%}
+{%- assign _mg_ini = _mg_html | slice: 0, 3 -%}
+{%- if _mg_n == 2 and _mg_ini == "<p>" -%}
+  {%- assign _mg_html = _mg_html | remove_first: "<p>" | remove: "</p>" | strip -%}
+{%- endif -%}
+<aside class="margen{% if _mg_tipo != '' %} {{ _mg_tipo }}{% endif %}">
+  {%- if _mg_rotulo != "" -%}<span class="rotulo">{{ _mg_rotulo }}</span>{%- endif -%}
+  {%- if _mg_tipo == "indice" -%}<hr class="regla-pixel" aria-hidden="true">{%- endif -%}
+  {{ _mg_html }}</aside>

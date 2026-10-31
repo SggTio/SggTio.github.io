@@ -1,0 +1,14 @@
+{%- comment -%}
+  Tiempo de lectura de un texto de Mates o de Notas (nunca de Escritos).
+  Fórmula del rediseño v2: palabras del contenido ya renderizado, sin
+  etiquetas, entre 200, y como mínimo 1. Cuenta también el TeX y el
+  código, así que es una estimación: no se presenta como una medida.
+
+  Parámetros
+    contenido  obligatorio  HTML renderizado (en un layout, `content`;
+                            en una lista, `item.content`)
+    corto      opcional     true devuelve «N min» (listas); por defecto
+                            «N min de lectura»
+{%- endcomment -%}
+{%- assign _minutos = include.contenido | strip_html | number_of_words | divided_by: 200 | at_least: 1 -%}
+{%- if include.corto -%}{{ _minutos }} min{%- else -%}{{ _minutos }} min de lectura{%- endif -%}

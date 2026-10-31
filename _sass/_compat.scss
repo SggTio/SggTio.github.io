@@ -1,0 +1,51 @@
+// ==============================================================
+//  Alias de transición: nombres viejos → tokens v2
+//
+//  Hay CSS que no se puede o no se debe reescribir todavía y que sigue
+//  pidiendo los nombres de antes:
+//    · _sass/_componentes.scss (no editable en el rediseño; en la copia
+//      de trabajo de Santiago trae además el bloque difusion-piloto),
+//    · _sass/_entornos.scss y _sass/_heredado.scss mientras existan,
+//    · las hojas de prueba de propuestas (grafo-dual), fuera del build.
+//  Cada alias apunta a su token, así que cambia de tema solo.
+//
+//  Se declaran en :root, el mismo elemento que los tokens: un var()
+//  dentro de una propiedad personalizada se resuelve donde se declara.
+//
+//  --accent-color NO es un alias de :root. Vive en body.section-*
+//  (= var(--acento)), ver _v2-esqueleto.scss.
+//
+//  Retirados sin alias (nadie fuera de los parciales viejos los usaba):
+//  --link-color, --link-hover-color, --nav-color, --on-accent,
+//  --shadow-soft, --shadow-strong, --gray-000…900, --dark-poole-*,
+//  --red…--orange, --blue-300/400, --yellow-100, --code-color,
+//  --body-font-size, --body-line-height.
+// ==============================================================
+
+:root {
+  // ---- color ----
+  --body-bg: var(--fondo);
+  --body-color: var(--tinta);
+  --heading-color: var(--tinta);
+  --surface: var(--superficie);
+  --border-color: var(--regla);
+  --surface-border: var(--regla);
+  --code-bg: var(--codigo-fondo);
+  --text-quiet: var(--tinta-quieta);
+  --text-muted: var(--tinta-tenue);
+  --accent-azulgris: var(--azulgris);
+  --accent-crema: var(--crema);
+  --accent-verde: var(--verde);
+
+  // ---- familias ----
+  --body-font: var(--font-sans);
+  --code-font: var(--font-mono);
+
+  // ---- forma y ritmo ----
+  // 0.25rem (4px) pasa a radio-1 (2px): el radio de todo lo que no es
+  // tipografía en el sistema nuevo. radio-2 queda solo para el retrato.
+  --border-radius: var(--radio-1);
+  --spacer: var(--espacio-4);     // 1rem   = 16px
+  --spacer-2: var(--espacio-5);   // 1.5rem = 24px
+  --spacer-3: var(--espacio-7);   // 3rem   = 48px
+}

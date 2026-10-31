@@ -1,49 +1,82 @@
 {%- comment -%}
-  Bloque de metadatos de la página de un proyecto: año, estado, tipo, área,
-  tecnologías y enlaces.
+  Metadatos de un proyecto como lista de definiciones: estado, año, área,
+  tipo, dominio, tecnologías y enlaces. Es el contenido de la ficha del
+  margen (_includes/ficha-proyecto.html la envuelve en aside.margen.ficha);
+  suelto, como en /desarrollo/, se pinta en la columna de texto con el
+  mismo aspecto.
+
+  Todo sale del front matter; una fila sin dato no se pinta. Sin fila de
+  repositorio ni «Código» (decisión D7 del rediseño): `enlaces.repo` no se
+  muestra. El texto de cada enlace describe su destino, nunca «aquí»
+  (CLAUDE.md §6).
 
   Va en <dl> porque es literalmente una lista de pares término/definición.
-  El texto de cada enlace describe su destino: nunca "aquí" (CLAUDE.md §6).
 
   Parámetros
-    proyecto  obligatorio  elemento de _proyectos
+    proyecto  obligatorio  elemento de _proyectos (o un hash con sus campos)
 {%- endcomment -%}
-{%- assign p = include.proyecto -%}
+{%- assign _mp = include.proyecto -%}
+
+{%- case _mp.area -%}
+  {%- when "matematicas" -%}              {%- assign _mp_area = "Matemáticas" -%}
+  {%- when "ciencias-computacionales" -%} {%- assign _mp_area = "Ciencias computacionales" -%}
+  {%- when "ia" -%}                       {%- assign _mp_area = "Inteligencia artificial" -%}
+  {%- else -%}                            {%- assign _mp_area = _mp.area | replace: "-", " " -%}
+{%- endcase -%}
+
+{%- case _mp.tipo -%}
+  {%- when "investigacion" -%}   {%- assign _mp_tipo = "Investigación" -%}
+  {%- when "software" -%}        {%- assign _mp_tipo = "Software" -%}
+  {%- when "experimento" -%}     {%- assign _mp_tipo = "Experimento" -%}
+  {%- when "visualizacion" -%}   {%- assign _mp_tipo = "Visualización" -%}
+  {%- when "infraestructura" -%} {%- assign _mp_tipo = "Infraestructura" -%}
+  {%- when "divulgacion" -%}     {%- assign _mp_tipo = "Divulgación" -%}
+  {%- else -%}                   {%- assign _mp_tipo = _mp.tipo | replace: "-", " " -%}
+{%- endcase -%}
+
+{%- assign _mp_enlaces = false -%}
+{%- if _mp.enlaces.demo or _mp.enlaces.publicacion or _mp.enlaces.paper -%}
+  {%- assign _mp_enlaces = true -%}
+{%- endif -%}
 <dl class="meta-proyecto">
-  {%- if p.anio -%}
-  <dt>Año</dt>
-  <dd>{{ p.anio }}{% if p.anio_fin %}–{{ p.anio_fin }}{% else %}{% if p.estado == "activo" or p.estado == "en-desarrollo" %} – en curso{% endif %}{% endif %}</dd>
-  {%- endif -%}
-
-  {%- if p.estado -%}
+  {%- if _mp.estado %}
   <dt>Estado</dt>
-  <dd>{% include insignia-estado.html estado=p.estado %}</dd>
-  {%- endif -%}
+  <dd>{% include insignia-estado.html estado=_mp.estado clase="estado" %}</dd>
+  {%- endif %}
 
-  {%- if p.tipo -%}
-  <dt>Tipo</dt>
-  <dd>{{ p.tipo | replace: "-", " " | capitalize }}</dd>
-  {%- endif -%}
+  {%- if _mp.anio %}
+  <dt>Año</dt>
+  <dd>{{ _mp.anio }}{% if _mp.anio_fin %}–{{ _mp.anio_fin }}{% endif %}</dd>
+  {%- endif %}
 
-  {%- if p.area -%}
+  {%- if _mp.area %}
   <dt>Área</dt>
-  <dd>{{ p.area | replace: "-", " " | capitalize }}</dd>
-  {%- endif -%}
+  <dd>{{ _mp_area }}</dd>
+  {%- endif %}
 
-  {%- if p.tecnologias -%}
+  {%- if _mp.tipo %}
+  <dt>Tipo</dt>
+  <dd>{{ _mp_tipo }}</dd>
+  {%- endif %}
+
+  {%- if _mp.dominio and _mp.dominio.size > 0 %}
+  <dt>Dominio</dt>
+  <dd>{{ _mp.dominio | join: " · " }}</dd>
+  {%- endif %}
+
+  {%- if _mp.tecnologias and _mp.tecnologias.size > 0 %}
   <dt>Tecnologías</dt>
-  <dd>{% include lista-etiquetas.html etiquetas=p.tecnologias titulo="Tecnologías" %}</dd>
-  {%- endif -%}
+  <dd>{{ _mp.tecnologias | join: " · " }}</dd>
+  {%- endif %}
 
-  {%- if p.enlaces -%}
+  {%- if _mp_enlaces %}
   <dt>Enlaces</dt>
   <dd>
     <ul class="meta-proyecto-enlaces">
-      {%- if p.enlaces.repo -%}<li><a href="{{ p.enlaces.repo }}">Repositorio</a></li>{%- endif -%}
-      {%- if p.enlaces.demo -%}<li><a href="{{ p.enlaces.demo }}">Demostración interactiva</a></li>{%- endif -%}
-      {%- if p.enlaces.publicacion -%}<li><a href="{{ p.enlaces.publicacion }}">Publicación</a></li>{%- endif -%}
-      {%- if p.enlaces.paper -%}<li><a href="{{ p.enlaces.paper }}">Artículo en arXiv</a></li>{%- endif -%}
+      {%- if _mp.enlaces.demo %}<li><a href="{{ _mp.enlaces.demo }}">Demostración interactiva</a></li>{% endif -%}
+      {%- if _mp.enlaces.publicacion %}<li><a href="{{ _mp.enlaces.publicacion }}">Publicación</a></li>{% endif -%}
+      {%- if _mp.enlaces.paper %}<li><a href="{{ _mp.enlaces.paper }}">Artículo en arXiv</a></li>{% endif -%}
     </ul>
   </dd>
-  {%- endif -%}
+  {%- endif %}
 </dl>

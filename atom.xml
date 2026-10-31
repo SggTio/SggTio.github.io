@@ -15,8 +15,9 @@ layout: null
    <email>{{ site.author.email }}</email>
  </author>
 
- {% assign feed_items = site.mates | concat: site.notas | concat: site.escritos | sort: 'date' | reverse %}
- {% for item in feed_items %}
+ {%- comment -%} Sin draft ni listar: false (D10), por fecha descendente. {%- endcomment -%}
+ {%- include publicaciones.html %}
+ {% for item in publicaciones %}
  <entry>
    <title>{{ item.title | xml_escape }}</title>
    <link href="{{ site.url }}{{ site.baseurl }}{{ item.url }}"/>

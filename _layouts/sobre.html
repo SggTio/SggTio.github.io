@@ -1,0 +1,58 @@
+---
+layout: default
+---
+{%- comment -%}
+  Sobre mí (rediseño v2, D14; componentes SobreMi y FichaPersonaje).
+  Voz de lectura (voz-escritos) con acento crema (body.section-sobre).
+
+    <article class="articulo voz-escritos sobre">
+      <h1> · línea de meta (nombre · ciudad, en minúscula)
+      ficha de personaje en el margen   (_includes/ficha-personaje.html)
+      {{ content }}                     (about.md: intro con retrato, hojas
+                                         desplegables, mapa, enlaces de cierre)
+    </article>
+
+  La ficha va ANTES del contenido para flotar junto a la intro; cuando la
+  columna de margen no cabe (≤1040px, voz de lectura) se pliega en el
+  texto, encima de la intro.
+
+  Front matter que usa:
+    ciudad  segunda mitad de la línea de meta (la primera es site.author.name)
+    ficha   ver _includes/ficha-personaje.html
+{%- endcomment -%}
+{%- include voz.html %}
+<article class="articulo {{ voz }} sobre">
+  <h1>{{ page.title }}</h1>
+  {%- if page.ciudad %}
+  <p class="meta"><span>{{ site.author.name | downcase }}</span>&nbsp; ·&nbsp; <span>{{ page.ciudad }}</span></p>
+  {%- endif %}
+  {% include ficha-personaje.html %}
+  {{ content }}
+</article>
+<script>
+  // Un enlace a /sobre/#software (o #matematicas desde el mapa) debe dejar
+  // ver la hoja: si el destino es una hoja cerrada, o algo dentro de ella, se
+  // abre. Chrome ya abre un <details> cuando el destino está DENTRO de su
+  // contenido cerrado, pero no cuando el destino es el propio <details>.
+  (function () {
+    function abrir(hash) {
+      if (!hash || hash.length < 2) return;
+      var id;
+      try { id = decodeURIComponent(hash.slice(1)); } catch (e) { return; }
+      var el = document.getElementById(id);
+      var hoja = el && el.closest ? el.closest('details.hoja') : null;
+      if (hoja && !hoja.open) hoja.open = true;
+    }
+    abrir(location.hash);
+    window.addEventListener('hashchange', function () { abrir(location.hash); });
+    // Volver a pulsar un enlace al hash actual no dispara hashchange: si
+    // entretanto se cerró la hoja, se reabre al hacer clic.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href*="#"]') : null;
+      if (!a) return;
+      var url;
+      try { url = new URL(a.getAttribute('href'), location.href); } catch (err) { return; }
+      if (url.pathname === location.pathname) abrir(url.hash);
+    });
+  })();
+</script>

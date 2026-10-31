@@ -1,0 +1,499 @@
+// Dueño: fase Mates (artículo de Mates: _layouts/post.html, los dos posts reales, sus .viz y el índice «En esta entrada»). Ajustes acotados a body.section-mates o .voz-mates; ver CONTRATO.md.
+// ==============================================================
+//  Ajustes · Mates
+//
+//  El artículo es <article class="post articulo voz-mates"> (ver la
+//  cabecera de _layouts/post.html). Los dos posts reales cargan su
+//  post.css DESPUÉS de styles.css (extra_css) y no se editan: aquí se les
+//  gana por especificidad, con `body .post…` o `body.section-mates …`,
+//  nunca por orden. Ningún color nuevo: solo tokens.
+//
+//  Qué se devuelve al sistema y qué se queda:
+//  · Fuera: la fila de chips (D11), las cajas de post.css (entrada, citas,
+//    tablas, columnas, analogías), el chip de código en línea y la línea
+//    bajo los H2. El cuerpo queda en la voz de Mates sin una sola caja.
+//  · Dentro: el lienzo oscuro de cada visualización (.viz-stage). Sus
+//    scripts pintan colores fijos para fondo oscuro y no se tocan, así que
+//    el lienzo es oscuro en los dos temas. Todo lo demás de la .viz
+//    (rótulo, pie, mandos, lectura, panel de hitos) sigue al tema.
+// ==============================================================
+
+// ---- D11: las etiquetas viven en el front matter y salen en la meta ----
+body.section-mates .post-meta-chips { display: none; }
+
+// La medida de los hijos con otra letra (meta en mono, entrada de 21px,
+// H2, notas plegadas) la resuelve el registro de --texto como longitud
+// (@property en _v2-articulo.scss); la línea de meta y sus etiquetas con
+// subrayado punteado también son comunes (`.articulo > .meta`).
+
+// La regla entre secciones (--- en el cuerpo): 48px a cada lado en vez de
+// 64px; con el margen del H2 que la sigue, cada sección quedaba a 130px.
+body.section-mates .articulo.voz-mates > hr { margin: var(--espacio-7) 0; }
+
+// ---- Entrada: el p.lead del cuerpo, como entrada-mates en crema ----
+// post.css lo pintaba como panel con regla de acento.
+body .post.voz-mates .lead {
+  margin: 0 0 1.4rem;
+  padding: 0;
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variation-settings: "opsz" 22;
+  color: var(--crema);
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+// ---- Títulos ----
+body .post.voz-mates h2 {
+  margin-top: 2.2rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+body .post.voz-mates h3 { margin-top: 1.6rem; }
+
+// El sistema no define H4 y los posts usan muchos (####): un escalón bajo
+// el H3, en redonda, al cuerpo del texto.
+.voz-mates h4 {
+  margin: 1.5rem 0 .4rem;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+  font-variation-settings: "opsz" 18;
+}
+
+// ---- Citas: sin panel, como en el resto del sitio (_type.scss) ----
+// Se conserva la cursiva de post.css: en los posts son citas textuales
+// (Turing) y en Literata la cursiva basta para marcarlas.
+body .post.voz-mates blockquote {
+  margin: var(--espacio-5) 0;
+  padding: 0 0 0 var(--espacio-4);
+  font-style: italic;
+  color: var(--tinta-quieta);
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--regla);
+  border-radius: 0;
+}
+
+// ---- Código en línea (CONTRATO §9.3) ----
+// post.css lo ponía como chip en acento sobre --post-bg-soft: 3,1:1 en
+// claro. Vuelve al del sistema: crema sin fondo (≥5:1 en los dos temas).
+body .post.voz-mates :is(p, li, td, th, h2, h3, h4) code {
+  padding: 0;
+  font-size: .92em;
+  color: var(--crema);
+  background: none;
+  border-radius: 0;
+}
+
+// ---- Tablas: sin caja, solo reglas de 1px ----
+body .post.voz-mates table {
+  margin: 1.2rem 0 1.6rem;
+  background: none;
+  border-radius: 0;
+}
+
+body .post.voz-mates table th,
+body .post.voz-mates table td {
+  padding: .45rem .75rem;
+  font-size: 16px;
+  line-height: 1.45;
+  border-bottom: 1px solid var(--regla);
+}
+
+body .post.voz-mates table th {
+  font-weight: 600;
+  color: var(--tinta);
+  background: none;
+}
+
+body .post.voz-mates table thead th { border-bottom-color: var(--tinta-tenue); }
+
+// CONTRATO §9.8: con cuatro columnas de texto la tabla no cabe en un
+// teléfono. Se desplaza dentro de sí misma; nada se oculta.
+@media (max-width: 720px) {
+  body .post.voz-mates table {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  body .post.voz-mates table th,
+  body .post.voz-mates table td { padding: .4rem .5rem; }
+}
+
+// ---- Fórmulas en línea más anchas que la columna (CONTRATO §9.1) ----
+// MathJax (SVG) no parte una fórmula en línea, y el post de avances tiene
+// cuentas de hasta 680px escritas como $$…$$ dentro de un párrafo
+// (kramdown las deja en línea): en un teléfono ensanchaban la página
+// entera. Cada párrafo o lista que contiene una fórmula en línea se
+// desplaza en horizontal dentro de sí mismo; el texto y la fórmula
+// quedan enteros. En las listas el desplazamiento va en ul/ol y no en el
+// li, para no recortar la viñeta. Donde la fórmula cabe, no cambia nada.
+// overflow-y: hidden porque el MathML asistivo de MathJax (invisible, ya
+// recortado con clip) sobresale 2px por debajo y daba una barra vertical;
+// no recorta tinta: los lectores de pantalla lo siguen leyendo.
+body.section-mates .voz-mates :is(p, ul, ol):has(mjx-container:not([display="true"])) {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+// MathJax hace enfocable cada fórmula (tabindex=0, explorador accesible).
+// El anillo de :focus-visible (2px a 2px de distancia) se salía de la caja
+// del párrafo desplazable y quedaba recortado en dos barritas. Dentro de
+// esos párrafos se dibuja hacia dentro de la fórmula: entero, sin recorte.
+body.section-mates .voz-mates :is(p, ul, ol):has(mjx-container:not([display="true"])) mjx-container:focus-visible {
+  outline-offset: -2px;
+}
+
+// ---- Dos columnas y analogías del cuerpo (marcado de los posts) ----
+// Al ancho del artículo (texto + margen): a la medida del texto cada
+// columna quedaba en unos 30 caracteres. Sin cajas. `none` y no
+// var(--ancho): el artículo ya mide --ancho (o la columna, plegado).
+body.section-mates .articulo > :is(.two-col, .analogy-grid) {
+  max-width: none;
+  clear: both;
+}
+
+body.section-mates .post .two-col {
+  gap: var(--espacio-6);
+  margin: 2rem 0;
+}
+
+body.section-mates .post .two-col > .col {
+  padding: var(--espacio-3) 0 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--regla);
+  border-radius: 0;
+}
+
+body.section-mates .post .two-col > .col h3 {
+  margin-top: 0;
+  padding-bottom: 0;
+  color: inherit;
+  border-bottom: 0;
+}
+
+body.section-mates .post .two-col > .col > :last-child { margin-bottom: 0; }
+
+body.section-mates .post .analogy-grid {
+  gap: var(--espacio-6);
+  margin: 1.6rem 0 2rem;
+}
+
+// Cada analogía como la nota de margen «Analogía»: rótulo en mono y
+// Literata cursiva en tinta, sin caja.
+body.section-mates .post .analogy-grid .analogy {
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+body.section-mates .post .analogy-grid .analogy h4 {
+  margin: 0 0 var(--espacio-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+body.section-mates .post .analogy-grid .analogy p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.6;
+  font-variation-settings: "opsz" 16;
+  color: var(--tinta);
+}
+
+// ==============================================================
+//  Visualizaciones (.viz): figura «ancho» (componente Figura)
+//
+//  Al ancho texto + hueco + margen. Rótulo y pie quedan ARRIBA, donde
+//  los pone el marcado (el sistema los pone debajo): el h3 abre la figura
+//  para el lector de pantalla, el pie trae las instrucciones de uso, y
+//  así el orden visual es el del documento.
+// ==============================================================
+// `none`: el artículo ya mide --ancho (o la columna, plegado).
+body.section-mates .articulo > .viz {
+  max-width: none;
+  clear: both;
+}
+
+body.section-mates .post .viz {
+  margin: 2.4rem 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+// Rótulo «Visualización N · …», como «Figura N».
+body.section-mates .post .viz .viz-title {
+  margin: 0 0 var(--espacio-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-variation-settings: normal;
+  color: var(--acento);
+}
+
+// Pie con las instrucciones, en pie-figura.
+body.section-mates .post .viz .viz-sub {
+  margin: 0 0 var(--espacio-3);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tinta-tenue);
+}
+
+// ---- Base del lienzo y de los mandos ----
+// Para una entrada sin hoja propia (sin extra_css): lienzo oscuro con
+// relleno y borde, el SVG al ancho del lienzo y los mandos en fila. Son los
+// valores que ya ponen los post.css de los dos posts reales. Con :where()
+// estas reglas no pesan nada: cualquier regla de la hoja de una entrada
+// (.viz-stage, #viz-x .viz-stage…) les gana, y en los dos posts no cambia
+// nada.
+:where(body.section-mates .post .viz .viz-stage) {
+  padding: .75rem;
+  overflow: hidden;
+  background: var(--lienzo-fondo);
+  border: 1px solid var(--regla);
+  border-radius: var(--radio-1);
+}
+
+:where(body.section-mates .post .viz .viz-stage svg) {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+:where(body.section-mates .post .viz .viz-controls) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1.25rem;
+  align-items: center;
+  margin: 1rem 0 .75rem;
+}
+
+// El lienzo oscuro: en los dos posts, post.css le pone su borde y su
+// radio; aquí se devuelven a la regla y al radio del sistema.
+body.section-mates .post .viz .viz-stage {
+  border-color: var(--regla);
+  border-radius: var(--radio-1);
+}
+
+// Al imprimir, el navegador no pinta fondos: el dibujo, pensado para fondo
+// oscuro, quedaba claro sobre papel blanco. El lienzo se imprime con su
+// fondo (el resto de la página toma los colores del tema claro, _tokens).
+@media print {
+  body.section-mates .viz-stage {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+// El plano del perceptrón (viewBox 520×420) a todo el ancho medía casi
+// 800px de alto: los mandos quedaban fuera de la pantalla mientras se
+// hace click en él. Se limita el ANCHO (nunca el alto: perceptron.js
+// convierte el click con getBoundingClientRect y una caja con otra
+// proporción desplazaría los puntos) y se centra en su lienzo.
+body.section-mates #viz-perceptron .viz-stage svg {
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+// Las dos líneas de tiempo (viewBox de 900 y 960) en un teléfono dejaban
+// sus rótulos en unos 4px. Por debajo de 600px el lienzo se desplaza en
+// horizontal y el dibujo mide al menos 640px; los hitos se pulsan igual
+// (cada uno tiene su propio manejador, no se calcula con coordenadas).
+// Los hitos de abajo tocan el borde del dibujo: el SVG (overflow hidden
+// por defecto) cortaba el lado inferior de su anillo de foco. El anillo
+// sale ahora al relleno del lienzo.
+body.section-mates :is(#viz-timeline, #viz-winters) .viz-stage svg { overflow: visible; }
+
+@media (max-width: 600px) {
+  body.section-mates :is(#viz-timeline, #viz-winters) .viz-stage { overflow-x: auto; }
+
+  body.section-mates :is(#viz-timeline, #viz-winters) .viz-stage svg { min-width: 640px; }
+}
+
+// Textos del SVG que los scripts piden en una pila SFMono: Plex Mono,
+// el hilo común del sitio. El resto hereda Plex Sans de la .viz.
+body.section-mates .viz svg :is(text[font-family*="monospace"], .node-label, .edge-label) {
+  font-family: var(--font-mono);
+}
+
+// Etiquetas dentro de un nodo activo (McCulloch-Pitts, Turing, MLP): el
+// nodo se rellena con el acento y post.css deja la etiqueta en su tinta
+// clara (1,9:1 sobre azulgris; en master, sobre crema, 1,1:1). En el color
+// del fondo pasan de 5:1 en los dos temas. La tercera regla es el θ del
+// cuerpo de McCulloch-Pitts (el nombre «x1» junto al nodo de entrada lleva
+// text-anchor y queda fuera).
+body.section-mates .viz svg .node.active + .node-label,
+body.section-mates .viz svg .node.active + .node-label + .node-label,
+body.section-mates .viz svg .node.active + .node-label + .edge-label:not([text-anchor]) {
+  fill: var(--fondo);
+}
+
+// Textos de los scripts por debajo de 4,5:1 sobre el lienzo oscuro (igual
+// en master). El fill de CSS gana al atributo que pone el script; los
+// selectores copian el valor exacto del atributo y, si el script cambia,
+// simplemente dejan de aplicar. Colores fijos del lienzo (_tokens.scss):
+// · años del eje de las dos líneas de tiempo, #6b7480: 3,6–4:1 → 5:1;
+// · rótulos de era de los inviernos (gris y azul translúcidos, 3,3 y
+//   2,4:1) → opacos, en gris y azulgris: más de 5:1;
+// · el año dentro de una barra apagada del panel de convergencia (tinta
+//   casi negra sobre barra casi negra, 1,4:1) → tinta clara. En una barra
+//   encendida el año sigue oscuro sobre la barra clara (3,7:1, como en
+//   master: ningún color de la paleta llega a 4,5:1 sobre ese tono medio);
+//   el mismo año se lee en el eje.
+body.section-mates :is(#viz-timeline, #viz-winters) svg text[fill="#6b7480"] { fill: var(--lienzo-tinta-tenue); }
+
+body.section-mates #viz-winters svg text[fill="rgba(160,175,195,0.55)"] { fill: var(--lienzo-tinta-tenue); }
+
+body.section-mates #viz-winters svg text[fill="rgba(92,184,255,0.4)"] { fill: var(--lienzo-azulgris); }
+
+body.section-mates #viz-convergence svg rect[fill-opacity="0.18"] + text + text:not([text-anchor]) { fill: var(--lienzo-tinta); }
+
+// ---- Mandos: sobre el fondo de la página, en los dos temas ----
+body.section-mates .post .viz .viz-controls {
+  font-size: 14px;
+  color: var(--tinta);
+}
+
+body.section-mates .post .viz .viz-controls .value {
+  font-family: var(--font-mono);
+  color: var(--acento);
+}
+
+body.section-mates .post .viz .viz-controls input[type="range"] { accent-color: var(--acento); }
+
+// mlp.js pinta su <select> oscuro en línea; en claro quedaba como una
+// isla negra entre los mandos. El !important solo vence a ese estilo.
+body.section-mates .post .viz .viz-controls :is(input[type="number"], select) {
+  font-family: var(--font-mono);
+  color: var(--tinta) !important;
+  background: var(--fondo) !important;
+  border: 1px solid var(--tinta-tenue);
+  border-radius: var(--radio-1);
+}
+
+// Botones: palabra en mono con borde fino, sin relleno de color.
+body.section-mates .post .viz .btn {
+  padding: .3rem .75rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--tinta);
+  background: none;
+  border: 1px solid var(--tinta-tenue);
+  border-radius: var(--radio-1);
+}
+
+body.section-mates .post .viz .btn.btn-ghost { color: var(--tinta-quieta); }
+
+body.section-mates .post .viz .btn:hover,
+body.section-mates .post .viz .btn:focus-visible {
+  color: var(--acento);
+  background: none;
+  border-color: var(--acento);
+}
+
+// ---- Lectura de valores: panel de código del sistema ----
+body.section-mates .post .viz .viz-readout {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--tinta);
+  background: var(--codigo-fondo);
+  border: 1px solid var(--regla);
+  border-radius: var(--radio-1);
+}
+
+body.section-mates .post .viz .viz-readout .k { color: var(--tinta-tenue); }
+
+body.section-mates .post .viz .viz-readout .v { color: var(--acento); }
+
+body.section-mates .post .viz .viz-readout p { margin: 0 0 var(--espacio-1); }
+
+// La lectura del explorador de backpropagation no son pares clave/valor
+// sino cuatro bloques (época, tabla, detalle, nota): la rejilla de dos
+// columnas de post.css los repartía en diagonal.
+body.section-mates #viz-backprop .viz-readout { display: block; }
+
+// backprop-explorer.js mete un <pre> en la lectura; post.css le fija un
+// fondo casi negro con !important.
+body.section-mates .post .viz .viz-readout pre {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  background: none !important;
+  border: 0;
+  border-radius: 0;
+}
+
+body.section-mates .post .viz .muted { color: var(--tinta-tenue); }
+
+// ---- Panel de hitos de las dos líneas de tiempo ----
+// Sin panel ni regla de acento: texto de lectura bajo una regla de 1px.
+body.section-mates #viz-timeline .tl-panel,
+body.section-mates #viz-winters .tl-panel {
+  padding: var(--espacio-3) 0 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--regla);
+  border-radius: 0;
+}
+
+body.section-mates #viz-timeline .tl-panel h4,
+body.section-mates #viz-winters .tl-panel h4 {
+  margin: 0 0 var(--espacio-1);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+body.section-mates #viz-timeline .tl-panel p,
+body.section-mates #viz-winters .tl-panel p {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tinta-quieta);
+}
+
+// ==============================================================
+//  Includes para autores: margen.html, ecuacion.html, figura.html
+//  (párrafos dentro de una nota y medidas de figura y vídeo: comunes, en
+//  _v2-articulo.scss y _v2-figura.scss)
+// ==============================================================
+
+// Ecuación más ancha que la medida, en figura ancho (ecuacion.html
+// ancho=true): el margen lo ocupa la propia ecuación, así que el número
+// va debajo, a la derecha, como en el pliegue.
+.voz-mates .ancho > .ecuacion { margin: 0; }
+
+.voz-mates .ancho > .ecuacion .num {
+  position: static;
+  display: block;
+  width: auto;
+  text-align: right;
+}

@@ -1,70 +1,115 @@
-// Body resets
+// ==============================================================
+//  Base: reinicio y elementos sueltos (bundle.css «base»)
 //
-// Update the foundational and global aspects of the page.
+//  Diferencias con bundle.css, a propósito:
+//  · El subrayado de los enlaces va en tinta-tenue, no en regla:
+//    con color: inherit el subrayado es la única señal de enlace y
+//    regla (#ffffff24) se queda en 1,4:1. Navegación, listas y meta lo
+//    quitan con border: 0, como en el diseño.
+//  · :focus-visible en acento para todo lo enfocable (bundle no trae
+//    foco; CLAUDE.md §7).
+//  · La desaturación del tema oscuro NO va en `img`: solo en fotos
+//    decorativas (ver .foto-decorativa en _v2-figura.scss).
+//  · Tablas, mark y abbr, que el contenido usa y bundle no define.
+// ==============================================================
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  background: var(--fondo);
+  color: var(--tinta);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  font-family: var(--body-font);
-  font-size: var(--body-font-size);
-  line-height: var(--body-line-height);
-  color: var(--body-color);
-  background-color: var(--body-bg);
-  -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-// No `:visited` state is required by default (browsers will use `a`)
 a {
-  color: var(--link-color);
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--tinta-tenue);
+  transition: border-color .15s, color .15s;
 
-  // `:focus` is linked to `:hover` for basic accessibility
-  &:hover,
-  &:focus {
-    color: var(--link-hover-color);
-  }
+  &:hover { border-bottom-color: var(--acento); }
 
-  strong {
-    color: inherit;
-  }
+  strong { color: inherit; }
 }
 
-img {
+::selection {
+  background: var(--acento);
+  color: var(--fondo);
+}
+
+img,
+video {
   display: block;
   max-width: 100%;
-  margin-bottom: var(--spacer);
-  border-radius: var(--border-radius);
+  height: auto;
+  border-radius: var(--radio-1);
 }
 
+hr {
+  border: 0;
+  border-top: 1px solid var(--regla);
+  margin: var(--espacio-8) 0;
+}
+
+// ---- Foco visible (CLAUDE.md §7) ----
+// Un solo anillo para todo el sitio: 2px en el acento de la sección.
+// Los tres acentos superan 3:1 sobre fondo en los dos temas.
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+// El destino del enlace «Saltar al contenido» no necesita anillo.
+main:focus {
+  outline: none;
+}
+
+// ---- Tablas (las usan los dos posts de Mates) ----
 table {
-  margin-bottom: 1rem;
   width: 100%;
-  border: 0 solid var(--border-color);
+  margin: 0 0 var(--espacio-5);
   border-collapse: collapse;
 }
 
 td,
 th {
-  padding: .25rem .5rem;
-  border-color: inherit;
-  border-style: solid;
-  border-width: 0;
-  border-bottom-width: 1px;
-}
-
-th {
+  padding: var(--espacio-1) var(--espacio-2);
+  border-bottom: 1px solid var(--regla);
   text-align: left;
+  vertical-align: top;
 }
 
 thead th {
-  border-bottom-color: currentColor;
+  border-bottom-color: var(--tinta-tenue);
+  font-weight: 500;
 }
 
+// ---- Marcas y abreviaturas ----
+// El sistema no tiene un amarillo de resaltado: la marca es texto en
+// crema con un subrayado grueso en superficie.
 mark {
-  padding: .15rem;
-  background-color: var(--yellow-100);
-  border-radius: .125rem;
+  padding: 0 .1em;
+  background: none;
+  color: var(--crema);
+  box-shadow: inset 0 -.35em 0 var(--superficie);
+}
+
+abbr[title] {
+  cursor: help;
+  text-decoration: underline dotted var(--tinta-tenue);
 }

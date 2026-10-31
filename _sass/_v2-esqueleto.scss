@@ -1,0 +1,201 @@
+// ==============================================================
+//  Esqueleto v2: acento por sección, contenedor, cabecera y pie
+//  (bundle.css «acento por sección» y «contenedor y navegación»;
+//  componente Navegacion). Marcado en _layouts/default.html.
+//
+//  Va después de _componentes.scss: sustituye sus reglas de .nav-pie y
+//  .alternador-tema sin tocar ese archivo.
+// ==============================================================
+
+// ---- Acento por sección (D6) ----
+// --acento se hereda desde la clase de sección de <body>. Por defecto
+// (inicio, archivo, etiquetas, desarrollo, 404) azulgris, como antes y
+// como bundle.css.
+//
+// --accent-color es el nombre viejo que leen _componentes.scss,
+// _entornos.scss y los post.css de Mates. Se declara aquí, en <body>, y
+// NUNCA en :root/html: el JS de las visualizaciones de avances lo lee de
+// documentElement y necesita no encontrarlo para usar su respaldo #e5d6c7
+// (sus paneles son oscuros en los dos temas).
+body {
+  --acento: var(--azulgris);
+  --accent-color: var(--acento);
+}
+
+body.section-mates {
+  --acento: var(--azulgris);
+  --accent-color: var(--acento);
+}
+
+body.section-escritos,
+body.section-notas,
+body.section-sobre {
+  --acento: var(--crema);
+  --accent-color: var(--acento);
+}
+
+body.section-proyectos {
+  --acento: var(--verde);
+  --accent-color: var(--acento);
+}
+
+// Para teñir un bloque suelto con el acento de otra sección (filas de la
+// portada, tiles). No tocan --accent-color.
+.seccion-mates { --acento: var(--azulgris); }
+.seccion-escritos,
+.seccion-notas,
+.seccion-sobre { --acento: var(--crema); }
+.seccion-proyectos { --acento: var(--verde); }
+
+// ---- Saltar al contenido ----
+// Fuera de la vista hasta que recibe el foco del teclado.
+.saltar {
+  position: absolute;
+  top: var(--espacio-2);
+  left: var(--espacio-2);
+  z-index: 10;
+  padding: var(--espacio-2) var(--espacio-3);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--tinta);
+  background: var(--fondo);
+  border: 1px solid var(--acento);
+  border-radius: var(--radio-1);
+  transform: translateY(-200%);
+
+  &:focus,
+  &:focus-visible {
+    transform: none;
+  }
+}
+
+// ---- Contenedor ----
+.contenedor {
+  max-width: var(--contenedor);
+  margin: 0 auto;
+  padding: 0 var(--espacio-6);
+}
+
+// ---- Cabecera ----
+// Desviación: nav y cabecera con flex-wrap y row-gap. bundle.css no
+// envuelve y a 360px los cinco enlaces desbordan.
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--espacio-3) var(--espacio-5);
+  padding: 22px 0 18px;
+  margin-bottom: var(--espacio-7);
+  border-bottom: 1px solid var(--regla);
+
+  .marca {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 500;
+    font-variation-settings: "opsz" 18;
+    line-height: 1;
+    color: var(--tinta);
+    border: 0;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-3) 22px;
+    margin-left: auto;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  nav a {
+    padding-bottom: 6px;
+    color: var(--tinta-quieta);
+    border: 0;
+
+    &:hover { color: var(--tinta); }
+  }
+
+  // La sección actual: tinta y una línea de 2px en el acento. Nunca fondo.
+  nav a.activa {
+    color: var(--tinta);
+    box-shadow: inset 0 -2px 0 var(--acento);
+  }
+}
+
+// ---- Pie ----
+// Archivo · Etiquetas · Feed · alternador de tema · © nombre, todo en meta.
+.pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--espacio-2) var(--espacio-5);
+  margin-top: var(--espacio-9);
+  padding: var(--espacio-5) 0;
+  border-top: 1px solid var(--regla);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tinta-tenue);
+
+  a {
+    color: inherit;
+    border: 0;
+
+    &:hover { color: var(--tinta); }
+  }
+
+  .pie-enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-1) var(--espacio-2);
+  }
+
+  .pie-sep { color: var(--tinta-tenue); }
+
+  .pie-firma { margin-left: auto; }
+}
+
+// ---- Alternador de tema: una palabra en mono ----
+// Sustituye al estilo de _componentes.scss (.alternador-tema). No se le
+// da `display`: nace con `hidden` y lo revela su script.
+.pie .alternador-tema,
+.alternador-tema {
+  padding: 0;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tinta-tenue);
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--tinta);
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    color: var(--tinta);
+    text-decoration: none;
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+  }
+}
+
+// ---- Pliegue ----
+@media (max-width: 960px) {
+  .masthead nav {
+    width: 100%;
+    margin-left: 0;
+    gap: var(--espacio-3) var(--espacio-4);
+  }
+}
+
+// Desviación: en teléfonos el gutter baja de 32px a 16px.
+@media (max-width: 480px) {
+  .contenedor { padding: 0 var(--espacio-4); }
+
+  .pie .pie-firma { margin-left: 0; }
+}

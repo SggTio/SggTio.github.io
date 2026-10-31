@@ -1,0 +1,33 @@
+{%- comment -%}
+  Publicaciones del sitio para listas, «Últimas», el feed, Archivo,
+  Etiquetas y los conteos de la portada. No pinta nada: deja variables
+  en el ámbito de quien lo incluye.
+
+  Entran Mates, Notas y Escritos; se excluyen los borradores (draft: true)
+  y lo marcado con `listar: false` (D10: placeholders y plantillas, cuyas
+  URL siguen vivas pero no aparecen en ninguna lista). Proyectos no entra:
+  no tiene fecha.
+
+  Deja
+    publicaciones  array, por fecha descendente
+    n_mates        publicaciones de Mates
+    n_notas        publicaciones de Notas
+    n_escritos     publicaciones de Escritos
+    n_proyectos    fichas de proyecto sin draft
+
+  Uso: incluirlo una vez al principio de la página o del layout y luego
+  recorrer `publicaciones` (por ejemplo con limit: 3 para «Últimas»).
+
+  Sin parámetros.
+{%- endcomment -%}
+{%- assign _pub_todo = site.mates | concat: site.notas | concat: site.escritos -%}
+{%- assign publicaciones = "" | split: "" -%}
+{%- for _i in _pub_todo -%}
+  {%- if _i.draft == true or _i.listar == false -%}{%- continue -%}{%- endif -%}
+  {%- assign publicaciones = publicaciones | push: _i -%}
+{%- endfor -%}
+{%- assign publicaciones = publicaciones | sort: "date" | reverse -%}
+{%- assign n_mates = publicaciones | where: "collection", "mates" | size -%}
+{%- assign n_notas = publicaciones | where: "collection", "notas" | size -%}
+{%- assign n_escritos = publicaciones | where: "collection", "escritos" | size -%}
+{%- assign n_proyectos = site.proyectos | where_exp: "p", "p.draft != true" | size -%}

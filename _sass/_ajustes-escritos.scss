@@ -1,0 +1,177 @@
+// Dueño: fase Escritos y Notas (layouts escrito, poema y nota: cuento, poema, susurro, voz de la nota). Ajustes acotados a body.section-escritos, body.section-notas o su layout-*; ver CONTRATO.md.
+
+// ==============================================================
+//  Escritos y Notas (componentes Poema, NotaMargen y FichaProyecto en
+//  su versión de nota). Marcado de los layouts:
+//
+//    escrito.html  article.articulo.voz-escritos > h1, p.meta,
+//                  p.epigrafe?, div.cuento > {{ content }}
+//    poema.html    article.articulo.voz-escritos > h1, p.meta,
+//                  p.epigrafe?, div.versos > {{ content }}
+//    nota.html     article.articulo.voz-tecnica (o .voz-escritos si
+//                  genero: ensayo, D12) > h1, p.meta, p.resumen?, cuerpo
+//
+//  Todo va acotado a body.layout-escrito, body.layout-poema y
+//  body.layout-nota: Sobre mí también usa .voz-escritos y no se toca.
+// ==============================================================
+
+// Las tres páginas que leen en la voz de Escritos: cuento, poema y ensayo.
+$lectura-escritos: "body.layout-escrito .articulo.voz-escritos, body.layout-poema .articulo.voz-escritos, body.layout-nota .articulo.voz-escritos";
+
+#{$lectura-escritos} {
+  // El bloque texto + margen se desplaza unos 64px a la derecha para
+  // quedar centrado ópticamente (componente Poema). Nunca más de lo que
+  // sobra junto al artículo: entre 1041 y 1120px de ventana el hueco es
+  // menor y el desplazamiento se encoge con él, sin desbordar.
+  margin-left: clamp(0px, calc(100% - var(--ancho)), var(--espacio-8));
+
+  // Una nota al margen larga al final no se sale del artículo hacia el pie:
+  // clearfix común en .articulo::after (_v2-articulo.scss).
+
+  // Si hay H2, va en tinta y cursiva, nunca en el acento (Poema: «no
+  // colorear el H2»). H3 un escalón más abajo, también en cursiva.
+  h2 {
+    margin: 2.4rem 0 .8rem;
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 400;
+    font-style: italic;
+    font-variation-settings: "opsz" 24;
+    color: var(--tinta);
+  }
+
+  h3 {
+    margin: 1.8rem 0 .4rem;
+    font-size: 1em;
+    line-height: 1.5;
+    font-weight: 500;
+    font-style: italic;
+    font-variation-settings: "opsz" 18;
+    color: var(--tinta);
+  }
+
+  // Separador entre secciones: el autor escribe *** (un <hr> de kramdown)
+  // y se ve «· · ·», como p.separador. El texto generado no se lee en voz
+  // alta (el <hr> ya es un separador). El padding compensa el
+  // letter-spacing que queda tras el último punto, para centrarlo.
+  hr {
+    height: auto;
+    margin: 2rem 0;
+    border: 0;
+    overflow: visible;
+    text-align: center;
+    color: var(--tinta-tenue);
+
+    &::before {
+      content: "· · ·";
+      content: #{'"· · ·" / ""'};
+      padding-left: 1em;
+      letter-spacing: 1em;
+    }
+  }
+
+  .separador { padding-left: 1em; }
+
+  // Las notas al margen (susurro) y los párrafos que el include meta dentro
+  // son de _v2-articulo.
+}
+
+// En el pliegue el artículo ocupa la columna de texto: sin desplazamiento, y
+// la nota vuelve tras su párrafo con un respiro arriba (en un cuento los
+// párrafos no tienen margen y el susurro quedaba pegado al texto).
+@media (max-width: 1040px) {
+  #{$lectura-escritos} {
+    margin-left: 0;
+
+    .margen { margin: var(--espacio-2) 0 var(--espacio-4); }
+  }
+}
+
+// La línea de metadatos (margen, etiquetas con subrayado punteado) y su
+// medida (--texto en píxeles desde el artículo) son comunes: _v2-articulo.
+
+// ---- Cuerpo de un cuento y de un poema ----
+// div.cuento y div.versos no generan caja: sus hijos se maquetan como hijos
+// del artículo. Así una aside.margen dentro del cuerpo flota en la columna
+// de margen (a la derecha del artículo) y no dentro de la de texto. Cada
+// hijo se limita a la medida, como `.articulo > *`; con :where() la regla
+// no pesa nada y .ancho/.completo siguen mandando.
+body.layout-escrito .cuento,
+body.layout-poema .versos { display: contents; }
+
+:where(body.layout-escrito .cuento, body.layout-poema .versos) > * { max-width: var(--texto); }
+
+// Cuento: _v2-articulo ya pone sangría de primera línea y párrafos sin
+// espacio (`.voz-escritos .cuento p`). Sin sangría tras un título, un
+// separador o un bloque, y nunca dentro de citas, listas o figuras.
+body.layout-escrito .cuento {
+  :is(h2, h3, h4, hr, .separador, blockquote, figure, ul, ol, pre, table, div) + p { text-indent: 0; }
+
+  :is(blockquote, li, figure, td, th) p {
+    margin: 0 0 .6em;
+    text-indent: 0;
+  }
+
+  :is(blockquote, li, figure, td, th) p:last-child { margin-bottom: 0; }
+
+  // Entre párrafos sin margen, una lista necesita aire arriba y abajo.
+  :is(ul, ol) { margin: var(--espacio-3) 0; }
+}
+
+// Poema: un <p> por estrofa, cada salto de línea es un verso.
+// pre-line va en el párrafo y no en el envoltorio: si no, los saltos entre
+// </p> y <p> se verían como líneas en blanco.
+body.layout-poema .versos > p {
+  margin: 0 0 2rem;
+  white-space: pre-line;
+}
+
+// Un verso demasiado largo para la línea se parte con sangría francesa, para
+// no confundir el trozo con el verso siguiente (sobre todo en el teléfono).
+// each-line + hanging sangra solo las líneas partidas, no las que empiezan
+// tras un salto del autor. Sin soporte, el verso se parte sin sangría.
+@supports (text-indent: 1em hanging each-line) {
+  body.layout-poema .versos > p { text-indent: 1.5em hanging each-line; }
+}
+
+// ---- Nota en la voz técnica ----
+// Viñetas píxel en las listas del cuerpo (las listas de Notas sí llevan el
+// guiño, README del sistema). Copia de `ul.pixel` (_v2-pixel) para las
+// listas que kramdown emite sin clase.
+body.layout-nota .articulo.voz-tecnica ul:not([class]) {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    margin-bottom: .5rem;
+    padding-left: calc(var(--pixel) * 10);
+  }
+
+  li::before {
+    content: "";
+    position: absolute;
+    top: .55em;
+    left: 0;
+    width: var(--pixel);
+    height: var(--pixel);
+    color: var(--acento);
+    background: currentColor;
+    box-shadow: calc(var(--pixel)*0) calc(var(--pixel)*0), calc(var(--pixel)*0) calc(var(--pixel)*1), calc(var(--pixel)*1) calc(var(--pixel)*1), calc(var(--pixel)*0) calc(var(--pixel)*2), calc(var(--pixel)*1) calc(var(--pixel)*2), calc(var(--pixel)*2) calc(var(--pixel)*2), calc(var(--pixel)*0) calc(var(--pixel)*3), calc(var(--pixel)*1) calc(var(--pixel)*3), calc(var(--pixel)*0) calc(var(--pixel)*4);
+  }
+
+  li > ul:not([class]) { margin: .5rem 0 0; }
+}
+
+// ---- Ensayo (nota con genero: ensayo, voz de lectura) ----
+// La voz de Escritos no trae .resumen: aquí, en tinta quieta y sin cursiva
+// (la cursiva es del epígrafe y del margen).
+body.layout-nota .articulo.voz-escritos .resumen {
+  max-width: 52ch;
+  margin: 0 0 var(--espacio-6);
+  font-size: 21px;
+  line-height: 1.5;
+  font-variation-settings: "opsz" 22;
+  color: var(--tinta-quieta);
+}

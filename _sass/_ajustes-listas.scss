@@ -1,0 +1,377 @@
+// Dueño: fase Listas y portada (index.md/mosaico, índices de sección Mates.md Notas.md Escritos.md, archive.md, tags.md, 404.html, layout seccion). Ajustes acotados a su sección o página; ver CONTRATO.md.
+//
+// ==============================================================
+//  Listas y portada (rediseño v2)
+//
+//  1. Portada (body.section-inicio): título oculto, tile «Últimas» con
+//     su sección, foto, línea de presentación bajo el mosaico (D9).
+//  2. Índices de sección, Archivo y Etiquetas (_layouts/seccion.html,
+//     .indice-seccion): título, epígrafe, texto de entrada, rótulos de
+//     lista.
+//  3. 404 (.pagina-404).
+//  4. Includes de componentes que esta fase reestila y que también usa
+//     /desarrollo/: tarjeta-post (.posts-card), encabezado-seccion,
+//     linea-tiempo, enlaces-sociales. Se acotan a la clase del
+//     componente: no dependen de la página.
+//  Solo tokens; ningún color nuevo.
+// ==============================================================
+
+// ---- 1. Portada ----
+body.section-inicio {
+  // El <h1> de la portada lleva .visualmente-oculto (_utilidades.scss):
+  // presente para lectores de pantalla y para la estructura, invisible (el
+  // nombre ya está en la cabecera).
+
+  .mosaico {
+    margin-bottom: var(--espacio-5);
+  }
+
+  // «Últimas» es un <h2> (estructura) con aspecto de rótulo pixel.
+  .mosaico .ultimas h2.rotulo {
+    margin: 0 0 var(--espacio-3);
+    font-weight: 400;
+  }
+
+  .mosaico .ultimas li > a { min-width: 0; }
+
+  // La sección de cada entrada, en mono con su acento (.seccion-* fija
+  // --acento), bajo la fecha: la columna de la izquierda es toda meta y
+  // el título no deja la sección huérfana en una línea propia. No se
+  // llama .seccion: en el mosaico esa clase es un tile.
+  .mosaico .ultimas .sec {
+    display: block;
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--acento);
+  }
+
+  // Los iconos 8×8 se dibujan con sombras desde un cuadrado de un píxel:
+  // sin caja propia, en tiles bajos (≤960px, cuenta en dos líneas) el
+  // icono pisaba el nombre. La caja reserva sus 8×8 píxeles.
+  .mosaico .seccion .px {
+    flex: none;
+    width: calc(var(--px) * 8);
+    height: calc(var(--px) * 8);
+  }
+
+  .mosaico .ultimas .vacia {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--tinta-tenue);
+  }
+
+  // La foto llena su tile también cuando la fila crece (el sistema pone
+  // filas minmax(200px, auto)): el tile es la referencia de la imagen.
+  .mosaico .foto img {
+    position: absolute;
+    inset: 0;
+  }
+
+  // D9: la presentación de la portada anterior, en meta bajo el mosaico.
+  // Cada pareja (pregunta, respuesta) va junta: si no cabe en la línea,
+  // pasa entera a la siguiente.
+  .presentacion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-1) var(--espacio-5);
+    margin: 0;
+
+    dt,
+    dd {
+      display: inline;
+      margin: 0;
+    }
+
+    dt {
+      font-weight: 500;
+      color: var(--tinta-quieta);
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  // Con 6 columnas la foto ocupa una fila entera de alto automático: se
+  // le da proporción para que no quede ni enana ni de 700px.
+  body.section-inicio .mosaico .foto {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 480px) {
+  body.section-inicio .mosaico .foto { aspect-ratio: 4 / 3; }
+
+  // Una columna: la sección sigue a la fecha en la misma línea.
+  body.section-inicio .mosaico .ultimas .sec {
+    display: inline;
+    margin: 0 0 0 var(--espacio-2);
+  }
+}
+
+// ---- 2. Índices de sección, Archivo, Etiquetas ----
+// La columna mide lo que una .lista (72ch de Plex Sans a 17px): así la
+// lista vacía, los rótulos y las filas acaban en el mismo borde.
+.indice-seccion {
+  max-width: var(--medida-tecnica);
+  font-family: var(--font-sans);
+  font-size: 17px;
+
+  > h1 {
+    margin: 0 0 var(--espacio-5);
+    color: var(--tinta);
+  }
+
+  // Epígrafe: la cita que abre la sección, tal cual, sin caja ni centrado.
+  .epigrafe {
+    max-width: 52ch;
+    margin: 0 0 var(--espacio-5);
+    color: var(--tinta-quieta);
+  }
+
+  .epigrafe small {
+    display: block;
+    margin-top: var(--espacio-1);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-style: normal;
+    line-height: 1.5;
+    color: var(--tinta-tenue);
+  }
+
+  // El autor va en <em> en el texto original; Plex Mono no trae cursiva
+  // y el navegador la fabricaría inclinando las letras.
+  .epigrafe small em { font-style: normal; }
+
+  // La glosa entre paréntesis (Escritos): un escalón por debajo de la
+  // cita, todavía en la voz de lectura.
+  .epigrafe small.glosa {
+    max-width: 60ch;
+    margin: var(--espacio-2) 0 var(--espacio-2);
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.55;
+    font-variation-settings: "opsz" 14;
+    color: var(--tinta-quieta);
+  }
+
+  // Texto de entrada de la sección (dos líneas del autor).
+  .entrada {
+    max-width: 60ch;
+    margin: 0 0 var(--espacio-7);
+  }
+
+  .entrada p {
+    margin: 0 0 var(--espacio-2);
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+  }
+
+  // Rótulo de cada lista: <h2 class="lista-titulo">.
+  h2.lista-titulo {
+    margin: var(--espacio-7) 0 var(--espacio-2);
+    line-height: 1.5;
+  }
+
+  > h2.lista-titulo:first-of-type { margin-top: 0; }
+
+  // Índice de Etiquetas: una línea de palabras en mono con su cuenta (el
+  // «·» y el interlineado de 26px vienen de .lista-etiquetas, _v2-listas).
+  .indice-etiquetas .lista-etiquetas { margin: 0 0 var(--espacio-7); }
+
+  // «etiqueta (n)» no se parte entre líneas.
+  .indice-etiquetas li { white-space: nowrap; }
+}
+
+// Voz de lectura (Mates, Escritos): entrada en Literata.
+.indice-lectura .entrada p {
+  font-family: var(--font-serif);
+  font-variation-settings: "opsz" 18;
+}
+
+// Voz técnica (Notas, Archivo, Etiquetas): entrada en Plex Sans.
+.indice-tecnica .entrada p { font-family: var(--font-sans); }
+
+@media (max-width: 480px) {
+  .indice-seccion {
+    .titulo-mates { font-size: 32px; font-variation-settings: "opsz" 32; }
+    .titulo-escritos { font-size: 31px; font-variation-settings: "opsz" 32; }
+    .titulo-tecnico { font-size: 29px; }
+
+    .entrada p { font-size: 17px; }
+  }
+}
+
+// ---- 3. 404 ----
+.pagina-404 h1 { margin-bottom: var(--espacio-5); }
+
+.pagina-404 .lead {
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--tinta-quieta);
+}
+
+// ---- 4. Componentes reestilados (también en /desarrollo/) ----
+
+// tarjeta-post.html: sin caja. Regla fina arriba, título, fecha en mono,
+// resumen en tinta quieta. El área de clic estirada y su foco
+// (:focus-within) siguen viniendo de _componentes.scss.
+.posts-card {
+  padding: 14px 0;
+  font-family: var(--font-sans);
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--regla);
+  border-radius: 0;
+
+  &:hover { border-top-color: var(--regla); }
+
+  h2,
+  h3 {
+    margin: 0 0 var(--espacio-1);
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--tinta);
+  }
+
+  &:hover h2 a,
+  &:hover h3 a { color: var(--acento); }
+
+  .posts-card-fecha {
+    margin: 0 0 var(--espacio-1);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--tinta-tenue);
+  }
+
+  .posts-card-resumen {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+  }
+}
+
+// encabezado-seccion.html: sin caja; regla arriba y el h2 de la voz.
+.encabezado-seccion {
+  margin: var(--espacio-8) 0 var(--espacio-4);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--regla);
+
+  .encabezado-seccion-titulo { margin: 0 0 var(--espacio-1); }
+
+  .encabezado-seccion-descripcion {
+    max-width: 60ch;
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+  }
+}
+
+// linea-tiempo.html: lista tipográfica, fechas en mono a la izquierda.
+.linea-tiempo {
+  max-width: var(--medida-tecnica);
+  margin: var(--espacio-5) 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-sans);
+  border: 0;
+
+  .linea-tiempo-evento {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 0 var(--espacio-4);
+    align-items: baseline;
+    margin: 0;
+    padding: 14px 0;
+    border-top: 1px solid var(--regla);
+
+    &:last-child { border-bottom: 1px solid var(--regla); }
+
+    > * { grid-column: 2; }
+  }
+
+  .linea-tiempo-fecha {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0;
+    color: var(--tinta-tenue);
+  }
+
+  .linea-tiempo-titulo {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.35;
+
+    strong { font-weight: 500; }
+  }
+
+  .linea-tiempo-subtitulo { color: var(--tinta-quieta); }
+
+  .linea-tiempo-descripcion {
+    margin-top: 2px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+
+    p { margin: 0 0 var(--espacio-2); }
+  }
+}
+
+@media (max-width: 480px) {
+  .linea-tiempo .linea-tiempo-evento {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--espacio-1) 0;
+
+    > * { grid-column: 1; }
+  }
+
+  .linea-tiempo .linea-tiempo-fecha { grid-row: auto; }
+}
+
+// enlaces-sociales.html: una línea en mono con «·», como el pie.
+.enlaces-sociales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1) 0;
+  margin: var(--espacio-4) 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--tinta-tenue);
+
+  li {
+    min-width: 0;
+    margin: 0;
+  }
+
+  // El «·» cierra cada enlace: si la línea se parte, la siguiente no
+  // empieza por un punto.
+  li:not(:last-child)::after {
+    content: "·";
+    content: #{'"·" / ""'};
+    margin: 0 var(--espacio-2);
+  }
+
+  a {
+    color: var(--tinta-quieta);
+    overflow-wrap: anywhere;
+
+    &:hover { color: var(--acento); }
+  }
+}

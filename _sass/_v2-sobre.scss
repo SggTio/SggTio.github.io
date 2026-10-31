@@ -1,0 +1,216 @@
+// ==============================================================
+//  Sobre mí (componentes SobreMi y FichaPersonaje; bundle.css
+//  «v2 · Sobre mí» y «mapa de intereses»)
+//
+//    <article class="articulo voz-escritos sobre">
+//      <div class="intro"><img class="retrato" …> …</div>
+//      <aside class="margen ficha-personaje"> … </aside>
+//      <details class="hoja" id="matematicas" open>
+//        <summary><span class="px px-vineta"></span><span class="px px-abierta"></span><h2>…</h2></summary>
+//        <div class="cuerpo"> … </div>
+//      </details>
+//      <div class="mapa"> <svg>…</svg> <p class="leyenda">…</p> </div>
+//    </article>
+//
+//  Desviaciones: sin barras de atributos (D4: .stat y .barra no existen);
+//  foco visible en summary y en los nodos del mapa; las hojas se abren
+//  al imprimir también con CSS (además del beforeprint de head.html).
+// ==============================================================
+
+.sobre .intro {
+  max-width: var(--medida-escritos);
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.7;
+  font-variation-settings: "opsz" 18;
+}
+
+.sobre .retrato {
+  float: left;
+  width: 120px;
+  height: 120px;
+  margin: 6px var(--espacio-5) var(--espacio-3) 0;
+  object-fit: cover;
+  border-radius: var(--radio-2);
+}
+
+// ---- Hojas desplegables ----
+details.hoja {
+  max-width: var(--medida-escritos);
+  padding: 14px 0 6px;
+  border-top: 1px solid var(--regla);
+
+  &:last-of-type { border-bottom: 1px solid var(--regla); }
+
+  summary {
+    display: grid;
+    grid-template-columns: calc(var(--pixel) * 10) 1fr auto;
+    align-items: baseline;
+    gap: var(--espacio-2);
+    list-style: none;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    font-size: 21px;
+    font-style: italic;
+    font-weight: 500;
+    font-variation-settings: "opsz" 20;
+  }
+
+  // Si el título de la hoja es un <h2> (jerarquía de encabezados), hereda
+  // el aspecto del summary.
+  summary h2,
+  summary h3 {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  // La viñeta se alinea con la PRIMERA línea del título (centrada en el
+  // summary quedaba entre dos líneas cuando el título se parte). La caja
+  // de .px mide un píxel; el dibujo, cinco (box-shadow).
+  summary .px {
+    align-self: start;
+    margin-top: calc((1.75em - var(--pixel) * 5) / 2);
+  }
+
+  summary .px-abierta { display: none; }
+
+  &[open] summary .px-vineta { display: none; }
+
+  &[open] summary .px-abierta { display: inline-block; }
+
+  summary .cuenta {
+    font-family: var(--font-pixel);
+    font-size: 11px;
+    font-style: normal;
+    color: var(--tinta-tenue);
+  }
+
+  .cuerpo {
+    padding: var(--espacio-3) 0 var(--espacio-3) calc(var(--pixel) * 10 + var(--espacio-2));
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .cuerpo p { margin: 0 0 1rem; }
+}
+
+@media print {
+  details.hoja::details-content { content-visibility: visible; }
+}
+
+// ---- Ficha de personaje (margen de Sobre mí) ----
+// Anula el susurro de la voz de lectura: la ficha se lee entera.
+.voz-escritos .margen.ficha-personaje {
+  font-family: var(--font-sans);
+  font-style: normal;
+  color: var(--tinta-quieta);
+  opacity: 1;
+}
+
+.voz-escritos .margen.ficha-personaje .rotulo { display: block; }
+
+.ficha-personaje {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--tinta-quieta);
+
+  .rotulo {
+    display: block;
+    margin: var(--espacio-3) 0 var(--espacio-1);
+  }
+
+  .rotulo:first-child { margin-top: 0; }
+
+  .grande {
+    font-family: var(--font-pixel);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--acento);
+  }
+
+  .inv {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--tinta-tenue);
+  }
+
+  // Marcado del include ficha-personaje.html: rótulos en <dt>, valores en
+  // <dd>. La separación con la regla de píxeles la da el margen del <dl>
+  // (en un <dl> el primer rótulo también es :first-child).
+  .regla-pixel { margin-bottom: 0; }
+
+  dl { margin: var(--espacio-3) 0 0; }
+
+  dd { margin: 0; }
+
+  // Bloque «Ahora» bajo la ficha, dentro del mismo <aside>: acento verde.
+  .ficha-ahora { --acento: var(--verde); }
+
+  dl + .ficha-ahora { margin-top: var(--espacio-6); }
+}
+
+// ---- Mapa de intereses (SVG) ----
+.mapa {
+  clear: both;
+  max-width: calc(var(--medida-escritos) + var(--hueco-margen) + var(--margen));
+  margin: var(--espacio-6) 0;
+
+  svg {
+    width: 100%;
+    height: auto;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    shape-rendering: crispEdges;
+  }
+
+  a { border: 0; }
+
+  .arista {
+    stroke: var(--regla);
+    stroke-width: 2;
+  }
+
+  .arista.activa { stroke: var(--acento); }
+
+  .nodo rect {
+    fill: var(--fondo);
+    stroke: var(--tinta-tenue);
+    stroke-width: 2;
+  }
+
+  .nodo text { fill: var(--tinta-quieta); }
+
+  .nodo.ancla rect { stroke: var(--acento); }
+
+  .nodo.ancla text { fill: var(--tinta); }
+
+  .nodo.activo rect,
+  .nodo:hover rect,
+  a:focus-visible .nodo rect,
+  .nodo:focus-visible rect {
+    fill: var(--superficie);
+    stroke: var(--acento);
+  }
+
+  .nodo.activo text,
+  .nodo:hover text,
+  a:focus-visible .nodo text,
+  .nodo:focus-visible text { fill: var(--tinta); }
+
+  // Desviación: bundle.css la pone en Silkscreen 11px. Es una frase, no un
+  // rótulo, y en Silkscreen a ese tamaño no se lee: va en mono.
+  .leyenda {
+    max-width: 80ch;
+    margin: var(--espacio-3) 0 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--tinta-tenue);
+  }
+}

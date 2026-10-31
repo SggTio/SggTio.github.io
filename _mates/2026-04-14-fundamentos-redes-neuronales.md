@@ -7,6 +7,14 @@ subsection: redes-neuronales
 math: true
 wide: true
 description: "Un viaje histórico y técnico desde Cajal hasta el perceptrón multicapa, con visualizaciones interactivas de McCulloch-Pitts, Turing, Rosenblatt y backpropagation."
+tags:
+  - historia de la ia
+  - redes neuronales
+  - mcculloch-pitts
+  - turing
+  - perceptrón
+  - mlp
+  - backpropagation
 extra_css:
   - /assets/posts/fundamentos-redes-neuronales/post.css
 ---

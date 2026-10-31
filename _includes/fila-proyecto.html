@@ -1,0 +1,32 @@
+{%- comment -%}
+  Fila del índice de proyectos (componente IndiceProyectos). Va dentro de
+  <ul class="lista proyectos">: número | título, estado, resumen y
+  tecnologías | año. Sin fondos ni bordes por fila: las separa la regla de
+  la lista.
+
+  El único enlace es el título. El estado es una palabra (insignia-estado),
+  las tecnologías texto en mono separado por punto medio; una fila sin
+  tecnologías (lista vacía) no pinta esa línea.
+
+  Parámetros
+    proyecto  obligatorio  elemento de _proyectos
+    numero    obligatorio  posición en el índice (entero); se pinta con dos
+                           cifras: 1 → 01
+{%- endcomment -%}
+{%- assign _fp = include.proyecto -%}
+{%- assign _fp_n = include.numero | plus: 0 -%}
+<li>
+  <span class="num">{% if include.numero %}{% if _fp_n < 10 %}0{% endif %}{{ _fp_n }}{% endif %}</span>
+  <div>
+    {%- comment -%} Espacio duro: el estado no queda solo en otra línea, se lleva consigo la última palabra del título {%- endcomment %}
+    <div class="tit"><a href="{{ _fp.url | relative_url }}">{{ _fp.title }}</a>&nbsp;{% include insignia-estado.html estado=_fp.estado clase="estado" %}</div>
+    {%- if _fp.description %}
+    <div class="des">{{ _fp.description }}</div>
+    {%- endif %}
+    {%- if _fp.tecnologias and _fp.tecnologias.size > 0 %}
+    <div class="tec">{{ _fp.tecnologias | join: " · " }}</div>
+    {%- endif %}
+    {%- include aviso-borrador.html draft=_fp.draft %}
+  </div>
+  <span class="anio">{{ _fp.anio }}{% if _fp.anio_fin %}–{{ _fp.anio_fin }}{% endif %}</span>
+</li>

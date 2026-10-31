@@ -1,37 +1,40 @@
 ---
-layout: page
+layout: seccion
 title: Etiquetas
 permalink: /etiquetas/
 section: etiquetas
+# La página escribe sus propias listas: una por etiqueta, con su ancla
+# (#slug-de-la-etiqueta, al que enlaza _includes/lista-etiquetas.html).
+# Filas compactas (fecha, título, sección): la etiqueta ya agrupa, y el
+# resumen y la lectura están en el índice de cada sección.
+lista: false
 ---
-
-{% assign all_items = site.mates | concat: site.notas | concat: site.escritos %}
-{% assign tag_list = "" | split: "" %}
-{% for item in all_items %}
-  {% for tag in item.tags %}
-    {% unless tag_list contains tag %}
-      {% assign tag_list = tag_list | push: tag %}
-    {% endunless %}
-  {% endfor %}
-{% endfor %}
-{% assign tag_list = tag_list | sort %}
-
-<h2>Etiquetas</h2>
-<ul>
-  {% for tag in tag_list %}
-    {% assign tagged = all_items | where_exp: "item", "item.tags contains tag" %}
-    <li>
-      <a href="#{{ tag | slugify }}">{{ tag }}</a> ({{ tagged.size }})
-    </li>
-  {% endfor %}
+{%- include publicaciones.html -%}
+{%- assign _et_lista = "" | split: "" -%}
+{%- for _et_item in publicaciones -%}
+  {%- for _et_t in _et_item.tags -%}
+    {%- unless _et_lista contains _et_t -%}{%- assign _et_lista = _et_lista | push: _et_t -%}{%- endunless -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign _et_lista = _et_lista | sort -%}
+{%- if _et_lista.size > 0 %}
+<nav class="indice-etiquetas" aria-label="Índice de etiquetas">
+<ul class="lista-etiquetas">
+{%- for _et_t in _et_lista -%}
+{%- assign _et_con = publicaciones | where_exp: "item", "item.tags contains _et_t" %}
+<li><a href="#{{ _et_t | slugify }}">{{ _et_t }}</a> ({{ _et_con.size }})</li>
+{%- endfor %}
 </ul>
-
-{% for tag in tag_list %}
-  <h3 id="{{ tag | slugify }}">{{ tag }}</h3>
-  <ul>
-    {% assign tagged = all_items | where_exp: "item", "item.tags contains tag" %}
-    {% for item in tagged %}
-      <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
-    {% endfor %}
-  </ul>
-{% endfor %}
+</nav>
+{%- for _et_t in _et_lista -%}
+{%- assign _et_con = publicaciones | where_exp: "item", "item.tags contains _et_t" %}
+<h2 class="lista-titulo" id="{{ _et_t | slugify }}">{{ _et_t }}</h2>
+<ul class="lista">
+{%- for _et_item in _et_con %}
+{% include fila-publicacion.html post=_et_item seccion=true resumen=false etiquetas=false lectura=false %}
+{%- endfor %}
+</ul>
+{%- endfor %}
+{%- else %}
+<p class="lista-vacia">aún sin entradas</p>
+{%- endif %}

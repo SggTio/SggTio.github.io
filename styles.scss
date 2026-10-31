@@ -3,31 +3,57 @@
 # only main files contain this front matter, not partials.
 ---
 
+// ==============================================================
+//  Un Santajaro · hoja de estilos (rediseño v2)
 //
-//                        ___
-//                       /\_ \
-//  _____     ___     ___\//\ \      __
-// /\ '__`\  / __`\  / __`\\ \ \   /'__`\
-// \ \ \_\ \/\ \_\ \/\ \_\ \\_\ \_/\  __/
-//  \ \ ,__/\ \____/\ \____//\____\ \____\
-//   \ \ \/  \/___/  \/___/ \/____/\/____/
-//    \ \_\
-//     \/_/
+//  Sistema de diseño «Un Santajaro»: tokens.css + components/bundle.css,
+//  repartidos en parciales. Mapa completo en el contrato de la fase de
+//  cimientos. El orden importa:
 //
-// Designed, built, and released under MIT license by @mdo. Learn more at
-// https://github.com/poole/poole.
+//  1. Fuentes, tokens y alias de nombres viejos.
+//  2. Base neutral: elementos, tipografía, código, entornos.
+//  3. _componentes.scss (no editable en el rediseño) y el marcado viejo
+//     que aún existe.
+//  4. Parciales v2: van DESPUÉS de _componentes.scss para poder
+//     sustituir sus reglas (pie, alternador, etiquetas, insignias).
+//  5. Utilidades de una y dos columnas.
+//  6. Ajustes por área. Las fases siguientes solo escriben ahí, y van
+//     al final para ganar a todo lo anterior a igual especificidad.
+//
+//  Basado en Poole, de @mdo (MIT): https://github.com/poole/poole.
+// ==============================================================
 
-@import "variables";
+// 1
+@import "fuentes";
+@import "tokens";
+@import "compat";
+
+// 2
 @import "base";
 @import "type";
-@import "syntax";
 @import "code";
-@import "layout";
-@import "masthead";
-@import "posts";
-@import "pagination";
-@import "message";
-@import "toc";
+@import "syntax";
 @import "entornos";
+
+// 3
 @import "componentes";
-@import "custom";
+@import "heredado";
+
+// 4
+@import "v2-esqueleto";
+@import "v2-articulo";
+@import "v2-figura";
+@import "v2-listas";
+@import "v2-mosaico";
+@import "v2-sobre";
+@import "v2-pixel";
+
+// 5
+@import "utilidades";
+
+// 6
+@import "ajustes-mates";
+@import "ajustes-proyectos";
+@import "ajustes-listas";
+@import "ajustes-escritos";
+@import "ajustes-sobre";

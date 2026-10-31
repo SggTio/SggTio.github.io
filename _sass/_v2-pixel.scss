@@ -1,0 +1,154 @@
+// ==============================================================
+//  Guiños 8 bits (componente GuinosPixel; bundle.css «guiños 8 bits»)
+//
+//  Solo en lo que hace de índice, de ficha o de puerta: el índice «En
+//  esta entrada», la ficha de Sobre mí, los tiles del mosaico, ul.pixel
+//  en Sobre mí y Notas, el marcador de details.hoja. Nunca en cuerpo,
+//  títulos, navegación, código ni Escritos.
+//
+//  Todo se dibuja con box-shadow sobre un cuadrado de --px en
+//  currentColor (el acento de la sección): sin imágenes, los dos temas.
+//    <span class="px px-vineta"></span>      5×5, viñeta
+//    <span class="px px-abierta"></span>     5×5, marcador abierto
+//    <span class="px px-sigma px-grande"></span>  8×8 (también px-marca,
+//                                            px-pluma, px-caja); solo tiles
+//
+//  Desviación (D5): el cursor parpadea 4 ciclos y queda fijo; estático
+//  con prefers-reduced-motion. Uno por pantalla como máximo.
+//  Sin barras de atributos (D4): .stat y .barra no se portan.
+// ==============================================================
+
+.px {
+  --px: var(--pixel);
+  display: inline-block;
+  width: var(--px);
+  height: var(--px);
+  color: var(--acento);
+}
+
+.px::before {
+  content: "";
+  display: block;
+  width: var(--px);
+  height: var(--px);
+  background: currentColor;
+}
+
+.px-vineta::before { box-shadow: calc(var(--px)*0) calc(var(--px)*0), calc(var(--px)*0) calc(var(--px)*1), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*0) calc(var(--px)*2), calc(var(--px)*1) calc(var(--px)*2), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*0) calc(var(--px)*3), calc(var(--px)*1) calc(var(--px)*3), calc(var(--px)*0) calc(var(--px)*4); }
+
+.px-abierta::before { box-shadow: calc(var(--px)*0) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*1), calc(var(--px)*3) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2); }
+
+.px-sigma::before { box-shadow: calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*2) calc(var(--px)*4), calc(var(--px)*1) calc(var(--px)*5), calc(var(--px)*1) calc(var(--px)*6), calc(var(--px)*2) calc(var(--px)*6), calc(var(--px)*3) calc(var(--px)*6), calc(var(--px)*4) calc(var(--px)*6), calc(var(--px)*5) calc(var(--px)*6), calc(var(--px)*6) calc(var(--px)*6); }
+
+.px-pluma::before { box-shadow: calc(var(--px)*7) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*1), calc(var(--px)*5) calc(var(--px)*2), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*2) calc(var(--px)*5), calc(var(--px)*1) calc(var(--px)*6), calc(var(--px)*0) calc(var(--px)*7), calc(var(--px)*1) calc(var(--px)*7), calc(var(--px)*0) calc(var(--px)*6); }
+
+.px-caja::before { box-shadow: calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*7), calc(var(--px)*2) calc(var(--px)*7), calc(var(--px)*3) calc(var(--px)*7), calc(var(--px)*4) calc(var(--px)*7), calc(var(--px)*5) calc(var(--px)*7), calc(var(--px)*6) calc(var(--px)*7), calc(var(--px)*0) calc(var(--px)*1), calc(var(--px)*0) calc(var(--px)*2), calc(var(--px)*0) calc(var(--px)*3), calc(var(--px)*0) calc(var(--px)*4), calc(var(--px)*0) calc(var(--px)*5), calc(var(--px)*0) calc(var(--px)*6), calc(var(--px)*7) calc(var(--px)*1), calc(var(--px)*7) calc(var(--px)*2), calc(var(--px)*7) calc(var(--px)*3), calc(var(--px)*7) calc(var(--px)*4), calc(var(--px)*7) calc(var(--px)*5), calc(var(--px)*7) calc(var(--px)*6), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*4); }
+
+.px-marca::before { box-shadow: calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*2) calc(var(--px)*3), calc(var(--px)*2) calc(var(--px)*4), calc(var(--px)*2) calc(var(--px)*5), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*1), calc(var(--px)*3) calc(var(--px)*2), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*3) calc(var(--px)*5), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*1), calc(var(--px)*4) calc(var(--px)*2), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*5), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*1), calc(var(--px)*5) calc(var(--px)*2), calc(var(--px)*5) calc(var(--px)*3), calc(var(--px)*5) calc(var(--px)*4), calc(var(--px)*5) calc(var(--px)*5), calc(var(--px)*2) calc(var(--px)*6), calc(var(--px)*5) calc(var(--px)*6); }
+
+.px-grande { --px: calc(var(--pixel) * 1.5); }
+
+// ---- Rótulos en Silkscreen: índice, ficha de personaje, tiles ----
+// El índice y la ficha son notas de margen: sus selectores pesan al menos
+// lo que `.articulo .margen .rotulo` (_v2-articulo, rótulo en mono) y, a
+// igual peso, este parcial va después. Peso 400: Silkscreen solo trae 400 y
+// 700, y el 500 heredado del rótulo de margen no existe.
+// Desviación: 12px, no los 11px de tokens.css. A 10 y 11px, en pantallas de
+// densidad 1, la C de Silkscreen se cierra y se lee como O («FIOHA», «OLASE»;
+// las vistas previas del sistema tienen el mismo defecto: «SILKSOREEN»). A
+// 12px está abierta a densidad 1, 1,25, 1,5 y 2, y la altura de mayúscula (7,5px) queda
+// casi en la del rótulo en mono a 11px (7,7px). Los números (abajo) siguen a
+// 11px: las cifras no tienen el problema.
+.rotulo-pixel,
+.voz-mates .margen.indice .rotulo,
+.articulo .margen.ficha-personaje .rotulo,
+.ficha-personaje .rotulo,
+.mosaico .rotulo {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+.voz-mates .margen.indice li::before,
+.lista.proyectos .num {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+}
+
+.voz-mates .margen.indice li.actual::before { color: var(--acento); }
+.voz-mates .margen.indice li.actual { color: var(--tinta); }
+
+// ---- Regla punteada de píxeles: sustituye a regla en índice, ficha, tiles ----
+.regla-pixel {
+  height: var(--pixel);
+  margin: 0 0 var(--espacio-2);
+  background: repeating-linear-gradient(90deg, var(--tinta-tenue) 0 var(--pixel), transparent var(--pixel) calc(var(--pixel) * 3));
+  border: 0;
+  opacity: .6;
+}
+
+// La regla de píxeles sustituye a la regla de 1px del índice. Plegado
+// (≤1090px, bloque sobre superficie) conserva el relleno superior del
+// pliegue, como la ficha de proyecto; si no, el rótulo tocaba el borde.
+.voz-mates .margen.indice {
+  padding-top: 0;
+  border-top: 0;
+}
+
+@media (max-width: 1090px) {
+  .voz-mates .margen.indice { padding-top: 10px; }
+}
+
+// ---- Cursor de bloque (D5) ----
+// Tras «En esta entrada», «Últimas» o «Ahora»: <span class="rotulo cursor">Últimas</span>.
+// Parpadea 4 ciclos de --parpadeo (≈4,4 s, por debajo de los 5 s de
+// WCAG 2.2.2) y se queda encendido. Con prefers-reduced-motion no se mueve.
+.cursor::after {
+  content: "";
+  display: inline-block;
+  width: calc(var(--pixel) * 4);
+  height: calc(var(--pixel) * 6);
+  margin-left: var(--espacio-2);
+  vertical-align: -1px;
+  background: var(--acento);
+  animation: parpadeo var(--parpadeo) steps(1) 4;
+}
+
+@keyframes parpadeo {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor::after { animation: none; }
+}
+
+// ---- Viñetas pixel en listas de Sobre mí y Notas ----
+ul.pixel {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    margin-bottom: .5rem;
+    padding-left: calc(var(--pixel) * 10);
+  }
+
+  li::before {
+    content: "";
+    position: absolute;
+    top: .55em;
+    left: 0;
+    width: var(--pixel);
+    height: var(--pixel);
+    // bundle.css pone background: acento y deja las sombras en
+    // currentColor (la tinta del li): la viñeta salía bicolor.
+    color: var(--acento);
+    background: currentColor;
+    box-shadow: calc(var(--pixel)*0) calc(var(--pixel)*0), calc(var(--pixel)*0) calc(var(--pixel)*1), calc(var(--pixel)*1) calc(var(--pixel)*1), calc(var(--pixel)*0) calc(var(--pixel)*2), calc(var(--pixel)*1) calc(var(--pixel)*2), calc(var(--pixel)*2) calc(var(--pixel)*2), calc(var(--pixel)*0) calc(var(--pixel)*3), calc(var(--pixel)*1) calc(var(--pixel)*3), calc(var(--pixel)*0) calc(var(--pixel)*4);
+  }
+}

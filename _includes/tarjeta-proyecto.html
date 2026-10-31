@@ -1,8 +1,15 @@
 {%- comment -%}
-  Tarjeta de proyecto, para el índice de /proyectos/.
+  Bloque de un proyecto con título propio (h2 o h3), para listados sueltos
+  fuera del índice.
+
+  Rediseño v2: el índice de /proyectos/ ya no usa tarjetas sino filas
+  (_includes/fila-proyecto.html). Esta pieza se conserva con los mismos
+  parámetros para /desarrollo/ y para quien la necesite, pero ya no es una
+  caja: es una entrada tipográfica separada por una regla de 1px, con el
+  estado como palabra y las tecnologías en mono (_ajustes-proyectos.scss).
 
   Las secciones vacías no se renderizan: un proyecto sin imagen ni
-  tecnologías produce una tarjeta corta y honesta, no una con huecos.
+  tecnologías produce una entrada corta y honesta, no una con huecos.
 
   Parámetros
     proyecto       obligatorio  elemento de _proyectos
@@ -30,7 +37,7 @@
     </p>
 
     {%- if p.description -%}
-    <p>{{ p.description }}</p>
+    <p class="tarjeta-proyecto-des">{{ p.description }}</p>
     {%- endif -%}
 
     {%- unless include.tecnologias == false -%}

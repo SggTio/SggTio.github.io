@@ -1,0 +1,210 @@
+// ==============================================================
+//  Listas tipográficas, nunca tarjetas (bundle.css «listas
+//  tipográficas»; componentes ListaPublicaciones e IndiceProyectos)
+//
+//    <p class="lista-titulo">Rótulo</p>
+//    <ul class="lista">
+//      <li>
+//        <span class="fecha">{% include fecha.html fecha=item.date %}</span>
+//        <div>
+//          <span class="tit"><a href="…">Título</a></span><span class="seccion mates">mates</span>
+//          <div class="des">Resumen de una línea</div>
+//          <div class="tec">meta en mono</div>
+//        </div>
+//      </li>
+//    </ul>
+//  Proyectos: <ul class="lista proyectos"> con .num | contenido | .anio.
+//
+//  Desviación: por debajo de 480px cada fila pasa a una columna (fecha o
+//  número encima del título). bundle.css no trae ese quiebre.
+//
+//  Al final: etiquetas e insignias de estado como palabras en mono
+//  (sustituyen a las píldoras con borde de _componentes.scss).
+// ==============================================================
+
+.lista {
+  max-width: var(--medida-tecnica);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-sans);
+
+  li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0 var(--espacio-4);
+    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--regla);
+  }
+
+  li:last-child { border-bottom: 1px solid var(--regla); }
+
+  .fecha,
+  .num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--tinta-tenue);
+  }
+
+  .tit {
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+
+  .tit a { border: 0; }
+
+  .tit a:hover { color: var(--acento); }
+
+  .seccion {
+    margin-left: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .seccion.mates { color: var(--azulgris); }
+  .seccion.escritos,
+  .seccion.notas { color: var(--crema); }
+  .seccion.proyectos { color: var(--verde); }
+
+  .des {
+    margin-top: 2px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-quieta);
+  }
+
+  .tec {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--tinta-tenue);
+  }
+}
+
+.lista.proyectos {
+  li { grid-template-columns: 3.2rem 1fr 5rem; }
+
+  .anio {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-align: right;
+    color: var(--tinta-tenue);
+  }
+
+  .estado {
+    margin-left: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--verde);
+  }
+}
+
+.lista-titulo {
+  margin: 0 0 var(--espacio-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tinta-tenue);
+}
+
+// Lista vacía (D10): una línea en meta, sin caja.
+.lista-vacia {
+  margin: 0 0 var(--espacio-6);
+  padding: 14px 0;
+  border-top: 1px solid var(--regla);
+  border-bottom: 1px solid var(--regla);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--tinta-tenue);
+}
+
+@media (max-width: 480px) {
+  .lista li,
+  .lista.proyectos li {
+    grid-template-columns: 1fr;
+    gap: var(--espacio-1) 0;
+  }
+
+  .lista.proyectos .anio { text-align: left; }
+
+  .lista .seccion { margin-left: 6px; }
+}
+
+// ==============================================================
+//  Etiquetas y estado: palabras en mono, sin píldoras
+//  (_includes/lista-etiquetas.html, _includes/insignia-estado.html)
+// ==============================================================
+
+// «laplacianos · segmentación · charla»
+// Interlineado 2 (26px): cuando la lista se parte, los enlaces de dos
+// líneas seguidas quedan a más de 24px (WCAG 2.5.8); con 1,6 se tocaban.
+.lista-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: var(--espacio-2) 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 2;
+  color: var(--tinta-tenue);
+
+  // El «·» cierra cada palabra y no abre la siguiente: si la lista se
+  // parte, la línea nueva empieza por una etiqueta. Texto alternativo
+  // vacío: el lector de pantalla no lee el punto.
+  li:not(:last-child)::after {
+    content: "·";
+    content: #{'"·" / ""'};
+    margin: 0 var(--espacio-2);
+  }
+
+  li > a,
+  li > span {
+    display: inline;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    border: 0;
+    border-radius: 0;
+  }
+
+  li > a:hover,
+  li > a:focus-visible { color: var(--acento); }
+}
+
+// El estado es una palabra (Idea, En desarrollo, Activo…). El texto
+// distingue los estados; el acento solo subraya el activo.
+.insignia {
+  display: inline;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--tinta-tenue);
+  border: 0;
+  border-radius: 0;
+}
+
+.insignia-activo {
+  font-weight: 500;
+  color: var(--acento);
+}
+
+.insignia-en-desarrollo { color: var(--tinta-quieta); }
+
+// _componentes.scss lo atenúa a .6, que baja de 4,5:1.
+.insignia-archivado { opacity: 1; }
