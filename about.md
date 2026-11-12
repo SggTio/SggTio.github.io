@@ -6,17 +6,18 @@ description: "Santiago Gil Gallego: matemáticas, software libre, inteligencia a
 permalink: /sobre/
 section: sobre
 wide: true
-# Línea de meta bajo el título: «santiago gil gallego · ciudad de méxico».
-# El nombre sale de _config.yml (author.name); la ciudad, de la intro
-# («…estudiante de doctorado en matemáticas en Ciudad de México»).
-ciudad: ciudad de méxico
-# Ficha de personaje en el margen (_includes/ficha-personaje.html). Solo
-# hechos que ya están en el repositorio (CLAUDE.md §2); sin atributos ni
-# barras (D4). Una clave que se borre deja de pintarse.
+# Línea de meta bajo el título: «santiago gil gallego · bogotá & ciudad de méxico».
+# El nombre sale de _config.yml (author.name); las ciudades las dio Santiago
+# (2026-11-12).
+ciudad: "bogotá & ciudad de méxico"
+# Ficha de personaje en el margen (_includes/ficha-personaje.html). Valores
+# dados por Santiago (2026-11-12); sin atributos ni barras (D4). Una clave
+# que se borre deja de pintarse.
 ficha:
-  clase: matemático computacional  # CLAUDE.md: «Matemático computacional»
+  clase: científico computacional
+  alineamiento: machine learning y matemáticas
   nivel: doctorando                # intro: «Ahora soy estudiante de doctorado»
-  inventario: ["C++", "CGAL"]      # hoja Matemáticas: «profundizar en C/C++, CGAL…»
+  inventario: ["geometría", "topología", "computación de alto desempeño", "biomedicina", "gemelos digitales", "simulación"]
 ---
 
 <div class="intro">

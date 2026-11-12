@@ -35,7 +35,7 @@
 # =============================================================================
 
 titulo: "Mapa de intereses"
-leyenda: "Una línea une dos temas que el texto relaciona. Al pasar el cursor o enfocar un tema se iluminan sus vecinos. Cada tema lleva a su página, si la tiene, o a la hoja de matemáticas."
+leyenda: "El mapa va creciendo a medida que voy aprendiendo cosas nuevas."
 hoja: matematicas
 ancho: 960
 alto: 340

@@ -6,7 +6,7 @@
 
     <aside class="margen ficha-personaje">
       FICHA DE PERSONAJE · regla de píxeles
-      CLASE · NIVEL (en Silkscreen) · INVENTARIO (mono, separado por «·»)
+      CLASE · ALINEAMIENTO · NIVEL (en Silkscreen) · INVENTARIO (mono, separado por «·»)
       [ <div class="ficha-ahora"> AHORA (acento verde) … </div> ]
     </aside>
 
@@ -23,13 +23,14 @@
 
   Parámetros
     ficha  opcional  por defecto page.ficha, con las claves
-                       clase       texto
-                       nivel       texto (se muestra en mayúsculas pixel)
-                       inventario  lista de herramientas
+                       clase         texto
+                       alineamiento  texto
+                       nivel         texto (se muestra en mayúsculas pixel)
+                       inventario    lista de campos
 {%- endcomment -%}
 {%- assign _ficha = include.ficha | default: page.ficha -%}
 {%- assign _ficha_hay = false -%}
-{%- if _ficha.clase or _ficha.nivel -%}{%- assign _ficha_hay = true -%}{%- endif -%}
+{%- if _ficha.clase or _ficha.alineamiento or _ficha.nivel -%}{%- assign _ficha_hay = true -%}{%- endif -%}
 {%- if _ficha.inventario and _ficha.inventario.size > 0 -%}{%- assign _ficha_hay = true -%}{%- endif -%}
 {%- comment -%} «Ahora»: esquema documentado en _data/ahora.yml (actualizado + bloques[titulo, items]). {%- endcomment -%}
 {%- assign _ahora = site.data.ahora -%}
@@ -46,6 +47,10 @@
     {%- if _ficha.clase %}
     <dt class="rotulo">Clase</dt>
     <dd>{{ _ficha.clase }}</dd>
+    {%- endif %}
+    {%- if _ficha.alineamiento %}
+    <dt class="rotulo">Alineamiento</dt>
+    <dd>{{ _ficha.alineamiento }}</dd>
     {%- endif %}
     {%- if _ficha.nivel %}
     <dt class="rotulo">Nivel</dt>
