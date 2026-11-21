@@ -1,0 +1,155 @@
+// Dueño: portada (index.md). Ajustes acotados a body.section-inicio .resumen-sobre.
+// ==============================================================
+//  Portada · resumen de Sobre mí
+//
+//  Bajo el mosaico, una segunda retícula .mosaico con tres tiles que
+//  reúnen lo de /sobre/ sin escribir nada nuevo: el retrato, la ficha de
+//  personaje (front matter de about.md, include ficha-personaje) y el
+//  mapa de intereses (_data/intereses.yml, include mapa-intereses).
+//
+//    <section class="mosaico resumen-sobre seccion-sobre">
+//      <h2 class="visualmente-oculto">Sobre mí</h2>
+//      <div class="tile retrato"><img …></div>
+//      <div class="tile personaje"> aside.ficha-personaje · p.mas > a </div>
+//      <div class="tile intereses"> section.mapa (título en h3) </div>
+//    </section>
+//
+//  Lo genérico de la ficha y del mapa está en _v2-sobre.scss y
+//  _v2-pixel.scss; lo que en /sobre/ hace _ajustes-sobre.scss (mapa en
+//  lista cuando el dibujo no se lee, bordes más gruesos al enfocar) se
+//  repite aquí acotado a la portada. Acento crema por .seccion-sobre.
+//  Desviación del README de Portada («debajo del mosaico no hay nada
+//  más»), como ya lo era la línea de presentación (D9).
+// ==============================================================
+
+body.section-inicio .resumen-sobre {
+  // ---- Retrato: llena su tile, como la foto del mosaico ----
+  .retrato {
+    grid-column: span 4;
+    min-height: 240px;
+    padding: 0;
+  }
+
+  .retrato img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // 1201×1600: el recorte apaisado se centra en la cara y la taza.
+    object-position: 50% 38%;
+    border-radius: 0;
+  }
+
+  // ---- Ficha de personaje ----
+  .personaje { grid-column: span 8; }
+
+  // En un tile ancho la ficha se lee como tabla: rótulo a la izquierda,
+  // valor a la derecha. Los rótulos pierden el margen vertical que llevan
+  // en la columna de margen de /sobre/.
+  .ficha-personaje dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--espacio-2) var(--espacio-5);
+    align-items: baseline;
+  }
+
+  .ficha-personaje dt.rotulo { margin: 0; }
+
+  // Enlace a la página completa, al pie del tile, en meta con subrayado
+  // punteado (en un tile sin reglas el color solo no lo distingue).
+  .mas {
+    margin: auto 0 0;
+    padding-top: var(--espacio-4);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--tinta-tenue);
+  }
+
+  .mas a {
+    color: inherit;
+    border-bottom: 1px dotted var(--tinta-tenue);
+  }
+
+  .mas a:hover {
+    color: var(--acento);
+    border-bottom-color: var(--acento);
+  }
+
+  // ---- Mapa de intereses ----
+  .intereses { grid-column: span 12; }
+
+  .mapa {
+    max-width: none;
+    margin: 0;
+  }
+
+  // El título del mapa es un <h3> (bajo el <h2> oculto «Sobre mí») con
+  // aspecto de rótulo pixel.
+  .mapa > h3 {
+    margin: 0 0 var(--espacio-3);
+    font-weight: 400;
+  }
+
+  .mapa .nodo.activo rect,
+  .mapa .nodo:hover rect { stroke-width: 3; }
+
+  .mapa a:focus-visible .nodo rect {
+    stroke-width: 4;
+    stroke: var(--acento);
+  }
+
+  .mapa .mapa-lista { display: none; }
+}
+
+// ---- Pliegues ----
+// ≤960px el mosaico pasa a 6 columnas: retrato y ficha comparten fila
+// (2 + 4) y la ficha vuelve a rótulo sobre valor. El mapa sigue siendo
+// el dibujo: si el tile baja de los 820px que necesita, el lienzo se
+// desplaza en horizontal (_v2-sobre.scss).
+@media (max-width: 960px) {
+  body.section-inicio .resumen-sobre {
+    .retrato {
+      grid-column: span 2;
+      min-height: 0;
+    }
+
+    .personaje { grid-column: span 4; }
+
+    .ficha-personaje dl { display: block; }
+
+    .ficha-personaje dt.rotulo { margin: var(--espacio-3) 0 var(--espacio-1); }
+
+    .ficha-personaje dt.rotulo:first-child { margin-top: 0; }
+
+    .intereses { grid-column: span 6; }
+  }
+}
+
+// En teléfonos el retrato ocupa la fila entera, con proporción (como la
+// foto del mosaico), la ficha va debajo y el mapa se sustituye por su
+// lista, como en /sobre/.
+@media (max-width: 480px) {
+  body.section-inicio .resumen-sobre {
+    .retrato {
+      grid-column: span 6;
+      aspect-ratio: 4 / 3;
+    }
+
+    .personaje { grid-column: span 6; }
+
+    .mapa .mapa-lienzo,
+    .mapa .leyenda { display: none; }
+
+    .mapa .mapa-lista {
+      display: block;
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--tinta-quieta);
+
+      a { color: var(--tinta); }
+    }
+  }
+}

@@ -6,10 +6,16 @@
 
     <section class="mapa">
       <h2 class="rotulo-pixel">Mapa de intereses</h2>
-      <svg>  aristas (decorativas) · un <a> por tema con su rectángulo  </svg>
+      <div class="mapa-lienzo">
+        <svg>  aristas (decorativas) · un <a> por tema con su rectángulo  </svg>
+      </div>
       <p class="leyenda">…</p>
       <ul class="pixel mapa-lista"> el mismo mapa en texto </ul>
     </section>
+
+  El lienzo (.mapa-lienzo) se desplaza en horizontal: cuando la columna
+  no llega al ancho con el que el dibujo se lee, el SVG conserva ese
+  ancho y el lector lo recorre, sin perder la interacción (_v2-sobre.scss).
 
   Accesibilidad:
   · Cada tema es un enlace <a>, así que se alcanza con el teclado; el
@@ -19,13 +25,15 @@
   · El SVG no lleva role="img" (convertiría los enlaces en
     presentacionales). Cada enlace se describe (aria-describedby) con sus
     vecinos, tomados de la lista en texto.
-  · La lista es la alternativa textual: en pantallas estrechas sustituye al
-    dibujo (que a ese ancho no se lee), y en las anchas está oculta pero
-    sigue describiendo los enlaces del SVG.
+  · La lista es la alternativa textual: en teléfonos sustituye al dibujo
+    (recorrer un dibujo ancho en una pantalla de 360px no compensa), y en
+    el resto está oculta pero sigue describiendo los enlaces del SVG.
   · Sin animaciones (README del componente: «no animar el mapa»).
 
   Parámetros
-    mapa  opcional  por defecto site.data.intereses
+    mapa   opcional  por defecto site.data.intereses
+    nivel  opcional  etiqueta del título: "h2" por defecto (Sobre mí);
+                     "h3" en la portada, bajo el <h2> del resumen
 {%- endcomment -%}
 {%- assign _m = include.mapa | default: site.data.intereses -%}
 {%- if _m.temas and _m.temas.size > 0 -%}
@@ -36,8 +44,10 @@
   {%- assign _b = _m.temas | where: "id", _e[1] | first -%}
   {%- if _a and _b -%}{%- assign _m_con_vecinos = _m_con_vecinos | append: _e[0] | append: "|" | append: _e[1] | append: "|" -%}{%- endif -%}
 {%- endfor -%}
+{%- assign _m_nivel = include.nivel | default: "h2" -%}
 <section class="mapa" aria-labelledby="mapa-titulo">
-  <h2 class="rotulo-pixel" id="mapa-titulo">{{ _m.titulo | default: "Mapa de intereses" }}</h2>
+  <{{ _m_nivel }} class="rotulo-pixel" id="mapa-titulo">{{ _m.titulo | default: "Mapa de intereses" }}</{{ _m_nivel }}>
+  <div class="mapa-lienzo">
   <svg viewBox="0 0 {{ _m.ancho }} {{ _m.alto }}" width="{{ _m.ancho }}" height="{{ _m.alto }}" aria-labelledby="mapa-titulo"{% if _m.leyenda %} aria-describedby="mapa-leyenda"{% endif %}>
     <g class="aristas" aria-hidden="true">
     {%- for _e in _m.aristas %}
@@ -70,6 +80,7 @@
     {%- endfor %}
     </g>
   </svg>
+  </div>
   {%- if _m.leyenda %}
   <p class="leyenda" id="mapa-leyenda">{{ _m.leyenda }}</p>
   {%- endif %}

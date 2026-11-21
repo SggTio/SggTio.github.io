@@ -169,6 +169,20 @@ details.hoja {
     shape-rendering: crispEdges;
   }
 
+  // El dibujo mide 960 unidades con letra de 13: por debajo de 820px de
+  // ancho la letra baja de 11px y deja de leerse. En vez de esconderlo,
+  // el lienzo conserva ese ancho mínimo y se desplaza en horizontal, y
+  // el mapa sigue siendo interactivo; el título y la leyenda no se mueven.
+  .mapa-lienzo {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .mapa-lienzo svg {
+    display: block;
+    min-width: 820px;
+  }
+
   a { border: 0; }
 
   .arista {

@@ -55,6 +55,30 @@ section: inicio
   {%- endfor %}
 </div>
 
+{%- comment -%}
+  Resumen de Sobre mí: bajo el mosaico, una segunda retícula con el
+  retrato, la ficha de personaje y el mapa de intereses de /sobre/. Nada
+  se escribe aquí: la ficha sale del front matter de about.md (la misma
+  que pinta _layouts/sobre.html) y el mapa de _data/intereses.yml. Acento
+  crema (seccion-sobre), como en /sobre/. El <h2> «Sobre mí» existe para
+  la estructura y no se ve: cada tile lleva su rótulo. Estilos en
+  _sass/_ajustes-inicio.scss.
+{%- endcomment -%}
+{%- assign _ini_sobre = site.pages | where: "url", "/sobre/" | first %}
+<section class="mosaico resumen-sobre seccion-sobre" aria-labelledby="resumen-sobre-titulo">
+  <h2 class="visualmente-oculto" id="resumen-sobre-titulo">Sobre mí</h2>
+  <div class="tile retrato">
+    <img class="foto-decorativa" src="{{ '/assets/profile.jpg' | relative_url }}" width="1201" height="1600" loading="lazy" decoding="async" alt="Santiago Gil Gallego bebiendo de una taza de cerámica verde y blanca que le tapa media cara, mirando a la cámara">
+  </div>
+  <div class="tile personaje">
+    {% include ficha-personaje.html ficha=_ini_sobre.ficha %}
+    <p class="mas"><a href="{{ '/sobre/' | relative_url }}">Más en Sobre mí</a></p>
+  </div>
+  <div class="tile intereses">
+    {% include mapa-intereses.html nivel="h3" %}
+  </div>
+</section>
+
 <dl class="meta presentacion">
   <div><dt>¿Qué es este sitio?</dt> <dd>Escribo sobre lo que me gusta: matemáticas, computación, cuentos y poesía.</dd></div>
   <div><dt>Formas</dt> <dd>Se mezcla lo visual con lo abstracto.</dd></div>

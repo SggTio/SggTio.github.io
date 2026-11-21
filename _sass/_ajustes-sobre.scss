@@ -11,9 +11,10 @@
 //  · «Las matemáticas son para todos.» entre la segunda y la tercera hoja;
 //  · el rótulo del mapa es un <h2> (jerarquía de encabezados) con aspecto
 //    de rótulo pixel;
-//  · el mapa en texto (.mapa-lista) sustituye al SVG cuando la columna de
-//    margen se pliega (≤1040px): el artículo baja a 58ch (~600px) y el
-//    dibujo de 960 unidades quedaría con letra de ~8px;
+//  · el mapa en texto (.mapa-lista) sustituye al SVG solo en teléfonos
+//    (≤480px). Plegado (≤1040px) el mapa usa todo el ancho del artículo,
+//    no la columna de 58ch; si aun así no llega a su ancho mínimo legible,
+//    .mapa-lienzo se desplaza en horizontal (_v2-sobre.scss);
 //  · foco y estado activo de los nodos también por grosor de borde, no solo
 //    por color;
 //  · los enlaces de cierre;
@@ -90,9 +91,6 @@
 }
 
 // ---- Mapa de intereses ----
-// Sin el hueco de línea base de un SVG en línea bajo el dibujo.
-.sobre .mapa svg { display: block; }
-
 .sobre .mapa > h2 {
   margin: 0 0 var(--espacio-3);
   font-weight: 400;
@@ -109,8 +107,18 @@
 
 .sobre .mapa .mapa-lista { display: none; }
 
+// Plegado, el artículo conserva el ancho de texto + margen (--ancho) para
+// que el mapa pueda usar toda la columna disponible; los demás hijos siguen
+// limitados a --texto por `.articulo > *` (_v2-articulo.scss). Con 58ch el
+// dibujo de 820px siempre había que desplazarlo, aunque la ventana cupiera.
 @media (max-width: 1040px) {
-  .sobre .mapa svg,
+  .sobre.articulo { max-width: var(--ancho); }
+
+  .sobre .mapa { max-width: none; }
+}
+
+@media (max-width: 480px) {
+  .sobre .mapa .mapa-lienzo,
   .sobre .mapa .leyenda { display: none; }
 
   .sobre .mapa .mapa-lista {
@@ -143,7 +151,7 @@
 // Las hojas se imprimen abiertas (head.html y _v2-sobre.scss); el mapa
 // se imprime como lista, que en papel se lee mejor que un SVG sin cursor.
 @media print {
-  .sobre .mapa svg,
+  .sobre .mapa .mapa-lienzo,
   .sobre .mapa .leyenda { display: none; }
 
   .sobre .mapa .mapa-lista { display: block; }
