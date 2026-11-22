@@ -3,6 +3,7 @@ layout: page
 title: Banco de componentes
 permalink: /desarrollo/
 sitemap: false
+published: false   # solo desarrollo (RD-001). En local: jekyll serve --unpublished
 robots: noindex, nofollow
 section: desarrollo
 

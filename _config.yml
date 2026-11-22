@@ -23,6 +23,9 @@ exclude:
   - README.md
   - CLAUDE.md
   - docs
+  # Herramientas y pruebas: nunca se copian al sitio generado (RD-001).
+  - tests
+  - scripts
 
 sass:
   sass_dir: _sass

@@ -4,6 +4,7 @@ title: "Plantilla de poema"
 date: 2026-01-01
 epigrafe: "Un epígrafe opcional, para citar a alguien antes del primer verso."
 listar: false
+published: false   # plantilla: quítalo al crear una entrada real (RD-001). En local: jekyll serve --unpublished
 ---
 
 Esta es la primera estrofa

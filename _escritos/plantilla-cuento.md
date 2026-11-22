@@ -3,6 +3,7 @@ title: "Plantilla de cuento"
 date: 2026-01-01
 description: "Breve descripción del cuento (opcional, aparece en listados)."
 listar: false
+published: false   # plantilla: quítalo al crear una entrada real (RD-001). En local: jekyll serve --unpublished
 ---
 
 Este es el layout por defecto para los escritos: una columna angosta y centrada, con tipografía cómoda para lectura larga. Todo lo que escribas en markdown se renderiza tal cual: **negritas**, *itálicas*, `código`, listas, citas, y demás.
