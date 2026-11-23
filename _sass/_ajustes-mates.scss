@@ -1,11 +1,11 @@
-// Dueño: fase Mates (artículo de Mates: _layouts/post.html, los dos posts reales, sus .viz y el índice «En esta entrada»). Ajustes acotados a body.section-mates o .voz-mates; ver CONTRATO.md.
+// Dueño: fase Mates (artículo de Mates: _layouts/post.html, los dos posts reales, sus .viz y el índice «En esta entrada»). Ajustes acotados al layout del artículo (body.layout-post) o a la voz de lectura (.voz-mates), nunca a la categoría: desde R2 los comparten Mates e Inteligencia artificial; ver CONTRATO.md.
 // ==============================================================
 //  Ajustes · Mates
 //
 //  El artículo es <article class="post articulo voz-mates"> (ver la
 //  cabecera de _layouts/post.html). Los dos posts reales cargan su
 //  post.css DESPUÉS de styles.css (extra_css) y no se editan: aquí se les
-//  gana por especificidad, con `body .post…` o `body.section-mates …`,
+//  gana por especificidad, con `body .post…` o `body.layout-post …`,
 //  nunca por orden. Ningún color nuevo: solo tokens.
 //
 //  Qué se devuelve al sistema y qué se queda:
@@ -19,7 +19,7 @@
 // ==============================================================
 
 // ---- D11: las etiquetas viven en el front matter y salen en la meta ----
-body.section-mates .post-meta-chips { display: none; }
+body.layout-post .post-meta-chips { display: none; }
 
 // La medida de los hijos con otra letra (meta en mono, entrada de 21px,
 // H2, notas plegadas) la resuelve el registro de --texto como longitud
@@ -28,7 +28,7 @@ body.section-mates .post-meta-chips { display: none; }
 
 // La regla entre secciones (--- en el cuerpo): 48px a cada lado en vez de
 // 64px; con el margen del H2 que la sigue, cada sección quedaba a 130px.
-body.section-mates .articulo.voz-mates > hr { margin: var(--espacio-7) 0; }
+body.layout-post .articulo.voz-mates > hr { margin: var(--espacio-7) 0; }
 
 // ---- Entrada: el p.lead del cuerpo, como entrada-mates en crema ----
 // post.css lo pintaba como panel con regla de acento.
@@ -138,7 +138,7 @@ body .post.voz-mates table thead th { border-bottom-color: var(--tinta-tenue); }
 // overflow-y: hidden porque el MathML asistivo de MathJax (invisible, ya
 // recortado con clip) sobresale 2px por debajo y daba una barra vertical;
 // no recorta tinta: los lectores de pantalla lo siguen leyendo.
-body.section-mates .voz-mates :is(p, ul, ol):has(mjx-container:not([display="true"])) {
+body.layout-post .voz-mates :is(p, ul, ol):has(mjx-container:not([display="true"])) {
   overflow-x: auto;
   overflow-y: hidden;
 }
@@ -147,7 +147,7 @@ body.section-mates .voz-mates :is(p, ul, ol):has(mjx-container:not([display="tru
 // El anillo de :focus-visible (2px a 2px de distancia) se salía de la caja
 // del párrafo desplazable y quedaba recortado en dos barritas. Dentro de
 // esos párrafos se dibuja hacia dentro de la fórmula: entero, sin recorte.
-body.section-mates .voz-mates :is(p, ul, ol):has(mjx-container:not([display="true"])) mjx-container:focus-visible {
+body.layout-post .voz-mates :is(p, ul, ol):has(mjx-container:not([display="true"])) mjx-container:focus-visible {
   outline-offset: -2px;
 }
 
@@ -155,17 +155,17 @@ body.section-mates .voz-mates :is(p, ul, ol):has(mjx-container:not([display="tru
 // Al ancho del artículo (texto + margen): a la medida del texto cada
 // columna quedaba en unos 30 caracteres. Sin cajas. `none` y no
 // var(--ancho): el artículo ya mide --ancho (o la columna, plegado).
-body.section-mates .articulo > :is(.two-col, .analogy-grid) {
+body.layout-post .articulo > :is(.two-col, .analogy-grid) {
   max-width: none;
   clear: both;
 }
 
-body.section-mates .post .two-col {
+body.layout-post .post .two-col {
   gap: var(--espacio-6);
   margin: 2rem 0;
 }
 
-body.section-mates .post .two-col > .col {
+body.layout-post .post .two-col > .col {
   padding: var(--espacio-3) 0 0;
   background: none;
   border: 0;
@@ -173,30 +173,30 @@ body.section-mates .post .two-col > .col {
   border-radius: 0;
 }
 
-body.section-mates .post .two-col > .col h3 {
+body.layout-post .post .two-col > .col h3 {
   margin-top: 0;
   padding-bottom: 0;
   color: inherit;
   border-bottom: 0;
 }
 
-body.section-mates .post .two-col > .col > :last-child { margin-bottom: 0; }
+body.layout-post .post .two-col > .col > :last-child { margin-bottom: 0; }
 
-body.section-mates .post .analogy-grid {
+body.layout-post .post .analogy-grid {
   gap: var(--espacio-6);
   margin: 1.6rem 0 2rem;
 }
 
 // Cada analogía como la nota de margen «Analogía»: rótulo en mono y
 // Literata cursiva en tinta, sin caja.
-body.section-mates .post .analogy-grid .analogy {
+body.layout-post .post .analogy-grid .analogy {
   padding: 0;
   background: none;
   border: 0;
   border-radius: 0;
 }
 
-body.section-mates .post .analogy-grid .analogy h4 {
+body.layout-post .post .analogy-grid .analogy h4 {
   margin: 0 0 var(--espacio-2);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -207,7 +207,7 @@ body.section-mates .post .analogy-grid .analogy h4 {
   color: var(--acento);
 }
 
-body.section-mates .post .analogy-grid .analogy p {
+body.layout-post .post .analogy-grid .analogy p {
   margin: 0;
   font-family: var(--font-serif);
   font-size: 16px;
@@ -226,12 +226,12 @@ body.section-mates .post .analogy-grid .analogy p {
 //  así el orden visual es el del documento.
 // ==============================================================
 // `none`: el artículo ya mide --ancho (o la columna, plegado).
-body.section-mates .articulo > .viz {
+body.layout-post .articulo > .viz {
   max-width: none;
   clear: both;
 }
 
-body.section-mates .post .viz {
+body.layout-post .post .viz {
   margin: 2.4rem 0;
   padding: 0;
   font-family: var(--font-sans);
@@ -243,7 +243,7 @@ body.section-mates .post .viz {
 }
 
 // Rótulo «Visualización N · …», como «Figura N».
-body.section-mates .post .viz .viz-title {
+body.layout-post .post .viz .viz-title {
   margin: 0 0 var(--espacio-1);
   font-family: var(--font-mono);
   font-size: 11px;
@@ -257,7 +257,7 @@ body.section-mates .post .viz .viz-title {
 }
 
 // Pie con las instrucciones, en pie-figura.
-body.section-mates .post .viz .viz-sub {
+body.layout-post .post .viz .viz-sub {
   margin: 0 0 var(--espacio-3);
   font-family: var(--font-mono);
   font-size: 13px;
@@ -272,7 +272,7 @@ body.section-mates .post .viz .viz-sub {
 // estas reglas no pesan nada: cualquier regla de la hoja de una entrada
 // (.viz-stage, #viz-x .viz-stage…) les gana, y en los dos posts no cambia
 // nada.
-:where(body.section-mates .post .viz .viz-stage) {
+:where(body.layout-post .post .viz .viz-stage) {
   padding: .75rem;
   overflow: hidden;
   background: var(--lienzo-fondo);
@@ -280,14 +280,14 @@ body.section-mates .post .viz .viz-sub {
   border-radius: var(--radio-1);
 }
 
-:where(body.section-mates .post .viz .viz-stage svg) {
+:where(body.layout-post .post .viz .viz-stage svg) {
   display: block;
   width: 100%;
   height: auto;
   max-width: 100%;
 }
 
-:where(body.section-mates .post .viz .viz-controls) {
+:where(body.layout-post .post .viz .viz-controls) {
   display: flex;
   flex-wrap: wrap;
   gap: .75rem 1.25rem;
@@ -297,7 +297,7 @@ body.section-mates .post .viz .viz-sub {
 
 // El lienzo oscuro: en los dos posts, post.css le pone su borde y su
 // radio; aquí se devuelven a la regla y al radio del sistema.
-body.section-mates .post .viz .viz-stage {
+body.layout-post .post .viz .viz-stage {
   border-color: var(--regla);
   border-radius: var(--radio-1);
 }
@@ -306,7 +306,7 @@ body.section-mates .post .viz .viz-stage {
 // oscuro, quedaba claro sobre papel blanco. El lienzo se imprime con su
 // fondo (el resto de la página toma los colores del tema claro, _tokens).
 @media print {
-  body.section-mates .viz-stage {
+  body.layout-post .viz-stage {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -317,7 +317,7 @@ body.section-mates .post .viz .viz-stage {
 // hace click en él. Se limita el ANCHO (nunca el alto: perceptron.js
 // convierte el click con getBoundingClientRect y una caja con otra
 // proporción desplazaría los puntos) y se centra en su lienzo.
-body.section-mates #viz-perceptron .viz-stage svg {
+body.layout-post #viz-perceptron .viz-stage svg {
   max-width: 600px;
   margin-inline: auto;
 }
@@ -329,17 +329,17 @@ body.section-mates #viz-perceptron .viz-stage svg {
 // Los hitos de abajo tocan el borde del dibujo: el SVG (overflow hidden
 // por defecto) cortaba el lado inferior de su anillo de foco. El anillo
 // sale ahora al relleno del lienzo.
-body.section-mates :is(#viz-timeline, #viz-winters) .viz-stage svg { overflow: visible; }
+body.layout-post :is(#viz-timeline, #viz-winters) .viz-stage svg { overflow: visible; }
 
 @media (max-width: 600px) {
-  body.section-mates :is(#viz-timeline, #viz-winters) .viz-stage { overflow-x: auto; }
+  body.layout-post :is(#viz-timeline, #viz-winters) .viz-stage { overflow-x: auto; }
 
-  body.section-mates :is(#viz-timeline, #viz-winters) .viz-stage svg { min-width: 640px; }
+  body.layout-post :is(#viz-timeline, #viz-winters) .viz-stage svg { min-width: 640px; }
 }
 
 // Textos del SVG que los scripts piden en una pila SFMono: Plex Mono,
 // el hilo común del sitio. El resto hereda Plex Sans de la .viz.
-body.section-mates .viz svg :is(text[font-family*="monospace"], .node-label, .edge-label) {
+body.layout-post .viz svg :is(text[font-family*="monospace"], .node-label, .edge-label) {
   font-family: var(--font-mono);
 }
 
@@ -349,9 +349,9 @@ body.section-mates .viz svg :is(text[font-family*="monospace"], .node-label, .ed
 // del fondo pasan de 5:1 en los dos temas. La tercera regla es el θ del
 // cuerpo de McCulloch-Pitts (el nombre «x1» junto al nodo de entrada lleva
 // text-anchor y queda fuera).
-body.section-mates .viz svg .node.active + .node-label,
-body.section-mates .viz svg .node.active + .node-label + .node-label,
-body.section-mates .viz svg .node.active + .node-label + .edge-label:not([text-anchor]) {
+body.layout-post .viz svg .node.active + .node-label,
+body.layout-post .viz svg .node.active + .node-label + .node-label,
+body.layout-post .viz svg .node.active + .node-label + .edge-label:not([text-anchor]) {
   fill: var(--fondo);
 }
 
@@ -367,30 +367,30 @@ body.section-mates .viz svg .node.active + .node-label + .edge-label:not([text-a
 //   encendida el año sigue oscuro sobre la barra clara (3,7:1, como en
 //   master: ningún color de la paleta llega a 4,5:1 sobre ese tono medio);
 //   el mismo año se lee en el eje.
-body.section-mates :is(#viz-timeline, #viz-winters) svg text[fill="#6b7480"] { fill: var(--lienzo-tinta-tenue); }
+body.layout-post :is(#viz-timeline, #viz-winters) svg text[fill="#6b7480"] { fill: var(--lienzo-tinta-tenue); }
 
-body.section-mates #viz-winters svg text[fill="rgba(160,175,195,0.55)"] { fill: var(--lienzo-tinta-tenue); }
+body.layout-post #viz-winters svg text[fill="rgba(160,175,195,0.55)"] { fill: var(--lienzo-tinta-tenue); }
 
-body.section-mates #viz-winters svg text[fill="rgba(92,184,255,0.4)"] { fill: var(--lienzo-azulgris); }
+body.layout-post #viz-winters svg text[fill="rgba(92,184,255,0.4)"] { fill: var(--lienzo-azulgris); }
 
-body.section-mates #viz-convergence svg rect[fill-opacity="0.18"] + text + text:not([text-anchor]) { fill: var(--lienzo-tinta); }
+body.layout-post #viz-convergence svg rect[fill-opacity="0.18"] + text + text:not([text-anchor]) { fill: var(--lienzo-tinta); }
 
 // ---- Mandos: sobre el fondo de la página, en los dos temas ----
-body.section-mates .post .viz .viz-controls {
+body.layout-post .post .viz .viz-controls {
   font-size: 14px;
   color: var(--tinta);
 }
 
-body.section-mates .post .viz .viz-controls .value {
+body.layout-post .post .viz .viz-controls .value {
   font-family: var(--font-mono);
   color: var(--acento);
 }
 
-body.section-mates .post .viz .viz-controls input[type="range"] { accent-color: var(--acento); }
+body.layout-post .post .viz .viz-controls input[type="range"] { accent-color: var(--acento); }
 
 // mlp.js pinta su <select> oscuro en línea; en claro quedaba como una
 // isla negra entre los mandos. El !important solo vence a ese estilo.
-body.section-mates .post .viz .viz-controls :is(input[type="number"], select) {
+body.layout-post .post .viz .viz-controls :is(input[type="number"], select) {
   font-family: var(--font-mono);
   color: var(--tinta) !important;
   background: var(--fondo) !important;
@@ -399,7 +399,7 @@ body.section-mates .post .viz .viz-controls :is(input[type="number"], select) {
 }
 
 // Botones: palabra en mono con borde fino, sin relleno de color.
-body.section-mates .post .viz .btn {
+body.layout-post .post .viz .btn {
   padding: .3rem .75rem;
   font-family: var(--font-mono);
   font-size: 13px;
@@ -409,17 +409,17 @@ body.section-mates .post .viz .btn {
   border-radius: var(--radio-1);
 }
 
-body.section-mates .post .viz .btn.btn-ghost { color: var(--tinta-quieta); }
+body.layout-post .post .viz .btn.btn-ghost { color: var(--tinta-quieta); }
 
-body.section-mates .post .viz .btn:hover,
-body.section-mates .post .viz .btn:focus-visible {
+body.layout-post .post .viz .btn:hover,
+body.layout-post .post .viz .btn:focus-visible {
   color: var(--acento);
   background: none;
   border-color: var(--acento);
 }
 
 // ---- Lectura de valores: panel de código del sistema ----
-body.section-mates .post .viz .viz-readout {
+body.layout-post .post .viz .viz-readout {
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--tinta);
@@ -428,20 +428,20 @@ body.section-mates .post .viz .viz-readout {
   border-radius: var(--radio-1);
 }
 
-body.section-mates .post .viz .viz-readout .k { color: var(--tinta-tenue); }
+body.layout-post .post .viz .viz-readout .k { color: var(--tinta-tenue); }
 
-body.section-mates .post .viz .viz-readout .v { color: var(--acento); }
+body.layout-post .post .viz .viz-readout .v { color: var(--acento); }
 
-body.section-mates .post .viz .viz-readout p { margin: 0 0 var(--espacio-1); }
+body.layout-post .post .viz .viz-readout p { margin: 0 0 var(--espacio-1); }
 
 // La lectura del explorador de backpropagation no son pares clave/valor
 // sino cuatro bloques (época, tabla, detalle, nota): la rejilla de dos
 // columnas de post.css los repartía en diagonal.
-body.section-mates #viz-backprop .viz-readout { display: block; }
+body.layout-post #viz-backprop .viz-readout { display: block; }
 
 // backprop-explorer.js mete un <pre> en la lectura; post.css le fija un
 // fondo casi negro con !important.
-body.section-mates .post .viz .viz-readout pre {
+body.layout-post .post .viz .viz-readout pre {
   padding: 0;
   font-size: inherit;
   color: inherit;
@@ -450,12 +450,12 @@ body.section-mates .post .viz .viz-readout pre {
   border-radius: 0;
 }
 
-body.section-mates .post .viz .muted { color: var(--tinta-tenue); }
+body.layout-post .post .viz .muted { color: var(--tinta-tenue); }
 
 // ---- Panel de hitos de las dos líneas de tiempo ----
 // Sin panel ni regla de acento: texto de lectura bajo una regla de 1px.
-body.section-mates #viz-timeline .tl-panel,
-body.section-mates #viz-winters .tl-panel {
+body.layout-post #viz-timeline .tl-panel,
+body.layout-post #viz-winters .tl-panel {
   padding: var(--espacio-3) 0 0;
   background: none;
   border: 0;
@@ -463,8 +463,8 @@ body.section-mates #viz-winters .tl-panel {
   border-radius: 0;
 }
 
-body.section-mates #viz-timeline .tl-panel h4,
-body.section-mates #viz-winters .tl-panel h4 {
+body.layout-post #viz-timeline .tl-panel h4,
+body.layout-post #viz-winters .tl-panel h4 {
   margin: 0 0 var(--espacio-1);
   font-family: var(--font-serif);
   font-size: 18px;
@@ -472,8 +472,8 @@ body.section-mates #viz-winters .tl-panel h4 {
   color: var(--tinta);
 }
 
-body.section-mates #viz-timeline .tl-panel p,
-body.section-mates #viz-winters .tl-panel p {
+body.layout-post #viz-timeline .tl-panel p,
+body.layout-post #viz-winters .tl-panel p {
   font-family: var(--font-serif);
   font-size: 16px;
   line-height: 1.6;

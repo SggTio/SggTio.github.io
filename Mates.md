@@ -3,14 +3,21 @@ layout: seccion
 title: Mates
 permalink: /mates/
 section: mates
-coleccion: mates
-# Una lista por subsección, en este orden; lo que no tenga subsección
-# conocida va al final, bajo «Otras notas», solo si hay algo.
+categoria: mates
+# R2: tres espacios, en este orden. Explorar y Cuadernos matemáticos tienen
+# página propia (el rótulo enlaza) y, mientras no tengan publicaciones,
+# dicen «en preparación». Lo que no caiga en ningún grupo va al final, bajo
+# «Otras notas», solo si hay algo. Los artículos de IA ya no entran aquí:
+# son section: ia y viven en /ia/.
 grupos:
-  - titulo: Redes Neuronales
-    subseccion: redes-neuronales
-  - titulo: Geometría Computacional
-    subseccion: geometria-computacional
+  - titulo: Explorar
+    formato: explorar
+    url: /mates/explorar/
+    vacio: en preparación
+  - titulo: Cuadernos matemáticos
+    formato: cuaderno
+    url: /mates/cuadernos/
+    vacio: en preparación
   - titulo: Charlas
     subseccion: charlas
 resto_titulo: Otras notas

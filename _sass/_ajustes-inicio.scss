@@ -104,9 +104,11 @@ body.section-inicio .resumen-sobre {
 
 // ---- Pliegues ----
 // ≤960px el mosaico pasa a 6 columnas: retrato y ficha comparten fila
-// (2 + 4) y la ficha vuelve a rótulo sobre valor. El mapa sigue siendo
-// el dibujo: si el tile baja de los 820px que necesita, el lienzo se
-// desplaza en horizontal (_v2-sobre.scss).
+// (2 + 4) y la ficha vuelve a rótulo sobre valor. El mapa pasa a su lista
+// en texto (R2): el dibujo necesita 820px (_v2-sobre.scss) y por debajo de
+// 960px el tile ya no los tiene; con el lienzo desplazable, a 768px los
+// nodos de la derecha quedaban fuera de la vista. En /sobre/ sigue el
+// lienzo desplazable.
 @media (max-width: 960px) {
   body.section-inicio .resumen-sobre {
     .retrato {
@@ -123,20 +125,6 @@ body.section-inicio .resumen-sobre {
     .ficha-personaje dt.rotulo:first-child { margin-top: 0; }
 
     .intereses { grid-column: span 6; }
-  }
-}
-
-// En teléfonos el retrato ocupa la fila entera, con proporción (como la
-// foto del mosaico), la ficha va debajo y el mapa se sustituye por su
-// lista, como en /sobre/.
-@media (max-width: 480px) {
-  body.section-inicio .resumen-sobre {
-    .retrato {
-      grid-column: span 6;
-      aspect-ratio: 4 / 3;
-    }
-
-    .personaje { grid-column: span 6; }
 
     .mapa .mapa-lienzo,
     .mapa .leyenda { display: none; }
@@ -151,5 +139,18 @@ body.section-inicio .resumen-sobre {
 
       a { color: var(--tinta); }
     }
+  }
+}
+
+// En teléfonos el retrato ocupa la fila entera, con proporción (como la
+// foto del mosaico) y la ficha va debajo.
+@media (max-width: 480px) {
+  body.section-inicio .resumen-sobre {
+    .retrato {
+      grid-column: span 6;
+      aspect-ratio: 4 / 3;
+    }
+
+    .personaje { grid-column: span 6; }
   }
 }

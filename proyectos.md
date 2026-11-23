@@ -1,11 +1,14 @@
 ---
 layout: page
-title: Proyectos
+title: Investigaciones
 permalink: /proyectos/
 section: proyectos
 ---
 
 {%- comment -%}
+  R2: la página se titula «Investigaciones» (menú y <h1>) y conserva la URL
+  /proyectos/ y las de sus fichas.
+
   Índice de proyectos (componente IndiceProyectos): una lista numerada por
   área, no una rejilla de tarjetas. Cada fila la pinta
   _includes/fila-proyecto.html.
@@ -27,6 +30,13 @@ section: proyectos
 {%- endcomment -%}
 
 {%- assign todos = site.proyectos -%}
+{%- comment -%}
+  R2: las fichas de divulgación (tipo: divulgacion; hoy la charla de
+  laplacianos y la serie de redes neuronales) no son investigaciones y no
+  se listan aquí. Sus URL siguen vivas: la charla se enlaza desde el mapa
+  de intereses y la serie desde /ia/explorar/.
+{%- endcomment -%}
+{%- assign todos = todos | where_exp: "p", "p.tipo != 'divulgacion'" -%}
 {%- if jekyll.environment == "production" -%}
   {%- assign todos = todos | where_exp: "p", "p.draft != true" -%}
 {%- endif -%}

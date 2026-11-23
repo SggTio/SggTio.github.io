@@ -3,17 +3,22 @@
   Etiquetas y los conteos de la portada. No pinta nada: deja variables
   en el ámbito de quien lo incluye.
 
-  Entran Mates, Notas y Escritos; se excluyen los borradores (draft: true)
+  Entran Mates, IA, Notas y Escritos. La categoría de cada publicación es
+  `section` (R2), no su colección: los artículos de IA viven en _mates con
+  section: ia. Se excluyen los borradores (draft: true)
   y lo marcado con `listar: false` (D10: placeholders y plantillas, cuyas
   URL siguen vivas pero no aparecen en ninguna lista). Proyectos no entra:
   no tiene fecha.
 
   Deja
     publicaciones  array, por fecha descendente
-    n_mates        publicaciones de Mates
+    n_mates        publicaciones de Mates (section: mates)
+    n_ia           publicaciones de Inteligencia artificial (section: ia)
     n_notas        publicaciones de Notas
     n_escritos     publicaciones de Escritos
-    n_proyectos    fichas de proyecto sin draft
+    n_mates_explorar, n_mates_cuadernos   las de Mates por `formato`
+    n_proyectos    fichas de proyecto sin draft y sin las de divulgación
+                   (tipo: divulgacion), que no figuran como investigaciones
 
   Uso: incluirlo una vez al principio de la página o del layout y luego
   recorrer `publicaciones` (por ejemplo con limit: 3 para «Últimas»).
@@ -27,7 +32,11 @@
   {%- assign publicaciones = publicaciones | push: _i -%}
 {%- endfor -%}
 {%- assign publicaciones = publicaciones | sort: "date" | reverse -%}
-{%- assign n_mates = publicaciones | where: "collection", "mates" | size -%}
-{%- assign n_notas = publicaciones | where: "collection", "notas" | size -%}
-{%- assign n_escritos = publicaciones | where: "collection", "escritos" | size -%}
-{%- assign n_proyectos = site.proyectos | where_exp: "p", "p.draft != true" | size -%}
+{%- assign _pub_mates = publicaciones | where: "section", "mates" -%}
+{%- assign n_mates = _pub_mates | size -%}
+{%- assign n_mates_explorar = _pub_mates | where: "formato", "explorar" | size -%}
+{%- assign n_mates_cuadernos = _pub_mates | where: "formato", "cuaderno" | size -%}
+{%- assign n_ia = publicaciones | where: "section", "ia" | size -%}
+{%- assign n_notas = publicaciones | where: "section", "notas" | size -%}
+{%- assign n_escritos = publicaciones | where: "section", "escritos" | size -%}
+{%- assign n_proyectos = site.proyectos | where_exp: "p", "p.draft != true and p.tipo != 'divulgacion'" | size -%}

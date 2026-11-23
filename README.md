@@ -6,7 +6,7 @@ Construido con [Jekyll](https://jekyllrb.com). El aspecto sigue el sistema de di
 
 ## Estructura
 
-- `_mates/` — posts de matemáticas y geometría computacional
+- `_mates/` — artículos de Mates y de Inteligencia artificial (la categoría la fija `section` en el front matter, no la carpeta: los de IA llevan `section: ia` y salen en `/ia/`)
 - `_notas/` — notas, ideas y blog
 - `_escritos/` — cuentos, poemas y otros escritos
 - `_layouts/`, `_includes/`, `_sass/` — plantillas y estilos

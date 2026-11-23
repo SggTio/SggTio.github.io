@@ -3,7 +3,7 @@ layout: seccion
 title: Escritos
 permalink: /escritos/
 section: escritos
-coleccion: escritos
+categoria: escritos
 lista_titulo: Últimos escritos
 lista_limite: 3
 resto_titulo: Otros escritos

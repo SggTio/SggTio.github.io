@@ -13,8 +13,12 @@ description: "TODO(santiago): una frase para las listas, el feed y los buscadore
 tags:                   # en minúscula; salen en la línea de meta y en /etiquetas/
   - "TODO(santiago): etiqueta"
 math: true              # carga MathJax: hace falta para fórmulas y para ecuacion.html
-# subsection: redes-neuronales  # grupo en /mates/: redes-neuronales | geometria-computacional | charlas.
-#                               # Sin subsection la entrada sale al final, en «Otras notas».
+# formato: explorar            # R2: espacio dentro de la categoría: explorar | cuaderno | charla.
+#                               # explorar sale en /mates/explorar/ (o /ia/explorar/), cuaderno en
+#                               # /mates/cuadernos/; sin formato ni subsection, al final, en «Otras notas».
+# section: ia                   # R2: solo en un artículo de Inteligencia artificial (por defecto, mates);
+# area: ia                      #     va con area: ia. El archivo sigue en _mates y la URL no cambia.
+# subsection: charlas           # grupo de /mates/ por subsección (hoy solo charlas).
 # extra_css:                    # hoja propia de la entrada (opcional: el lienzo ya lo pone el sitio)
 #   - /assets/posts/SLUG/post.css
 

@@ -11,6 +11,21 @@ Depende de `docs/site-restructure-audit.md`.
 > registro del plan descartado. Los
 > campos que los layouts leen hoy están en §5, «Campos y convenciones vigentes».
 
+> **Nota R2 (2026-11-22).** La especificación editorial R2 sustituye a §1
+> (navegación) y §8 (mapa de rutas): el menú es Mates · IA · Investigaciones ·
+> Notas · Escritos · Sobre mí; `/proyectos/` conserva su URL con el título
+> «Investigaciones»; no hay `/letras/`, `/investigacion/`, `/area/` ni
+> `/genero/`. La categoría editorial de una publicación es `section` (`mates` |
+> `ia` | `notas` | `escritos`), independiente de la colección: los artículos de
+> IA viven en `_mates` con `section: ia` y conservan su URL. `formato`
+> (`explorar` | `cuaderno` | `charla`) nombra el espacio dentro de la categoría.
+> Rutas nuevas: `/ia/`, `/ia/explorar/`, `/mates/explorar/`, `/mates/cuadernos/`.
+> Cada publicación tiene una sola categoría principal y no se duplica en varios
+> catálogos. La voz tipográfica (`voz-mates`) es independiente de la categoría:
+> la comparten Mates e IA. «Investigaciones» (`/proyectos/`) reúne las fichas de
+> investigación, software y experimentos; las de divulgación conservan su URL
+> pero no se listan allí.
+
 ## Decisiones que lo sustentan
 
 | Decisión | Valor | Cuándo |
@@ -469,7 +484,9 @@ Lo que los layouts del rediseño v2 ya leen, además de los defaults:
 | `epigrafe_fuente` | Escritos | quién lo dijo, **sin la raya**: el layout la pone |
 | `draft: true` | cualquier texto | fuera de listas, feed, «Últimas», etiquetas y conteos; aviso «Borrador» en local en todos los layouts, que en Mates, Notas y Escritos dice además si falta `published: false`. La página **se genera igual** y entra en `sitemap.xml` |
 | `published: false` | cualquier texto | Jekyll no genera la página: la garantía de que un `TODO(santiago)` no llega a producción. En local, `jekyll serve --unpublished` |
-| `subsection` | Mates | grupo de `/mates/`: `redes-neuronales`, `geometria-computacional`, `charlas`; sin ella, «Otras notas» |
+| `section` | Mates, IA | categoría editorial (R2): `mates` por defecto en `_mates`; `ia` en los artículos de IA, que no cambian de carpeta ni de URL. Fija el menú activo, el acento, la voz, la etiqueta de sección y los conteos |
+| `formato` | Mates, IA | espacio dentro de la categoría (R2): `explorar`, `cuaderno`, `charla`. Agrupa en `/mates/` e `/ia/`; filtra `/mates/explorar/`, `/mates/cuadernos/` e `/ia/explorar/` |
+| `subsection` | Mates | grupo de `/mates/` por subsección (hoy solo `charlas`; Explorar y Cuadernos van por `formato`); sin grupo, «Otras notas» |
 | `math: true` | cualquier texto | carga MathJax (fórmulas, `ecuacion.html`) |
 | `extra_css` | Mates | hojas propias de la entrada (opcional: la base del lienzo de las `.viz` y de sus mandos la pone el sitio) |
 

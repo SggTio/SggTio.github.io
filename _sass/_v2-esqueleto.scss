@@ -22,7 +22,9 @@ body {
   --accent-color: var(--acento);
 }
 
-body.section-mates {
+// IA comparte el acento de Mates (R2): el linaje matemáticas → IA.
+body.section-mates,
+body.section-ia {
   --acento: var(--azulgris);
   --accent-color: var(--acento);
 }
@@ -41,7 +43,8 @@ body.section-proyectos {
 
 // Para teñir un bloque suelto con el acento de otra sección (filas de la
 // portada, tiles). No tocan --accent-color.
-.seccion-mates { --acento: var(--azulgris); }
+.seccion-mates,
+.seccion-ia { --acento: var(--azulgris); }
 .seccion-escritos,
 .seccion-notas,
 .seccion-sobre { --acento: var(--crema); }
@@ -198,4 +201,21 @@ body.section-proyectos {
   .contenedor { padding: 0 var(--espacio-4); }
 
   .pie .pie-firma { margin-left: 0; }
+}
+
+// Menú de seis (R2), medido en el navegador: en una línea los seis enlaces
+// necesitan 396px más el gutter de 16px a cada lado, 428px de pantalla. A
+// 480px caben con holgura y se quedan en una fila. Por debajo, el flujo flex
+// envolvía en 5 + 1; desde 440px (margen para otras fuentes del sistema) el
+// menú es una retícula de tres columnas: dos filas de tres, en el orden del
+// documento. Cada enlace se ajusta a su palabra para que la línea de 2px del
+// activo no se estire al ancho de la columna.
+@media (max-width: 440px) {
+  .masthead nav {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    justify-items: start;
+    column-gap: var(--espacio-4);
+  }
 }

@@ -2,7 +2,9 @@
 layout: post
 title: "Avances de las redes neuronales: del invierno al amanecer del deep learning"
 date: 2026-04-15
-section: mates
+section: ia
+area: ia
+formato: explorar
 subsection: redes-neuronales
 math: true
 wide: true

@@ -8,13 +8,15 @@ section: inicio
   Portada (rediseño v2; componente Portada): mosaico de 12 columnas.
   foto 7×2 · frases 5×1 (las tres frases protegidas, literales, D8) ·
   «Últimas» 5×1 (las tres publicaciones más recientes, sin draft ni
-  listar: false) · cuatro tiles de sección con su cuenta. Debajo, en una
-  línea de meta, el texto de presentación de la portada anterior (D9).
+  listar: false) · una fila de cinco tiles de categoría (.tile-fila, R2):
+  Mates, IA, Investigaciones, Notas y Escritos, cada uno con una línea que
+  dice qué hay o qué está en preparación (no un contador vacío). Debajo,
+  en una línea de meta, el texto de presentación de la portada anterior (D9).
   El <h1> existe para la estructura de la página pero no se ve: el
   nombre del sitio ya está en la cabecera.
 {%- endcomment -%}
 {%- include publicaciones.html -%}
-{%- assign _ini_secciones = "mates,notas,escritos,proyectos" | split: "," %}
+{%- assign _ini_secciones = "mates,ia,proyectos,notas,escritos" | split: "," %}
 <h1 class="visualmente-oculto">{{ site.title }}</h1>
 
 <div class="mosaico">
@@ -31,28 +33,36 @@ section: inicio
     {%- if publicaciones.size > 0 %}
     <ol>
       {%- for _ini_p in publicaciones limit: 3 %}
-      <li><span class="fecha">{% include fecha.html fecha=_ini_p.date %} <span class="sec seccion-{{ _ini_p.collection }}">{{ _ini_p.collection }}</span></span><a href="{{ _ini_p.url | relative_url }}">{{ _ini_p.title }}</a></li>
+      <li><span class="fecha">{% include fecha.html fecha=_ini_p.date %} <span class="sec seccion-{{ _ini_p.section }}">{{ _ini_p.section }}</span></span><a href="{{ _ini_p.url | relative_url }}">{{ _ini_p.title }}</a></li>
       {%- endfor %}
     </ol>
     {%- else %}
     <p class="vacia">aún sin entradas</p>
     {%- endif %}
   </div>
+  <div class="tile-fila">
   {%- for _ini_s in _ini_secciones -%}
     {%- case _ini_s -%}
-      {%- when "mates" -%}{%- assign _ini_n = n_mates -%}{%- assign _ini_px = "px-sigma" -%}{%- assign _ini_nombre = "Mates" -%}
-      {%- when "notas" -%}{%- assign _ini_n = n_notas -%}{%- assign _ini_px = "px-marca" -%}{%- assign _ini_nombre = "Notas" -%}
-      {%- when "escritos" -%}{%- assign _ini_n = n_escritos -%}{%- assign _ini_px = "px-pluma" -%}{%- assign _ini_nombre = "Escritos" -%}
-      {%- when "proyectos" -%}{%- assign _ini_n = n_proyectos -%}{%- assign _ini_px = "px-caja" -%}{%- assign _ini_nombre = "Proyectos" -%}
+      {%- when "mates" -%}
+        {%- assign _ini_px = "px-sigma" -%}{%- assign _ini_nombre = "Mates" -%}
+        {%- capture _ini_cuenta -%}{% if n_mates_explorar == 0 and n_mates_cuadernos == 0 %}Explorar · Cuadernos en preparación{% elsif n_mates == 1 %}1 entrada{% else %}{{ n_mates }} entradas{% endif %}{%- endcapture -%}
+      {%- when "ia" -%}
+        {%- assign _ini_px = "px-ia" -%}{%- assign _ini_nombre = "Inteligencia artificial" -%}
+        {%- capture _ini_cuenta -%}{% if n_ia == 0 %}Explorar · en preparación{% elsif n_ia == 1 %}Explorar · 1 artículo{% else %}Explorar · {{ n_ia }} artículos{% endif %}{%- endcapture -%}
+      {%- when "proyectos" -%}
+        {%- assign _ini_px = "px-caja" -%}{%- assign _ini_nombre = "Investigaciones" -%}
+        {%- capture _ini_cuenta -%}{% if n_proyectos == 0 %}aún sin fichas{% elsif n_proyectos == 1 %}1 ficha{% else %}{{ n_proyectos }} fichas{% endif %}{%- endcapture -%}
+      {%- when "notas" -%}
+        {%- assign _ini_px = "px-marca" -%}{%- assign _ini_nombre = "Notas" -%}
+        {%- capture _ini_cuenta -%}{% if n_notas == 0 %}Reflexiones · en preparación{% elsif n_notas == 1 %}Reflexiones · 1 entrada{% else %}Reflexiones · {{ n_notas }} entradas{% endif %}{%- endcapture -%}
+      {%- when "escritos" -%}
+        {%- assign _ini_px = "px-pluma" -%}{%- assign _ini_nombre = "Escritos" -%}
+        {%- capture _ini_cuenta -%}{% if n_escritos == 0 %}Cuentos y poesía · en preparación{% elsif n_escritos == 1 %}Cuentos y poesía · 1 entrada{% else %}Cuentos y poesía · {{ n_escritos }} entradas{% endif %}{%- endcapture -%}
     {%- endcase -%}
-    {%- if _ini_s == "proyectos" -%}
-      {%- assign _ini_uno = "ficha" -%}{%- assign _ini_varios = "fichas" -%}
-    {%- else -%}
-      {%- assign _ini_uno = "entrada" -%}{%- assign _ini_varios = "entradas" -%}
-    {%- endif -%}
     {%- capture _ini_url -%}/{{ _ini_s }}/{%- endcapture %}
-  <a class="tile seccion {{ _ini_s }}" href="{{ _ini_url | relative_url }}"><span class="px {{ _ini_px }} px-grande" aria-hidden="true"></span><span class="nombre">{{ _ini_nombre }}</span><span class="cuenta">{% if _ini_n == 0 %}aún sin {{ _ini_varios }}{% elsif _ini_n == 1 %}1 {{ _ini_uno }}{% else %}{{ _ini_n }} {{ _ini_varios }}{% endif %}</span></a>
+  <a class="tile seccion {{ _ini_s }}" href="{{ _ini_url | relative_url }}"><span class="px {{ _ini_px }} px-grande" aria-hidden="true"></span><span class="nombre">{{ _ini_nombre }}</span><span class="cuenta">{{ _ini_cuenta }}</span></a>
   {%- endfor %}
+  </div>
 </div>
 
 {%- comment -%}

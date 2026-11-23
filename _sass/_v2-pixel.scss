@@ -11,7 +11,7 @@
 //    <span class="px px-vineta"></span>      5×5, viñeta
 //    <span class="px px-abierta"></span>     5×5, marcador abierto
 //    <span class="px px-sigma px-grande"></span>  8×8 (también px-marca,
-//                                            px-pluma, px-caja); solo tiles
+//                                            px-pluma, px-caja, px-ia); solo tiles
 //
 //  Desviación (D5): el cursor parpadea 4 ciclos y queda fijo; estático
 //  con prefers-reduced-motion. Uno por pantalla como máximo.
@@ -45,6 +45,12 @@
 .px-caja::before { box-shadow: calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*7), calc(var(--px)*2) calc(var(--px)*7), calc(var(--px)*3) calc(var(--px)*7), calc(var(--px)*4) calc(var(--px)*7), calc(var(--px)*5) calc(var(--px)*7), calc(var(--px)*6) calc(var(--px)*7), calc(var(--px)*0) calc(var(--px)*1), calc(var(--px)*0) calc(var(--px)*2), calc(var(--px)*0) calc(var(--px)*3), calc(var(--px)*0) calc(var(--px)*4), calc(var(--px)*0) calc(var(--px)*5), calc(var(--px)*0) calc(var(--px)*6), calc(var(--px)*7) calc(var(--px)*1), calc(var(--px)*7) calc(var(--px)*2), calc(var(--px)*7) calc(var(--px)*3), calc(var(--px)*7) calc(var(--px)*4), calc(var(--px)*7) calc(var(--px)*5), calc(var(--px)*7) calc(var(--px)*6), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*4); }
 
 .px-marca::before { box-shadow: calc(var(--px)*2) calc(var(--px)*0), calc(var(--px)*2) calc(var(--px)*1), calc(var(--px)*2) calc(var(--px)*2), calc(var(--px)*2) calc(var(--px)*3), calc(var(--px)*2) calc(var(--px)*4), calc(var(--px)*2) calc(var(--px)*5), calc(var(--px)*3) calc(var(--px)*0), calc(var(--px)*3) calc(var(--px)*1), calc(var(--px)*3) calc(var(--px)*2), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*3) calc(var(--px)*5), calc(var(--px)*4) calc(var(--px)*0), calc(var(--px)*4) calc(var(--px)*1), calc(var(--px)*4) calc(var(--px)*2), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*5), calc(var(--px)*5) calc(var(--px)*0), calc(var(--px)*5) calc(var(--px)*1), calc(var(--px)*5) calc(var(--px)*2), calc(var(--px)*5) calc(var(--px)*3), calc(var(--px)*5) calc(var(--px)*4), calc(var(--px)*5) calc(var(--px)*5), calc(var(--px)*2) calc(var(--px)*6), calc(var(--px)*5) calc(var(--px)*6); }
+
+// Inteligencia artificial (R2): una red con nodo central. Cuatro nodos de
+// 2×2 en las esquinas y un nodo central mayor (4×4 sin las esquinas),
+// separados por un píxel: las diagonales se leen sin estar dibujadas, y el
+// centro se distingue de los satélites. 28 píxeles.
+.px-ia::before { box-shadow: calc(var(--px)*0) calc(var(--px)*0), calc(var(--px)*0) calc(var(--px)*1), calc(var(--px)*1) calc(var(--px)*0), calc(var(--px)*1) calc(var(--px)*1), calc(var(--px)*0) calc(var(--px)*6), calc(var(--px)*0) calc(var(--px)*7), calc(var(--px)*1) calc(var(--px)*6), calc(var(--px)*1) calc(var(--px)*7), calc(var(--px)*6) calc(var(--px)*0), calc(var(--px)*6) calc(var(--px)*1), calc(var(--px)*7) calc(var(--px)*0), calc(var(--px)*7) calc(var(--px)*1), calc(var(--px)*6) calc(var(--px)*6), calc(var(--px)*6) calc(var(--px)*7), calc(var(--px)*7) calc(var(--px)*6), calc(var(--px)*7) calc(var(--px)*7), calc(var(--px)*3) calc(var(--px)*2), calc(var(--px)*4) calc(var(--px)*2), calc(var(--px)*2) calc(var(--px)*3), calc(var(--px)*3) calc(var(--px)*3), calc(var(--px)*4) calc(var(--px)*3), calc(var(--px)*5) calc(var(--px)*3), calc(var(--px)*2) calc(var(--px)*4), calc(var(--px)*3) calc(var(--px)*4), calc(var(--px)*4) calc(var(--px)*4), calc(var(--px)*5) calc(var(--px)*4), calc(var(--px)*3) calc(var(--px)*5), calc(var(--px)*4) calc(var(--px)*5); }
 
 .px-grande { --px: calc(var(--pixel) * 1.5); }
 

@@ -14,7 +14,8 @@ tecnologias: [JavaScript, MathJax]
 
 resumen: |
   Esta ficha es el **índice de la serie**, no el contenido. Los textos viven en
-  Escritos; aquí está el plan y su estado.
+  [Inteligencia artificial / Explorar](/ia/explorar/); aquí está el plan y su
+  estado: dos entregas publicadas, con nueve visualizaciones entre ambas.
 
 contribucion: |
   **Post 01 — De la neurona lógica al MLP.** Publicado:
@@ -26,16 +27,18 @@ contribucion: |
   como predecesores del perceptrón, a dos columnas; perceptrón y MLP con
   visualizaciones interactivas que sincronizan ecuación, arquitectura y flujo
   de datos; y una sección de analogías a dos columnas para lectores no
-  técnicos.
+  técnicos. Cinco visualizaciones: la línea de tiempo, la neurona de
+  McCulloch-Pitts, la red NAND educable de Turing, el perceptrón de Rosenblatt
+  y el MLP que aprende XOR.
 
-  **Post 02 — Del invierno al amanecer del deep learning.** Escrito y guardado
-  en el repositorio, **todavía sin publicar**. Cubre los dos inviernos de la
-  IA, el redescubrimiento de backpropagation, las primeras CNN y RNN, y la
-  convergencia de datos, GPU y algoritmos hasta 2010.
+  **Post 02 — Del invierno al amanecer del deep learning.** Publicado:
+  [Avances de las redes neuronales](/mates/2026-04-15-avances-redes-neuronales/).
 
-  Le faltan tres visualizaciones: explorador de backpropagation, convolución
-  paso a paso, y el gráfico de convergencia de 2012. Sus bloques ya están en el
-  texto, marcados como pendientes.
+  Cubre los dos inviernos de la IA, el redescubrimiento de backpropagation,
+  las primeras CNN y RNN, y la convergencia de datos, GPU y algoritmos hasta
+  2010, con cuatro visualizaciones: «inviernos y renacimientos»,
+  «explorador de backpropagation», «convolución, píxel a píxel» y el gráfico
+  de la convergencia de 2012 (algoritmos, cómputo y datos en el tiempo).
 
 enfoque_computacional: |
   Decisiones de diseño de la serie:
@@ -45,29 +48,24 @@ enfoque_computacional: |
   - *Mobile-first*: las secciones a dos columnas se apilan en pantalla estrecha.
   - Texto alternativo en las visualizaciones y controles accesibles por teclado.
 
-proximos_pasos: |
-  Publicar el post 02, una vez estén sus tres visualizaciones.
-
-  Post 03, comenzando en AlexNet.
-
 visualizaciones:
   - id: viz-backprop-explorer
     titulo: "Explorador de backpropagation"
     seccion: contribucion
     tipo: interactiva
-    estado: pendiente
+    estado: hecha
     que_muestra: |
       Red configurable donde se elige arquitectura y conjunto de datos, y se
       avanza paso a paso: hacia delante, hacia atrás, actualización. Cada paso
       resalta qué se está calculando en la ecuación y en el diagrama a la vez.
-      Es el bloque `viz-backprop` que ya existe vacío en el post 02.
+      Es el bloque `viz-backprop` del post 02.
     ensena: "Qué hace realmente backpropagation, en vez de citar la regla de la cadena."
 
   - id: viz-convolucion
     titulo: "Convolución, píxel a píxel"
     seccion: contribucion
     tipo: interactiva
-    estado: pendiente
+    estado: hecha
     que_muestra: |
       Una imagen pequeña, un filtro 3×3 y la salida calculándose en tiempo
       real, con la ventana desplazándose. Filtros preparados de un clic:
@@ -79,7 +77,7 @@ visualizaciones:
     titulo: "La convergencia de 2012"
     seccion: contribucion
     tipo: figura
-    estado: pendiente
+    estado: hecha
     que_muestra: |
       Tres curvas en el tiempo —tamaño de los conjuntos de datos, cómputo
       disponible por dólar, y publicaciones sobre aprendizaje profundo— con el

@@ -2,7 +2,9 @@
 layout: post
 title: "Los cimientos de la inteligencia artificial: de la neurona lógica al MLP"
 date: 2026-04-14
-section: mates
+section: ia
+area: ia
+formato: explorar
 subsection: redes-neuronales
 math: true
 wide: true

@@ -52,14 +52,19 @@ social:
 # Custom vars
 version: 3.0.0
 
-# Navbar page list
+# Navbar page list (R2, 2026-11-22): seis entradas. El rótulo del menú es
+# «IA» y el de sus páginas «Inteligencia artificial»; /proyectos/ conserva
+# su URL con el título visible «Investigaciones».
 nav:
-  - title: Proyectos
-    url: /proyectos/
-    section: proyectos
   - title: Mates
     url: /mates/
     section: mates
+  - title: IA
+    url: /ia/
+    section: ia
+  - title: Investigaciones
+    url: /proyectos/
+    section: proyectos
   - title: Notas
     url: /notas/
     section: notas
@@ -96,6 +101,9 @@ defaults:
       path: ""
       type: "mates"
     values:
+      # R2: `section` es la categoría editorial (mates | ia), no la carpeta.
+      # Un artículo de IA declara en su front matter section: ia, area: ia y
+      # formato (explorar | cuaderno | charla) sin cambiar de colección ni de URL.
       section: "mates"
       layout: "post"
       area: "matematicas"

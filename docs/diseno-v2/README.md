@@ -223,7 +223,8 @@ lienzo oscuro.
 
 | Sección (`page.section`) | Páginas | Layout | Voz | Acento | Pliegue del margen |
 |---|---|---|---|---|---|
-| `mates` | /mates/, `_mates/*` | `seccion`, `post` | `voz-mates` (Literata 18/1.65, 66ch) | azulgris | ≤1090px |
+| `mates` | /mates/, /mates/explorar/, /mates/cuadernos/, `_mates/*` con `section: mates` | `seccion`, `post` | `voz-mates` (Literata 18/1.65, 66ch) | azulgris | ≤1090px |
+| `ia` (R2) | /ia/, /ia/explorar/, los artículos de IA (`_mates/*` con `section: ia`) | `seccion`, `post` | `voz-mates` (la voz de lectura la comparten Mates e IA; los ajustes de `_ajustes-mates` se acotan a `body.layout-post`, no a la categoría) | azulgris | ≤1090px |
 | `escritos` | /escritos/, `_escritos/*` | `seccion`, `escrito`, `poema` | `voz-escritos` (Literata 19/1.75, 58ch) | crema | ≤1040px |
 | `notas` | /notas/, `_notas/*` | `seccion`, `nota` | `voz-tecnica`; con `genero: ensayo`, `voz-escritos` (D12) | crema | según voz |
 | `sobre` | /sobre/ | `sobre` | `voz-escritos` | crema | ≤1040px |
@@ -318,7 +319,7 @@ falta `published: false`), `tarjeta-post` (`formato_fecha` ahora es opcional: si
 |---|---|---|
 | `default` | todo | esqueleto: `.saltar`, `.contenedor`, `.masthead` (marca + nav), `main#contenido`, `.pie` (Archivo · Etiquetas · Feed, alternador, «© año autor»). La cabecera no lleva encabezado: cada página aporta un `<h1>` (la portada, `.visualmente-oculto`). `aria-current="page"` en el índice de la sección, `"true"` dentro. |
 | `page` | `proyectos.md`, `desarrollo.md` | `<article class="articulo {{ voz }}"><h1>`. |
-| `seccion` (nuevo) | Mates, Notas, Escritos, Archivo, Etiquetas | `title`, `coleccion`, `grupos` (lista de `{titulo, subseccion}`), `por_anio`, `lista_titulo`, `lista_limite`, `resto_titulo`, `lista: false` (la página escribe sus listas). Lista vacía → «aún sin entradas». |
+| `seccion` | Mates, IA, Explorar y Cuadernos, Notas, Escritos, Archivo, Etiquetas | `title`, `categoria` (filtra por `section`, R2), `formato`, `grupos` (lista de `{titulo, formato \| subseccion, url, vacio}`), `por_anio`, `lista_titulo`, `lista_limite`, `lista_vacia`, `resto_titulo`, `lista: false` (la página escribe sus listas). Lista vacía → «aún sin entradas» o el texto de `vacio`/`lista_vacia` («en preparación», R2). Con `url` el rótulo del grupo enlaza a su página. |
 | `post` | `_mates` | `article.post.articulo.voz-mates`: h1 → meta (fecha · sección · etiquetas · minutos) → aviso «Borrador» (con `draft: true`, solo en local) → índice al margen → cuerpo. Si el contenido trae `.viz-stage`, un oyente `focusin` en el documento desplaza el lienzo hasta mostrar el hito enfocado. |
 | `nota` | `_notas` | meta: fecha · género · etiquetas · minutos; aviso «Borrador» (con `draft: true`, solo en local); `description` como resumen. |
 | `escrito`, `poema` | `_escritos` | voz de lectura, sin tiempo de lectura ni guiños píxel; `epigrafe`, `epigrafe_fuente`; `***` → «· · ·»; aviso «Borrador» bajo la meta (con `draft: true`, solo en local). |
@@ -332,7 +333,7 @@ falta `published: false`), `tarjeta-post` (`formato_fecha` ahora es opcional: si
 | Componente (`sistema/components/`) | Dónde vive |
 |---|---|
 | Navegacion | `_layouts/default.html`, `_v2-esqueleto` |
-| Portada | `index.md`, `_v2-mosaico`, `_ajustes-listas` |
+| Portada | `index.md` (cinco tiles de categoría en `.tile-fila`, R2), `_v2-mosaico`, `_ajustes-listas`, `_ajustes-inicio` |
 | ArticuloMates | `_layouts/post.html`, `indice-entrada.html`, `margen.html`, `ecuacion.html`, `_v2-articulo`, `_ajustes-mates` |
 | NotaMargen | `margen.html`, `_v2-articulo` |
 | Figura | `figura.html`, `_v2-figura` |
@@ -368,6 +369,11 @@ nav, código ni Escritos. El cursor (`<span class="rotulo cursor">`) está hoy e
 | D12 Notas | voz técnica | voz técnica por defecto; `genero: ensayo` → voz de lectura. |
 | D14 Sobre mí | ficha y mapa «desde `_data/`» | texto byte-idéntico en intro + 4 `details.hoja`; ficha desde el front matter de `about.md`; mapa desde `_data/intereses.yml` sin las aristas no rastreables. |
 | Pie | — | «© {año del build} Santiago Gil Gallego»; Archivo · Etiquetas · Feed; alternador como palabra. |
+| R2 (2026-11-22) categoría IA | cuatro secciones; cinco enlaces en el menú | sexta entrada «IA» (sus páginas dicen «Inteligencia artificial»); `section: ia` como categoría editorial independiente de la colección; comparte acento azulgris y voz de lectura con Mates. `/proyectos/` se titula «Investigaciones»: reúne investigación, software y experimentos y no lista las fichas de divulgación, que conservan su URL. Una sola categoría principal por publicación: nada se duplica en dos catálogos. |
+| R2 portada | cuatro tiles de 3 columnas con su cuenta | cinco tiles iguales en `.tile-fila` (subretícula de 5 sobre las 12 columnas: sus bordes no caen en columna); ≤960px 2+2+2 / 3+3; ≤480px filas pictograma · nombre · texto. Quinto icono `px-ia`: rombo con nodo central (cuatro nodos 2×2 en las esquinas y un nodo central mayor, 28 píxeles en la retícula 8×8 del sistema, acento azulgris, decorativo con `aria-hidden`). La línea del tile dice qué hay o qué está en preparación («Explorar · Cuadernos en preparación», «Explorar · 2 artículos», «4 fichas», «Reflexiones · en preparación», «Cuentos y poesía · en preparación»); los conteos salen de lo publicado. |
+| R2 menú | cinco enlaces en flex | seis; en una fila mientras quepan (medido: necesitan 428px de pantalla, así que a 480px siguen en una) y ≤440px retícula de tres columnas, dos filas de tres: Mates · IA · Investigaciones / Notas · Escritos · Sobre mí. 440px no es pliegue del sistema: lo fija la medida del menú, con margen para otras fuentes. |
+| R2 mapa en portada | lienzo desplazable | ≤960px la lista en texto (a 768px los nodos de la derecha quedaban fuera de la vista); en /sobre/ sigue el lienzo. |
+| R2 rótulos de lista | texto | `h2.lista-titulo` puede ser enlace (Explorar, Cuadernos matemáticos). |
 
 ### 9.2 Adaptaciones al sitio real
 

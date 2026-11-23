@@ -3,7 +3,7 @@ layout: default
 ---
 {%- comment -%}
   Índice de sección y listas de publicaciones (rediseño v2; componente
-  ListaPublicaciones). Lo usan Mates, Notas, Escritos, Archivo y
+  ListaPublicaciones). Lo usan Mates, IA, Notas, Escritos, Archivo y
   Etiquetas.
 
     <h1> con el título de la página, en el estilo de título de su voz
@@ -16,10 +16,19 @@ layout: default
 
   Front matter de la página
     title         obligatorio  el <h1>
-    coleccion     opcional     mates | notas | escritos. Sin ella entran
-                               todas y cada fila lleva su sección.
-    grupos        opcional     lista de {titulo, subseccion}: una lista por
-                               subsección, en ese orden (Mates)
+    categoria     opcional     mates | ia | notas | escritos: filtra por
+                               `section`, la categoría editorial (R2), no
+                               por colección. Sin ella entran todas y cada
+                               fila lleva su sección.
+    formato       opcional     explorar | cuaderno | charla: filtra además
+                               por `formato` (/mates/explorar/, /ia/explorar/)
+    grupos        opcional     lista de {titulo, formato | subseccion, url,
+                               vacio}: una lista por grupo, en ese orden
+                               (Mates, IA). Con `url` el rótulo enlaza a la
+                               página del grupo; `vacio` es el texto de su
+                               lista vacía («en preparación»).
+    lista_vacia   opcional     texto de la lista única vacía; por defecto
+                               «aún sin entradas» (D10)
     por_anio      opcional     true: una lista por año (Archivo)
     lista_titulo  opcional     rótulo de la lista única
     lista_limite  opcional     cuántas van bajo lista_titulo; el resto,
@@ -40,21 +49,29 @@ layout: default
   {{ content }}
   {%- unless page.lista == false -%}
   {%- include publicaciones.html -%}
-  {%- if page.coleccion -%}
-    {%- assign _sec_entradas = publicaciones | where: "collection", page.coleccion -%}
+  {%- if page.categoria -%}
+    {%- assign _sec_entradas = publicaciones | where: "section", page.categoria -%}
     {%- assign _sec_con_seccion = false -%}
   {%- else -%}
     {%- assign _sec_entradas = publicaciones -%}
     {%- assign _sec_con_seccion = true -%}
+  {%- endif -%}
+  {%- if page.formato -%}
+    {%- assign _sec_entradas = _sec_entradas | where: "formato", page.formato -%}
   {%- endif -%}
   {%- assign _sec_resto = "" | split: "" -%}
 
   {%- if page.grupos -%}
     {%- assign _sec_ids = "" | split: "" -%}
     {%- for _sec_g in page.grupos -%}
-      {%- assign _sec_ids = _sec_ids | push: _sec_g.subseccion -%}
-      {%- assign _sec_items = _sec_entradas | where: "subsection", _sec_g.subseccion %}
-  <h2 class="lista-titulo">{{ _sec_g.titulo }}</h2>
+      {%- if _sec_g.formato -%}
+        {%- assign _sec_ids = _sec_ids | push: _sec_g.formato -%}
+        {%- assign _sec_items = _sec_entradas | where: "formato", _sec_g.formato -%}
+      {%- else -%}
+        {%- assign _sec_ids = _sec_ids | push: _sec_g.subseccion -%}
+        {%- assign _sec_items = _sec_entradas | where: "subsection", _sec_g.subseccion -%}
+      {%- endif %}
+  <h2 class="lista-titulo">{% if _sec_g.url %}<a href="{{ _sec_g.url | relative_url }}">{{ _sec_g.titulo }}</a>{% else %}{{ _sec_g.titulo }}{% endif %}</h2>
       {%- if _sec_items.size > 0 %}
   <ul class="lista">
         {%- for _sec_p in _sec_items %}
@@ -62,11 +79,11 @@ layout: default
         {%- endfor %}
   </ul>
       {%- else %}
-  <p class="lista-vacia">aún sin entradas</p>
+  <p class="lista-vacia">{{ _sec_g.vacio | default: "aún sin entradas" }}</p>
       {%- endif -%}
     {%- endfor -%}
     {%- for _sec_p in _sec_entradas -%}
-      {%- unless _sec_ids contains _sec_p.subsection -%}{%- assign _sec_resto = _sec_resto | push: _sec_p -%}{%- endunless -%}
+      {%- unless _sec_ids contains _sec_p.subsection or _sec_ids contains _sec_p.formato -%}{%- assign _sec_resto = _sec_resto | push: _sec_p -%}{%- endunless -%}
     {%- endfor -%}
 
   {%- elsif page.por_anio -%}
@@ -95,7 +112,7 @@ layout: default
       {%- endfor %}
   </ul>
     {%- else %}
-  <p class="lista-vacia">aún sin entradas</p>
+  <p class="lista-vacia">{{ page.lista_vacia | default: "aún sin entradas" }}</p>
     {%- endif -%}
     {%- for _sec_p in _sec_entradas offset: _sec_limite -%}
       {%- assign _sec_resto = _sec_resto | push: _sec_p -%}

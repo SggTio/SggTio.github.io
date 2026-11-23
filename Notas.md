@@ -3,7 +3,7 @@ layout: seccion
 title: Notas e ideas
 permalink: /notas/
 section: notas
-coleccion: notas
+categoria: notas
 lista_titulo: Últimas notas e ideas
 lista_limite: 3
 resto_titulo: Otras notas y blog

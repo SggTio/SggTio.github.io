@@ -9,11 +9,13 @@
   Resumen: solo `description`. El excerpt automático de Jekyll no sirve
   (no hay excerpt_separator: en los posts reales sale el primer bloque
   del cuerpo; en los marcadores, «Contenido del escrito.»).
-  Lectura: palabras / 200, en Mates y Notas (nunca en Escritos), y no en
+  Lectura: palabras / 200, en Mates, IA y Notas (nunca en Escritos), y no en
   piezas sin layout (la charla es una presentación HTML, no un texto).
   Sale de _includes/minutos-lectura.html, en la misma forma que la meta
   del artículo («N min de lectura»).
   Las etiquetas van como texto: el título es el único enlace de la fila.
+  La sección que se pinta es `section`, la categoría editorial (R2), no la
+  colección: los artículos de IA viven en _mates y salen como «ia».
 
   Parámetros
     post       obligatorio  elemento de colección
@@ -29,7 +31,7 @@
   {%- for _fila_t in _fila_p.tags -%}{%- assign _fila_tec = _fila_tec | push: _fila_t -%}{%- endfor -%}
 {%- endunless -%}
 {%- unless include.lectura == false or _fila_p.layout == "none" -%}
-  {%- if _fila_p.collection == "mates" or _fila_p.collection == "notas" -%}
+  {%- if _fila_p.section == "mates" or _fila_p.section == "ia" or _fila_p.section == "notas" -%}
     {%- capture _fila_lec -%}{% include minutos-lectura.html contenido=_fila_p.content %}{%- endcapture -%}
     {%- assign _fila_tec = _fila_tec | push: _fila_lec -%}
   {%- endif -%}
@@ -38,7 +40,7 @@
   <span class="fecha">{% include fecha.html fecha=_fila_p.date %}</span>
   <div>
     <span class="tit"><a href="{{ _fila_p.url | relative_url }}">{{ _fila_p.title }}</a></span>
-    {%- if include.seccion %}<span class="seccion {{ _fila_p.collection }}">{{ _fila_p.collection }}</span>{% endif %}
+    {%- if include.seccion %}<span class="seccion {{ _fila_p.section }}">{{ _fila_p.section }}</span>{% endif %}
     {%- if _fila_p.description and include.resumen != false %}
     <div class="des">{{ _fila_p.description }}</div>
     {%- endif %}
